@@ -1,0 +1,249 @@
+/* ShopAppChat Widget Styles */
+/* All classes prefixed with sac- to avoid conflicts */
+
+.sac-widget {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.sac-widget *,
+.sac-widget *::before,
+.sac-widget *::after {
+  box-sizing: inherit;
+}
+
+/* Floating chat button */
+.sac-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, background-color 0.2s;
+  z-index: 9999;
+}
+
+.sac-button:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.sac-button:active {
+  transform: scale(0.95);
+}
+
+/* Chat window */
+.sac-window {
+  position: fixed;
+  bottom: 88px;
+  right: 20px;
+  width: 360px;
+  height: 480px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9998;
+  animation: sac-slide-up 0.2s ease-out;
+}
+
+@keyframes sac-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.sac-header {
+  background: #2563eb;
+  color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.sac-header-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.sac-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sac-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Body */
+.sac-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Messages container */
+.sac-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sac-messages.sac-empty {
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Individual message */
+.sac-message {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sac-message-merchant {
+  align-self: flex-end;
+}
+
+.sac-message-support {
+  align-self: flex-start;
+}
+
+.sac-message-content {
+  padding: 10px 14px;
+  border-radius: 12px;
+  word-wrap: break-word;
+}
+
+.sac-message-merchant .sac-message-content {
+  background: #2563eb;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.sac-message-support .sac-message-content {
+  background: #f3f4f6;
+  color: #1f2937;
+  border-bottom-left-radius: 4px;
+}
+
+.sac-message-time {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.sac-message-merchant .sac-message-time {
+  text-align: right;
+}
+
+/* Loading and error states */
+.sac-loading,
+.sac-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  padding: 20px;
+  text-align: center;
+}
+
+.sac-error {
+  color: #dc2626;
+}
+
+/* Input form */
+.sac-input-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.sac-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sac-input:focus {
+  border-color: #2563eb;
+}
+
+.sac-input:disabled {
+  background: #f9fafb;
+  cursor: not-allowed;
+}
+
+.sac-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.sac-send-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.sac-send-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 400px) {
+  .sac-window {
+    width: calc(100vw - 40px);
+    height: calc(100vh - 120px);
+    max-height: 500px;
+  }
+}
