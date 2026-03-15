@@ -51,7 +51,7 @@ export default function ConversationPage() {
     refetch();
   };
 
-  if (fetching) {
+  if (fetching && !conversation) {
     return (
       <div className="p-6">
         <p className="text-muted-foreground">Loading conversation...</p>
