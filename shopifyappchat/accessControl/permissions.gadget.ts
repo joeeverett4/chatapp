@@ -16,6 +16,16 @@ export const permissions: GadgetPermissions = {
         action: true,
       },
       models: {
+        customer: {
+          read: {
+            filter: "accessControl/filters/customer/tenant.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         user: {
           read: {
             filter: "accessControl/filters/user/tenant.gelly",
@@ -36,6 +46,7 @@ export const permissions: GadgetPermissions = {
       actions: {
         getWidgetMessages: true,
         initWidget: true,
+        initWidgetTwo: true,
         sendWidgetMessage: true,
       },
     },

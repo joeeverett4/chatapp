@@ -71,23 +71,6 @@ export default function ConversationPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <Link to="/conversations" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4">
-        <ArrowLeft className="w-4 h-4" />
-        Back to conversations
-      </Link>
-
-      <Card className="p-4 mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">{conversation?.shopName || conversation?.externalShopId}</h1>
-            <p className="text-sm text-muted-foreground">{conversation?.subject}</p>
-          </div>
-          <Badge variant={conversation?.status === "open" ? "default" : conversation?.status === "pending" ? "secondary" : "outline"}>
-            {conversation?.status}
-          </Badge>
-        </div>
-      </Card>
-
       <div className="space-y-4 mb-6">
         {messages.length === 0 ? (
           <p className="text-muted-foreground text-center py-8">No messages yet.</p>
@@ -99,8 +82,8 @@ export default function ConversationPage() {
             >
               <div
                 className={`max-w-[70%] rounded-lg p-3 ${message.senderType === "support"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted"
                   }`}
               >
                 <p className="text-sm">{message.content}</p>

@@ -8,6 +8,9 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
+console.log("api")
+console.log(api);
+
 export function useChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -15,6 +18,7 @@ export function useChat() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
+  const [email, setEmail] = useState('');
   const pollIntervalRef = useRef(null);
 
   const config = getConfig();
@@ -22,20 +26,24 @@ export function useChat() {
   const shopName = config.shopName || 'Shop';
   const orgSlug = config.orgSlug || '';
 
-  // Initialize conversation
-  const initConversation = useCallback(async () => {
-    console.log('initConversation called with:', { shopId, shopName, orgSlug, config: window.SHOPAPPCHAT_CONFIG });
+  // Initialize conversation with email
+  const initConversation = useCallback(async (userEmail) => {
+    if (!userEmail) {
+      setError('Email is required');
+      return;
+    }
 
     if (!shopId || !orgSlug) {
       setError('Widget not configured properly - missing shopId or orgSlug');
       return;
     }
 
+    setEmail(userEmail);
     setLoading(true);
     setError(null);
 
     try {
-      const data = await api.initWidget({ shopId, shopName, orgSlug });
+      const data = await api.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail });
       setConversationId(data.conversationId);
       setMessages(data.messages || []);
     } catch (err) {
@@ -59,7 +67,7 @@ export function useChat() {
 
   // Send message
   const sendMessage = useCallback(async (content) => {
-    if (!content.trim() || !conversationId || !shopId) return;
+    if (!content.trim() || !conversationId || !shopId || !email) return;
 
     setSending(true);
 
@@ -67,7 +75,8 @@ export function useChat() {
       const data = await api.sendWidgetMessage({
         conversationId,
         content: content.trim(),
-        shopId
+        shopId,
+        email
       });
       setMessages(prev => [...prev, data.message]);
     } catch (err) {
@@ -75,19 +84,14 @@ export function useChat() {
     } finally {
       setSending(false);
     }
-  }, [conversationId, shopId]);
+  }, [conversationId, shopId, email]);
 
   // Toggle chat open/closed
   const toggleChat = useCallback(() => {
     setIsOpen(prev => !prev);
   }, []);
 
-  // Initialize on first open
-  useEffect(() => {
-    if (isOpen && !conversationId && !loading) {
-      initConversation();
-    }
-  }, [isOpen, conversationId, loading, initConversation]);
+  // No auto-initialize - wait for email submission
 
   // Poll for messages when chat is open
   useEffect(() => {
@@ -113,6 +117,8 @@ export function useChat() {
     sendMessage,
     loading,
     error,
-    sending
+    sending,
+    email,
+    initConversation
   };
 }

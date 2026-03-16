@@ -7,6 +7,7 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v2",
   storageKey: "DataModel-Conversation",
   fields: {
+    email: { type: "email", storageKey: "conv-email-07" },
     externalShopId: {
       type: "string",
       validations: { required: true },

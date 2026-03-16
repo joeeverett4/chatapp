@@ -44,7 +44,7 @@ const App = () => {
               <Route path="signed-in" element={<SignedInPage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="conversations" element={<ConversationsPage />} />
-              <Route path="conversations/:id" element={<ConversationPage />} />
+              <Route path="conversation/:id" element={<ConversationPage />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />
