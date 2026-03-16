@@ -16,14 +16,27 @@ export const permissions: GadgetPermissions = {
         action: true,
       },
       models: {
-        customer: {
-          read: {
-            filter: "accessControl/filters/customer/tenant.gelly",
-          },
+        conversation: {
+          read: true,
           actions: {
             create: true,
             delete: true,
             update: true,
+          },
+        },
+        customer: {
+          read: true,
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
+        message: {
+          read: true,
+          actions: {
+            create: true,
+            delete: true,
           },
         },
         user: {
@@ -45,7 +58,6 @@ export const permissions: GadgetPermissions = {
       },
       actions: {
         getWidgetMessages: true,
-        initWidget: true,
         initWidgetTwo: true,
         sendWidgetMessage: true,
       },
@@ -81,7 +93,7 @@ export const permissions: GadgetPermissions = {
       },
       actions: {
         getWidgetMessages: true,
-        initWidget: true,
+        initWidgetTwo: true,
         sendWidgetMessage: true,
       },
     },

@@ -8,6 +8,11 @@ export const schema: GadgetModel = {
   storageKey: "DataModel-Conversation",
   fields: {
     country: { type: "string", storageKey: "conv-country-08" },
+    customer: {
+      type: "belongsTo",
+      parent: { model: "customer" },
+      storageKey: "conv-customer-09",
+    },
     email: { type: "email", storageKey: "conv-email-07" },
     externalShopId: {
       type: "string",

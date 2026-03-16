@@ -1,3 +1,0 @@
-filter ($user: User, $session: Session) on Customer [
-  where userId == $user.id
-]

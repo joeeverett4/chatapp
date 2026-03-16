@@ -30,6 +30,23 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
     throw new Error("Organization not found");
   }
 
+  // Find or create customer
+  let customer = await api.customer.maybeFindFirst({
+    filter: { email: { equals: email } }
+  });
+
+  console.log("customer")
+  console.log(customer);
+
+  if (!customer) {
+    customer = await api.customer.create({
+      email: email,
+      country: country
+    });
+    console.log("customer created")
+    console.log(customer);
+  }
+
   // Look for existing open conversation for this email/shop in this organization
   let conversation = await api.conversation.maybeFindFirst({
     filter: {
@@ -65,7 +82,8 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
       country: country,
       subject: "Support Chat",
       status: "open",
-      organization: { _link: organization.id }
+      organization: { _link: organization.id },
+      customer: { _link: customer.id }
     });
 
     // Fetch with messages (empty for new conversation)

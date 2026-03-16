@@ -10,10 +10,5 @@ export const schema: GadgetModel = {
     country: { type: "string", storageKey: "FiOS6FE4Rkzd" },
     email: { type: "string", storageKey: "tWFI7iYNHKNg" },
     name: { type: "string", storageKey: "ptcYxMvGrN4H" },
-    user: {
-      type: "belongsTo",
-      parent: { model: "user" },
-      storageKey: "H7iaqdtKf3Sg-BelongsTo-User",
-    },
   },
 };

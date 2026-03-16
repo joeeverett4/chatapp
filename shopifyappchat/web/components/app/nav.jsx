@@ -29,6 +29,15 @@ import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { api } from "../../api";
 
+const countryCodeToFlag = (code) => {
+  if (!code || code.length !== 2) return code;
+  return code
+    .toUpperCase()
+    .split('')
+    .map(char => String.fromCodePoint(0x1F1E6 + char.charCodeAt(0) - 65))
+    .join('');
+};
+
 /**
  * The main navigation items for the left sidebar.
  * To add a new link, add an object with title, path, and icon.
@@ -94,10 +103,19 @@ export const Navigation = ({ onLinkClick }) => {
       shopName: true,
       externalShopId: true,
       status: true,
+      customer: {
+        id: true,
+        name: true,
+        email: true,
+        country: true,
+      },
     },
     sort: { createdAt: "Descending" },
     live: true,
   });
+
+  console.log("data")
+  console.log(conversations);
 
   return (
     <>
@@ -119,18 +137,20 @@ export const Navigation = ({ onLinkClick }) => {
             <Link
               key={conv.id}
               to={`/conversation/${conv.id}`}
-              className={`flex items-center px-4 py-2 text-sm rounded-md transition-colors
-                ${
-                  location.pathname === `/conversation/${conv.id}`
-                    ? "bg-accent text-accent-foreground"
-                    : "hover:bg-accent hover:text-accent-foreground"
+              className={`flex items-start px-4 py-2 text-sm rounded-md transition-colors
+                ${location.pathname === `/conversation/${conv.id}`
+                  ? "bg-accent text-accent-foreground"
+                  : "hover:bg-accent hover:text-accent-foreground"
                 }`}
               onClick={onLinkClick}
             >
-              <MessageSquare className="mr-3 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">{conv.shopName || conv.externalShopId}</span>
+              <MessageSquare className="mr-3 h-4 w-4 flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="truncate">{conv.shopName || conv.externalShopId}</div>
+                <div className="truncate text-xs text-muted-foreground">{conv.customer.email} {countryCodeToFlag(conv.customer.country)}</div>
+              </div>
               {conv.status === "open" && (
-                <span className="ml-auto w-2 h-2 bg-green-500 rounded-full flex-shrink-0" />
+                <span className="ml-2 w-2 h-2 bg-green-500 rounded-full flex-shrink-0 mt-1.5" />
               )}
             </Link>
           ))
