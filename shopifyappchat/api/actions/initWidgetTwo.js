@@ -8,7 +8,7 @@ import { GlobalActionRun } from "gadget-server";
  * @returns {object} - { conversationId, messages[] }
  */
 export const run: GlobalActionRun = async ({ params, api, logger }) => {
-  const { shopId, shopName, email } = params;
+  const { shopId, shopName, email, country } = params;
 
   logger.info({ params }, "initWidget called");
 
@@ -62,6 +62,7 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
       externalShopId: shopId,
       shopName: shopName || "Unknown Shop",
       email: email,
+      country: country,
       subject: "Support Chat",
       status: "open",
       organization: { _link: organization.id }
@@ -98,5 +99,6 @@ export const params = {
   shopId: { type: "string" },
   shopName: { type: "string" },
   orgSlug: { type: "string" },
-  email: { type: "string" }
+  email: { type: "string" },
+  country: { type: "string" }
 };

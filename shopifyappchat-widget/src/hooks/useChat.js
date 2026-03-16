@@ -26,6 +26,17 @@ export function useChat() {
   const shopName = config.shopName || 'Shop';
   const orgSlug = config.orgSlug || '';
 
+  // Get country from IP
+  const getCountry = async () => {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      return data.country_code || null;
+    } catch {
+      return null;
+    }
+  };
+
   // Initialize conversation with email
   const initConversation = useCallback(async (userEmail) => {
     if (!userEmail) {
@@ -43,7 +54,9 @@ export function useChat() {
     setError(null);
 
     try {
-      const data = await api.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail });
+      const country = await getCountry();
+      console.log('Country:', country);
+      const data = await api.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail, country });
       setConversationId(data.conversationId);
       setMessages(data.messages || []);
     } catch (err) {
