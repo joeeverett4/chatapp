@@ -6,7 +6,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
 import { Badge } from "../components/ui/badge";
-import { ArrowLeft, Send, Check, CheckCheck, Mail, MailCheck, MailOpen } from "lucide-react";
+import { ArrowLeft, Send } from "lucide-react";
 
 export default function ConversationPage() {
   const { id } = useParams();
@@ -110,21 +110,9 @@ export default function ConversationPage() {
     return { type: "sent", label: "Sent" };
   };
 
-  const renderStatusIcon = (status) => {
+  const renderStatus = (status) => {
     if (!status) return null;
-
-    switch (status.type) {
-      case "emailRead":
-        return <MailOpen className="w-3 h-3 ml-1" title={status.label} />;
-      case "emailDelivered":
-        return <MailCheck className="w-3 h-3 ml-1" title={status.label} />;
-      case "emailSent":
-        return <Mail className="w-3 h-3 ml-1" title={status.label} />;
-      case "read":
-        return <CheckCheck className="w-3 h-3 ml-1" title={status.label} />;
-      default:
-        return <Check className="w-3 h-3 ml-1" title={status.label} />;
-    }
+    return <span className="ml-1">· {status.label}</span>;
   };
 
   return (
@@ -147,7 +135,7 @@ export default function ConversationPage() {
                 <p className="text-sm">{message.content}</p>
                 <p className={`text-xs mt-1 flex items-center gap-1 ${message.senderType === "support" ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                   {message.senderType} • {new Date(message.createdAt).toLocaleString()}
-                  {renderStatusIcon(getMessageStatus(message))}
+                  {renderStatus(getMessageStatus(message))}
                 </p>
               </div>
             </div>

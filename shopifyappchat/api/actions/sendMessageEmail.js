@@ -24,6 +24,9 @@ export const run = async ({ params, api, logger }) => {
     from: 'onboarding@resend.dev', // Testing email - update to your domain in production
     to: 'joeeverett673@gmail.com', // Testing - change to conversation.email in production
     subject: `New message from ${conversation.shopName || 'Support'}`,
+    tags: [
+      { name: 'messageId', value: messageId }
+    ],
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <p style="font-size: 16px; line-height: 1.5;">${message.content}</p>
