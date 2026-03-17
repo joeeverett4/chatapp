@@ -46,7 +46,7 @@ export default function MessageList({ messages, operatorLastReadAt }) {
           <div className="sac-message-time">
             {formatTime(message.createdAt)}
             {message.senderType !== 'support' && isMessageRead(message) && (
-              <span className="sac-read-status">Read</span>
+              <span className="sac-read-status"> · Read</span>
             )}
           </div>
         </div>

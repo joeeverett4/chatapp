@@ -8,8 +8,25 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
-console.log("api")
-console.log(api);
+// Storage key for persisting conversation
+const getStorageKey = (shopId) => `sac_conversation_${shopId}`;
+
+const saveSession = (shopId, data) => {
+  try {
+    localStorage.setItem(getStorageKey(shopId), JSON.stringify(data));
+  } catch (e) {
+    // localStorage not available
+  }
+};
+
+const loadSession = (shopId) => {
+  try {
+    const stored = localStorage.getItem(getStorageKey(shopId));
+    return stored ? JSON.parse(stored) : null;
+  } catch (e) {
+    return null;
+  }
+};
 
 export function useChat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +45,16 @@ export function useChat() {
   const shopId = config.shopId || '';
   const shopName = config.shopName || 'Shop';
   const orgSlug = config.orgSlug || '';
+
+  // Restore session from localStorage on mount
+  useEffect(() => {
+    if (!shopId) return;
+    const session = loadSession(shopId);
+    if (session?.conversationId && session?.email) {
+      setConversationId(session.conversationId);
+      setEmail(session.email);
+    }
+  }, [shopId]);
 
   // Get country from IP
   const getCountry = async () => {
@@ -62,6 +89,8 @@ export function useChat() {
       const data = await api.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail, country });
       setConversationId(data.conversationId);
       setMessages(data.messages || []);
+      // Save session to localStorage
+      saveSession(shopId, { conversationId: data.conversationId, email: userEmail });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -97,7 +126,13 @@ export function useChat() {
         setOperatorLastReadAt(new Date(data.operatorLastReadAt));
       }
     } catch (err) {
-      // Silently fail on polling errors
+      // If conversation not found, clear the stored session
+      if (err.message?.includes('not found') || err.message?.includes('Access denied')) {
+        setConversationId(null);
+        setEmail('');
+        setMessages([]);
+        saveSession(shopId, null);
+      }
     }
   }, [conversationId, shopId]);
 
