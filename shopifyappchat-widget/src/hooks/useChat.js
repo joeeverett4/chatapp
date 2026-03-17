@@ -20,6 +20,8 @@ export function useChat() {
   const [sending, setSending] = useState(false);
   const [email, setEmail] = useState('');
   const pollIntervalRef = useRef(null);
+  const heartbeatIntervalRef = useRef(null);
+  const lastActivityRef = useRef(Date.now());
 
   const config = getConfig();
   const shopId = config.shopId || '';
@@ -122,6 +124,50 @@ export function useChat() {
       };
     }
   }, [isOpen, conversationId, fetchMessages]);
+
+  // Track user activity
+  useEffect(() => {
+    const updateActivity = () => {
+      lastActivityRef.current = Date.now();
+    };
+
+    const events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
+    events.forEach(event => window.addEventListener(event, updateActivity));
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, updateActivity));
+    };
+  }, []);
+
+  // Send heartbeat when chat is open and user is active
+  useEffect(() => {
+    if (isOpen && email) {
+      const sendHeartbeat = async () => {
+        const isActive = (Date.now() - lastActivityRef.current) < 60000;
+        console.log('Heartbeat check:', { isActive, visible: document.visibilityState, email });
+        if (isActive && document.visibilityState === 'visible') {
+          try {
+            await api.sendHeartbeat({ email });
+            console.log('Heartbeat sent successfully');
+          } catch (err) {
+            console.log('Heartbeat failed:', err);
+          }
+        }
+      };
+
+      // Send initial heartbeat
+      sendHeartbeat();
+
+      // Send heartbeat every 30 seconds
+      heartbeatIntervalRef.current = setInterval(sendHeartbeat, 30000);
+
+      return () => {
+        if (heartbeatIntervalRef.current) {
+          clearInterval(heartbeatIntervalRef.current);
+        }
+      };
+    }
+  }, [isOpen, email]);
 
   return {
     isOpen,

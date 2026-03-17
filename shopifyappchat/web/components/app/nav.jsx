@@ -38,6 +38,14 @@ const countryCodeToFlag = (code) => {
     .join('');
 };
 
+const getPresenceStatus = (lastActiveAt) => {
+  if (!lastActiveAt) return 'offline';
+  const seconds = (Date.now() - new Date(lastActiveAt)) / 1000;
+  if (seconds < 60) return 'online';
+  if (seconds < 300) return 'idle';
+  return 'offline';
+};
+
 /**
  * The main navigation items for the left sidebar.
  * To add a new link, add an object with title, path, and icon.
@@ -108,6 +116,7 @@ export const Navigation = ({ onLinkClick }) => {
         name: true,
         email: true,
         country: true,
+        lastActiveAt: true,
       },
     },
     sort: { createdAt: "Descending" },
@@ -149,9 +158,16 @@ export const Navigation = ({ onLinkClick }) => {
                 <div className="truncate">{conv.shopName || conv.externalShopId}</div>
                 <div className="truncate text-xs text-muted-foreground">{conv.customer.email} {countryCodeToFlag(conv.customer.country)}</div>
               </div>
-              {conv.status === "open" && (
-                <span className="ml-2 w-2 h-2 bg-green-500 rounded-full flex-shrink-0 mt-1.5" />
-              )}
+              {(() => {
+                const presence = getPresenceStatus(conv.customer?.lastActiveAt);
+                if (presence === 'online') {
+                  return <span className="ml-2 w-2 h-2 bg-green-500 rounded-full flex-shrink-0 mt-1.5" />;
+                }
+                if (presence === 'idle') {
+                  return <span className="ml-2 w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1.5" />;
+                }
+                return null;
+              })()}
             </Link>
           ))
         )}

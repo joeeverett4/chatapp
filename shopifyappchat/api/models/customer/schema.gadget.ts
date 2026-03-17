@@ -9,6 +9,10 @@ export const schema: GadgetModel = {
   fields: {
     country: { type: "string", storageKey: "FiOS6FE4Rkzd" },
     email: { type: "string", storageKey: "tWFI7iYNHKNg" },
+    lastActiveAt: {
+      type: "string",
+      storageKey: "cust-lastActiveAt-01",
+    },
     name: { type: "string", storageKey: "ptcYxMvGrN4H" },
   },
 };
