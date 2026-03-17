@@ -19,6 +19,7 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
       id: true,
       externalShopId: true,
       status: true,
+      operatorLastReadAt: true,
       messages: {
         edges: {
           node: {
@@ -46,7 +47,8 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
 
   return {
     messages,
-    status: conversation.status
+    status: conversation.status,
+    operatorLastReadAt: conversation.operatorLastReadAt
   };
 };
 

@@ -1,12 +1,31 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function MessageList({ messages }) {
+export default function MessageList({ messages, operatorLastReadAt }) {
   const bottomRef = useRef(null);
+
+  console.log('MessageList operatorLastReadAt:', operatorLastReadAt);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Check if a customer/merchant message has been read by the operator
+  const isMessageRead = (message) => {
+    console.log("ISMESSAGEREADISMESSAGEREAD")
+    // Customer messages can be 'customer' or 'merchant' depending on the system
+    if (message.senderType === 'support') {
+      console.log("retuning falseee")
+      return false
+    }
+    if (!operatorLastReadAt) {
+      console.log("no operateor last read")
+      false
+    }
+    const isRead = new Date(message.createdAt) <= operatorLastReadAt;
+    console.log('isMessageRead:', { msgTime: message.createdAt, operatorLastReadAt, isRead });
+    return isRead;
+  };
 
   if (messages.length === 0) {
     return (
@@ -26,6 +45,9 @@ export default function MessageList({ messages }) {
           <div className="sac-message-content">{message.content}</div>
           <div className="sac-message-time">
             {formatTime(message.createdAt)}
+            {message.senderType !== 'support' && isMessageRead(message) && (
+              <span className="sac-read-status">Read</span>
+            )}
           </div>
         </div>
       ))}

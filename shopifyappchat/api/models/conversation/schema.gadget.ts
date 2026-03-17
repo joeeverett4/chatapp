@@ -29,6 +29,11 @@ export const schema: GadgetModel = {
       children: { model: "message", belongsToField: "conversation" },
       storageKey: "conv-messages-05",
     },
+    operatorLastReadAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "conv-operatorLastReadAt-11",
+    },
     organization: {
       type: "belongsTo",
       validations: { required: true },

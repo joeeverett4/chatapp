@@ -1,6 +1,6 @@
 import { useFindOne, useAction, useUser } from "@gadgetinc/react";
 import { useParams, Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { api } from "../api";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -12,6 +12,7 @@ export default function ConversationPage() {
   const { id } = useParams();
   const [replyContent, setReplyContent] = useState("");
   const user = useUser(api);
+  const [lastMessageCount, setLastMessageCount] = useState(0);
 
   const [{ data: conversation, fetching, error }, refetch] = useFindOne(api.conversation, id, {
     live: true,
@@ -36,6 +37,26 @@ export default function ConversationPage() {
   });
 
   const [{ fetching: sending }, sendMessage] = useAction(api.message.create);
+
+  const messages = conversation?.messages?.edges?.map(edge => edge.node) || [];
+
+  // Mark conversation as read by operator when viewing or when new messages arrive
+  useEffect(() => {
+
+    console.log("messages")
+    console.log(messages)
+    const messageCount = messages.length;
+    if (conversation?.id && messageCount > 0 && messageCount !== lastMessageCount) {
+      api.conversation.update(conversation.id, {
+        operatorLastReadAt: new Date()
+      }).then(() => {
+        console.log("setting last message count")
+        setLastMessageCount(messageCount);
+      }).catch(err => {
+        console.error('Failed to mark as read:', err);
+      });
+    }
+  }, [conversation?.id, messages.length, lastMessageCount]);
 
   const handleSendReply = async (e) => {
     e.preventDefault();
@@ -68,7 +89,6 @@ export default function ConversationPage() {
     );
   }
 
-  const messages = conversation?.messages?.edges?.map(edge => edge.node) || [];
   const lastReadAt = conversation?.lastReadAt ? new Date(conversation.lastReadAt) : null;
 
   const isMessageRead = (message) => {

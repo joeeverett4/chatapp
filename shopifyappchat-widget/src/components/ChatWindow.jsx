@@ -57,7 +57,7 @@ function WelcomeSection() {
   );
 }
 
-export default function ChatWindow({ messages, onSend, onClose, loading, error, sending, email, onEmailSubmit }) {
+export default function ChatWindow({ messages, onSend, onClose, loading, error, sending, email, onEmailSubmit, operatorLastReadAt }) {
   return (
     <div className="sac-window">
       {/* Header */}
@@ -98,7 +98,7 @@ export default function ChatWindow({ messages, onSend, onClose, loading, error, 
         ) : error ? (
           <div className="sac-error">{error}</div>
         ) : (
-          <MessageList messages={messages} />
+          <MessageList messages={messages} operatorLastReadAt={operatorLastReadAt} />
         )}
       </div>
 

@@ -19,6 +19,7 @@ export function useChat() {
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
   const [email, setEmail] = useState('');
+  const [operatorLastReadAt, setOperatorLastReadAt] = useState(null);
   const pollIntervalRef = useRef(null);
   const heartbeatIntervalRef = useRef(null);
   const lastActivityRef = useRef(Date.now());
@@ -89,7 +90,12 @@ export function useChat() {
 
     try {
       const data = await api.getWidgetMessages({ conversationId, shopId });
+      console.log('getWidgetMessages response:', data);
+      console.log('operatorLastReadAt from API:', data.operatorLastReadAt);
       setMessages(data.messages || []);
+      if (data.operatorLastReadAt) {
+        setOperatorLastReadAt(new Date(data.operatorLastReadAt));
+      }
     } catch (err) {
       // Silently fail on polling errors
     }
@@ -214,6 +220,7 @@ export function useChat() {
     error,
     sending,
     email,
-    initConversation
+    initConversation,
+    operatorLastReadAt
   };
 }

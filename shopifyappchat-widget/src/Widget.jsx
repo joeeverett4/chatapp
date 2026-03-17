@@ -13,7 +13,8 @@ export default function Widget() {
     error,
     sending,
     email,
-    initConversation
+    initConversation,
+    operatorLastReadAt
   } = useChat();
 
   return (
@@ -28,6 +29,7 @@ export default function Widget() {
           sending={sending}
           email={email}
           onEmailSubmit={initConversation}
+          operatorLastReadAt={operatorLastReadAt}
         />
       )}
       <ChatButton onClick={toggleChat} isOpen={isOpen} />
