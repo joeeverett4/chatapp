@@ -6,7 +6,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
 import { Badge } from "../components/ui/badge";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, Check, CheckCheck } from "lucide-react";
 
 export default function ConversationPage() {
   const { id } = useParams();
@@ -21,6 +21,7 @@ export default function ConversationPage() {
       externalShopId: true,
       subject: true,
       status: true,
+      lastReadAt: true,
       messages: {
         edges: {
           node: {
@@ -68,6 +69,16 @@ export default function ConversationPage() {
   }
 
   const messages = conversation?.messages?.edges?.map(edge => edge.node) || [];
+  const lastReadAt = conversation?.lastReadAt ? new Date(conversation.lastReadAt) : null;
+
+  const isMessageRead = (message) => {
+    if (message.senderType !== "support") return false;
+    if (!lastReadAt) return false;
+    const msgTime = new Date(message.createdAt).getTime();
+    const readTime = lastReadAt.getTime();
+    console.log('Message sent:', msgTime, '| Last read:', readTime, '| Is read:', msgTime <= readTime);
+    return msgTime <= readTime;
+  };
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -87,8 +98,13 @@ export default function ConversationPage() {
                   }`}
               >
                 <p className="text-sm">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.senderType === "support" ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                <p className={`text-xs mt-1 flex items-center gap-1 ${message.senderType === "support" ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                   {message.senderType} • {new Date(message.createdAt).toLocaleString()}
+                  {message.senderType === "support" && (
+                    isMessageRead(message)
+                      ? <CheckCheck className="w-3 h-3 ml-1" title="Read" />
+                      : <Check className="w-3 h-3 ml-1" title="Sent" />
+                  )}
                 </p>
               </div>
             </div>

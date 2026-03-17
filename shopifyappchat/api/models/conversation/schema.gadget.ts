@@ -19,6 +19,11 @@ export const schema: GadgetModel = {
       validations: { required: true },
       storageKey: "conv-extShopId-03",
     },
+    lastReadAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "conv-lastReadAt-10",
+    },
     messages: {
       type: "hasMany",
       children: { model: "message", belongsToField: "conversation" },

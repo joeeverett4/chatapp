@@ -59,6 +59,7 @@ export const permissions: GadgetPermissions = {
       actions: {
         getWidgetMessages: true,
         initWidgetTwo: true,
+        markConversationRead: true,
         sendHeartbeat: true,
         sendWidgetMessage: true,
       },
@@ -95,6 +96,7 @@ export const permissions: GadgetPermissions = {
       actions: {
         getWidgetMessages: true,
         initWidgetTwo: true,
+        markConversationRead: true,
         sendHeartbeat: true,
         sendWidgetMessage: true,
       },

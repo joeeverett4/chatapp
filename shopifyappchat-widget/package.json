@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@gadget-client/shopappchat": "^1.13.0-development.202",
+    "@gadget-client/shopappchat": "^1.13.0-development.220",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

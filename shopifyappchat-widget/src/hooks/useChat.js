@@ -68,6 +68,21 @@ export function useChat() {
     }
   }, [shopId, shopName, orgSlug]);
 
+  // Mark conversation as read
+  const markAsRead = useCallback(async () => {
+
+    console.log("balcs")
+    if (!conversationId || !shopId) return;
+
+    console.log("calcs")
+    try {
+      console.log("zalcs")
+      await api.markConversationRead({ conversationId, shopId });
+    } catch (err) {
+      // Silently fail
+    }
+  }, [conversationId, shopId]);
+
   // Fetch messages
   const fetchMessages = useCallback(async () => {
     if (!conversationId || !shopId) return;
@@ -111,11 +126,17 @@ export function useChat() {
   // Poll for messages when chat is open
   useEffect(() => {
     if (isOpen && conversationId) {
-      // Initial fetch
+      // Initial fetch and mark as read
       fetchMessages();
+      markAsRead();
 
-      // Start polling every 5 seconds
-      pollIntervalRef.current = setInterval(fetchMessages, 5000);
+      // Start polling every 5 seconds - also mark as read while customer is viewing
+      pollIntervalRef.current = setInterval(() => {
+        fetchMessages();
+        if (document.visibilityState === 'visible') {
+          markAsRead();
+        }
+      }, 5000);
 
       return () => {
         if (pollIntervalRef.current) {
@@ -123,7 +144,7 @@ export function useChat() {
         }
       };
     }
-  }, [isOpen, conversationId, fetchMessages]);
+  }, [isOpen, conversationId, fetchMessages, markAsRead]);
 
   // Track user activity
   useEffect(() => {
@@ -168,6 +189,21 @@ export function useChat() {
       };
     }
   }, [isOpen, email]);
+
+  // Mark as read when tab becomes visible (customer returns to tab)
+  useEffect(() => {
+    if (!conversationId || !shopId) return;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && isOpen) {
+        console.log('Tab visible, marking as read');
+        markAsRead();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [conversationId, shopId, isOpen, markAsRead]);
 
   return {
     isOpen,
