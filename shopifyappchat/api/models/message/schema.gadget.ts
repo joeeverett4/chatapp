@@ -18,6 +18,21 @@ export const schema: GadgetModel = {
       parent: { model: "conversation" },
       storageKey: "msg-conversation-03",
     },
+    emailDeliveredAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "msg-emailDeliveredAt-06",
+    },
+    emailReadAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "msg-emailReadAt-07",
+    },
+    emailSentAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "msg-emailSentAt-05",
+    },
     senderType: {
       type: "enum",
       acceptMultipleSelections: false,

@@ -6,7 +6,7 @@ import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
 import { Badge } from "../components/ui/badge";
-import { ArrowLeft, Send, Check, CheckCheck } from "lucide-react";
+import { ArrowLeft, Send, Check, CheckCheck, Mail, MailCheck, MailOpen } from "lucide-react";
 
 export default function ConversationPage() {
   const { id } = useParams();
@@ -30,6 +30,9 @@ export default function ConversationPage() {
             content: true,
             senderType: true,
             createdAt: true,
+            emailSentAt: true,
+            emailDeliveredAt: true,
+            emailReadAt: true,
           }
         }
       }
@@ -91,13 +94,37 @@ export default function ConversationPage() {
 
   const lastReadAt = conversation?.lastReadAt ? new Date(conversation.lastReadAt) : null;
 
-  const isMessageRead = (message) => {
-    if (message.senderType !== "support") return false;
-    if (!lastReadAt) return false;
-    const msgTime = new Date(message.createdAt).getTime();
-    const readTime = lastReadAt.getTime();
-    console.log('Message sent:', msgTime, '| Last read:', readTime, '| Is read:', msgTime <= readTime);
-    return msgTime <= readTime;
+  const getMessageStatus = (message) => {
+    if (message.senderType !== "support") return null;
+
+    // Email statuses take priority
+    if (message.emailReadAt) return { type: "emailRead", label: "Read in email" };
+    if (message.emailDeliveredAt) return { type: "emailDelivered", label: "Delivered to email" };
+    if (message.emailSentAt) return { type: "emailSent", label: "Sent to email" };
+
+    // In-app read status
+    if (lastReadAt && new Date(message.createdAt) <= lastReadAt) {
+      return { type: "read", label: "Read" };
+    }
+
+    return { type: "sent", label: "Sent" };
+  };
+
+  const renderStatusIcon = (status) => {
+    if (!status) return null;
+
+    switch (status.type) {
+      case "emailRead":
+        return <MailOpen className="w-3 h-3 ml-1" title={status.label} />;
+      case "emailDelivered":
+        return <MailCheck className="w-3 h-3 ml-1" title={status.label} />;
+      case "emailSent":
+        return <Mail className="w-3 h-3 ml-1" title={status.label} />;
+      case "read":
+        return <CheckCheck className="w-3 h-3 ml-1" title={status.label} />;
+      default:
+        return <Check className="w-3 h-3 ml-1" title={status.label} />;
+    }
   };
 
   return (
@@ -120,11 +147,7 @@ export default function ConversationPage() {
                 <p className="text-sm">{message.content}</p>
                 <p className={`text-xs mt-1 flex items-center gap-1 ${message.senderType === "support" ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                   {message.senderType} • {new Date(message.createdAt).toLocaleString()}
-                  {message.senderType === "support" && (
-                    isMessageRead(message)
-                      ? <CheckCheck className="w-3 h-3 ml-1" title="Read" />
-                      : <Check className="w-3 h-3 ml-1" title="Sent" />
-                  )}
+                  {renderStatusIcon(getMessageStatus(message))}
                 </p>
               </div>
             </div>
