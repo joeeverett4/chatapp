@@ -14,6 +14,7 @@ import SignedInPage from "../routes/signed-in";
 import VerifyEmailPage from "../routes/verify-email";
 import ConversationsPage from "../routes/conversations";
 import ConversationPage from "../routes/conversation";
+import InboxPage from "../routes/inbox";
 import PublicLayout from "./layouts/public";
 import AuthLayout from "./layouts/auth";
 import AppLayout from "./layouts/app";
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="conversations" element={<ConversationsPage />} />
               <Route path="conversation/:id" element={<ConversationPage />} />
             </Route>
+            <Route path="inbox" element={<InboxPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
