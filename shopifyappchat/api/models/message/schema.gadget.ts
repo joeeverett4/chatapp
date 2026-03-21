@@ -7,11 +7,12 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v2",
   storageKey: "DataModel-Message",
   fields: {
-    content: {
-      type: "string",
-      validations: { required: true },
-      storageKey: "msg-content-01",
+    attachment: {
+      type: "file",
+      allowPublicAccess: true,
+      storageKey: "msg-attachment-08",
     },
+    content: { type: "string", storageKey: "msg-content-01" },
     conversation: {
       type: "belongsTo",
       validations: { required: true },

@@ -8,10 +8,15 @@ import { GlobalActionRun } from "gadget-server";
  * @returns {object} - { message }
  */
 export const run: GlobalActionRun = async ({ params, api, logger }) => {
-  const { conversationId, content, shopId } = params;
+  const { conversationId, content, shopId, attachmentBase64, attachmentFileName, attachmentMimeType } = params;
 
-  if (!conversationId || !content || !shopId) {
-    throw new Error("conversationId, content, and shopId are required");
+  if (!conversationId || !shopId) {
+    throw new Error("conversationId and shopId are required");
+  }
+
+  // Either content or attachment is required
+  if (!content && !attachmentBase64) {
+    throw new Error("content or attachment is required");
   }
 
   // Verify the conversation belongs to this shop
@@ -25,12 +30,24 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
     throw new Error("Access denied");
   }
 
-  // Create the message
-  const message = await api.message.create({
-    content: content,
+  // Build message data
+  const messageData = {
+    content: content || "",
     senderType: "merchant",
     conversation: { _link: conversationId }
-  });
+  };
+
+  // Add attachment if provided
+  if (attachmentBase64) {
+    messageData.attachment = {
+      base64: attachmentBase64,
+      fileName: attachmentFileName || "image.jpg",
+      mimeType: attachmentMimeType || "image/jpeg"
+    };
+  }
+
+  // Create the message
+  const message = await api.message.create(messageData);
 
   // Update conversation status to open if it was pending
   if (conversation.status === "pending") {
@@ -44,7 +61,12 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
       id: message.id,
       content: message.content,
       senderType: message.senderType,
-      createdAt: message.createdAt
+      createdAt: message.createdAt,
+      attachment: message.attachment ? {
+        url: message.attachment.url,
+        mimeType: message.attachment.mimeType,
+        fileName: message.attachment.fileName
+      } : null
     }
   };
 };
@@ -52,5 +74,8 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
 export const params = {
   conversationId: { type: "string" },
   content: { type: "string" },
-  shopId: { type: "string" }
+  shopId: { type: "string" },
+  attachmentBase64: { type: "string" },
+  attachmentFileName: { type: "string" },
+  attachmentMimeType: { type: "string" }
 };

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useFindMany, useFindOne, useUser } from "@gadgetinc/react";
+import { useState, useRef } from "react";
+import { useFindMany, useFindOne, useUser, useAction } from "@gadgetinc/react";
 import { api } from "../api";
 import {
   MessageSquare,
@@ -9,11 +9,19 @@ import {
   Bot,
   Users,
   ChevronDown,
+  Send,
+  Image as ImageIcon,
+  X,
 } from "lucide-react";
 
 export default function InboxPage() {
   const user = useUser(api);
   const [selectedConversationId, setSelectedConversationId] = useState(null);
+  const [messageContent, setMessageContent] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const fileInputRef = useRef(null);
+  const [{ fetching: sending }, sendMessage] = useAction(api.message.create);
 
   const [{ data: conversations }] = useFindMany(api.conversation, {
     filter: user?.organizationId ? { organizationId: { equals: user.organizationId } } : undefined,
@@ -64,6 +72,11 @@ export default function InboxPage() {
             emailSentAt: true,
             emailDeliveredAt: true,
             emailReadAt: true,
+            attachment: {
+              url: true,
+              mimeType: true,
+              fileName: true,
+            },
           }
         }
       }
@@ -73,6 +86,71 @@ export default function InboxPage() {
   });
 
   const messages = selectedConversation?.messages?.edges?.map(e => e.node) || [];
+
+  // Convert file to base64
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+    });
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const clearFile = () => {
+    setSelectedFile(null);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!selectedConversationId || (!messageContent.trim() && !selectedFile)) return;
+
+    const messageData = {
+      content: messageContent || "",
+      senderType: "support",
+      conversation: { _link: selectedConversationId },
+      user: { _link: user.id }
+    };
+
+    if (selectedFile) {
+      const base64 = await fileToBase64(selectedFile);
+      messageData.attachment = {
+        base64,
+        fileName: selectedFile.name,
+        mimeType: selectedFile.type
+      };
+    }
+
+    await sendMessage(messageData);
+    setMessageContent("");
+    clearFile();
+  };
 
   return (
     <div className="flex h-screen bg-white text-gray-900">
@@ -162,7 +240,15 @@ export default function InboxPage() {
                         : "bg-white border border-gray-200 text-gray-900"
                     }`}
                   >
-                    <p className="text-sm">{msg.content}</p>
+                    {msg.attachment?.url && (
+                      <img
+                        src={msg.attachment.url}
+                        alt={msg.attachment.fileName || "Attachment"}
+                        className="max-w-full max-h-48 rounded-lg mb-2 cursor-pointer"
+                        onClick={() => window.open(msg.attachment.url, "_blank")}
+                      />
+                    )}
+                    {msg.content && <p className="text-sm">{msg.content}</p>}
                     <p className={`text-xs mt-1 ${msg.senderType === "support" ? "text-blue-100" : "text-gray-500"}`}>
                       {formatTime(msg.createdAt)}
                     </p>
@@ -173,11 +259,50 @@ export default function InboxPage() {
 
             {/* Message Input */}
             <div className="p-4 border-t border-gray-200">
-              <input
-                type="text"
-                placeholder="Send your message..."
-                className="w-full bg-gray-100 rounded-lg px-4 py-3 text-sm outline-none border border-gray-200 focus:border-blue-500"
-              />
+              {/* Image Preview */}
+              {previewUrl && (
+                <div className="mb-3 relative inline-block">
+                  <img src={previewUrl} alt="Preview" className="max-h-24 rounded-lg border" />
+                  <button
+                    type="button"
+                    onClick={clearFile}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+
+              <form onSubmit={handleSendMessage} className="flex gap-2">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileSelect}
+                  accept="image/*"
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <ImageIcon className="w-5 h-5" />
+                </button>
+                <input
+                  type="text"
+                  value={messageContent}
+                  onChange={(e) => setMessageContent(e.target.value)}
+                  placeholder="Send your message..."
+                  className="flex-1 bg-gray-100 rounded-lg px-4 py-2 text-sm outline-none border border-gray-200 focus:border-blue-500"
+                />
+                <button
+                  type="submit"
+                  disabled={sending || (!messageContent.trim() && !selectedFile)}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <Send className="w-5 h-5" />
+                </button>
+              </form>
             </div>
           </>
         ) : (

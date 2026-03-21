@@ -414,6 +414,105 @@
   cursor: not-allowed;
 }
 
+/* Input container (wraps preview + form) */
+.sac-input-container {
+  background: white;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Attachment preview */
+.sac-attachment-preview {
+  position: relative;
+  padding: 12px 20px 0;
+}
+
+.sac-attachment-preview img {
+  max-width: 120px;
+  max-height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
+}
+
+.sac-attachment-remove {
+  position: absolute;
+  top: 8px;
+  left: 130px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.sac-attachment-remove:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+/* Attach button */
+.sac-attach-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.sac-attach-btn:hover:not(:disabled) {
+  background: #e2e8f0;
+  color: #2563eb;
+}
+
+.sac-attach-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Message attachment image */
+.sac-message-attachment {
+  margin-bottom: 8px;
+}
+
+.sac-message-attachment img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.sac-message-attachment img:hover {
+  opacity: 0.9;
+}
+
+.sac-message-merchant .sac-message-attachment img {
+  border-bottom-right-radius: 6px;
+}
+
+.sac-message-support .sac-message-attachment img {
+  border-bottom-left-radius: 6px;
+  border: 1px solid #f1f5f9;
+}
+
+/* Update input form when inside container */
+.sac-input-container .sac-input-form {
+  border-top: none;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 440px) {
   .sac-window {

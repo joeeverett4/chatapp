@@ -136,19 +136,42 @@ export function useChat() {
     }
   }, [conversationId, shopId]);
 
-  // Send message
-  const sendMessage = useCallback(async (content) => {
-    if (!content.trim() || !conversationId || !shopId || !email) return;
+  // Convert file to base64
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        // Remove data URL prefix (e.g., "data:image/png;base64,")
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+    });
+  };
+
+  // Send message (with optional file attachment)
+  const sendMessage = useCallback(async (content, file = null) => {
+    if ((!content?.trim() && !file) || !conversationId || !shopId || !email) return;
 
     setSending(true);
 
     try {
-      const data = await api.sendWidgetMessage({
+      const params = {
         conversationId,
-        content: content.trim(),
+        content: content?.trim() || "",
         shopId,
         email
-      });
+      };
+
+      // Add attachment if file is provided
+      if (file) {
+        params.attachmentBase64 = await fileToBase64(file);
+        params.attachmentFileName = file.name;
+        params.attachmentMimeType = file.type;
+      }
+
+      const data = await api.sendWidgetMessage(params);
       setMessages(prev => [...prev, data.message]);
     } catch (err) {
       setError(err.message);

@@ -26,7 +26,12 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
             id: true,
             content: true,
             senderType: true,
-            createdAt: true
+            createdAt: true,
+            attachment: {
+              url: true,
+              mimeType: true,
+              fileName: true
+            }
           }
         }
       }

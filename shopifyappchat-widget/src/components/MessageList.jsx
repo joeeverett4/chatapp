@@ -42,7 +42,20 @@ export default function MessageList({ messages, operatorLastReadAt }) {
           key={message.id}
           className={`sac-message sac-message-${message.senderType}`}
         >
-          <div className="sac-message-content">{message.content}</div>
+          {/* Display attachment image if present */}
+          {message.attachment?.url && (
+            <div className="sac-message-attachment">
+              <img
+                src={message.attachment.url}
+                alt={message.attachment.fileName || 'Attachment'}
+                onClick={() => window.open(message.attachment.url, '_blank')}
+              />
+            </div>
+          )}
+          {/* Display text content if present */}
+          {message.content && (
+            <div className="sac-message-content">{message.content}</div>
+          )}
           <div className="sac-message-time">
             {formatTime(message.createdAt)}
             {message.senderType !== 'support' && isMessageRead(message) && (
