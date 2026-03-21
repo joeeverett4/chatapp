@@ -54,7 +54,7 @@ export default function ConversationPage() {
   // Mark conversation as read by operator when viewing or when new messages arrive
   useEffect(() => {
 
-    console.log("messages")
+    console.log("messagessdfsfdsfd")
     console.log(messages)
     const messageCount = messages.length;
     if (conversation?.id && messageCount > 0 && messageCount !== lastMessageCount) {

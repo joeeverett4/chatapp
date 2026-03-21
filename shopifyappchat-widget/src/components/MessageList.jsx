@@ -20,7 +20,7 @@ export default function MessageList({ messages, operatorLastReadAt }) {
     }
     if (!operatorLastReadAt) {
       console.log("no operateor last read")
-      false
+      return false;
     }
     const isRead = new Date(message.createdAt) <= operatorLastReadAt;
     console.log('isMessageRead:', { msgTime: message.createdAt, operatorLastReadAt, isRead });
