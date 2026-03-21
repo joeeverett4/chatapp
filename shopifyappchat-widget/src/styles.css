@@ -73,81 +73,108 @@
 
 /* Header */
 .sac-header {
-  background: white;
-  padding: 20px 24px;
+  background: linear-gradient(145deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  padding: 0;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+}
+
+.sac-header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.sac-header-left {
+.sac-header-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.sac-logo {
-  width: 40px;
-  height: 40px;
-  background: #2563eb;
-  border-radius: 12px;
+.sac-brand-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
 }
 
-.sac-header-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.sac-header-title {
-  font-size: 15px;
+.sac-brand-name {
+  font-size: 14px;
   font-weight: 600;
-  color: #0f172a;
-}
-
-.sac-header-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #64748b;
-}
-
-.sac-online-dot {
-  width: 6px;
-  height: 6px;
-  background: #22c55e;
-  border-radius: 50%;
-  animation: sac-pulse 2s infinite;
-}
-
-@keyframes sac-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  color: white;
+  letter-spacing: 0.3px;
 }
 
 .sac-minimize-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: #f8fafc;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: white;
   transition: all 0.2s;
 }
 
 .sac-minimize-btn:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sac-header-content {
+  padding: 20px 20px 24px;
+  text-align: center;
+}
+
+.sac-header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.3px;
+}
+
+.sac-header-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sac-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.sac-online-dot {
+  width: 7px;
+  height: 7px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+}
+
+.sac-status-divider {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sac-response-time {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Body */

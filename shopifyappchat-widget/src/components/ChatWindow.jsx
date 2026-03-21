@@ -62,25 +62,33 @@ export default function ChatWindow({ messages, onSend, onClose, loading, error, 
     <div className="sac-window">
       {/* Header */}
       <div className="sac-header">
-        <div className="sac-header-left">
-          <div className="sac-logo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
+        <div className="sac-header-top">
+          <div className="sac-header-brand">
+            <div className="sac-brand-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </div>
+            <span className="sac-brand-name">Support</span>
           </div>
-          <div className="sac-header-info">
-            <span className="sac-header-title">Support</span>
-            <span className="sac-header-status">
+          <button className="sac-minimize-btn" onClick={onClose} aria-label="Close chat">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div className="sac-header-content">
+          <h2 className="sac-header-title">How can we help?</h2>
+          <div className="sac-header-status">
+            <span className="sac-status-badge">
               <span className="sac-online-dot"></span>
-              Online now
+              Online
             </span>
+            <span className="sac-status-divider">·</span>
+            <span className="sac-response-time">Usually responds in minutes</span>
           </div>
         </div>
-        <button className="sac-minimize-btn" onClick={onClose} aria-label="Close chat">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </button>
       </div>
 
       {/* Body */}

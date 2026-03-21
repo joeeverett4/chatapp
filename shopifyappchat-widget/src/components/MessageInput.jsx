@@ -106,7 +106,7 @@ export default function MessageInput({ onSend, disabled }) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type a message..."
+          placeholder="Type a message to char..."
           disabled={disabled}
         />
         <button
