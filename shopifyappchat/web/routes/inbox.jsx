@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useFindMany, useFindOne, useUser, useAction } from "@gadgetinc/react";
 import { api } from "../api";
 import {
@@ -52,6 +52,8 @@ export default function InboxPage() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
   const [{ fetching: sending }, sendMessage] = useAction(api.message.create);
+  const [, updateConversation] = useAction(api.conversation.update);
+  const [lastMessageCount, setLastMessageCount] = useState(0);
 
   const [{ data: conversations }] = useFindMany(api.conversation, {
     filter: user?.organizationId ? { organizationId: { equals: user.organizationId } } : undefined,
@@ -118,6 +120,23 @@ export default function InboxPage() {
 
   const messages = selectedConversation?.messages?.edges?.map(e => e.node) || [];
   const lastReadAt = selectedConversation?.lastReadAt ? new Date(selectedConversation.lastReadAt) : null;
+
+  // Mark conversation as read by operator when viewing or when new messages arrive
+  useEffect(() => {
+    const messageCount = messages.length;
+    if (selectedConversationId && messageCount > 0 && messageCount !== lastMessageCount) {
+      updateConversation({
+        id: selectedConversationId,
+        operatorLastReadAt: new Date()
+      });
+      setLastMessageCount(messageCount);
+    }
+  }, [selectedConversationId, messages.length]);
+
+  // Reset message count when switching conversations
+  useEffect(() => {
+    setLastMessageCount(0);
+  }, [selectedConversationId]);
 
   const fileToBase64 = (file) => {
     return new Promise((resolve, reject) => {

@@ -21,8 +21,9 @@ export const run = async ({ params, api, logger }) => {
   const trackingPixelUrl = `https://shopappchat.gadget.app/track-email-open?messageId=${messageId}`;
 
   const { data, error } = await resend.emails.send({
-    from: 'onboarding@resend.dev', // Testing email - update to your domain in production
-    to: 'joeeverett673@gmail.com', // Testing - change to conversation.email in production
+    from: `${conversation.shopName || 'Support'} <message@chat.ordersplitpro.co.uk>`,
+    replyTo: `reply+${conversationId}@chat.ordersplitpro.co.uk`,
+    to: conversation.email,
     subject: `New message from ${conversation.shopName || 'Support'}`,
     tags: [
       { name: 'messageId', value: messageId }

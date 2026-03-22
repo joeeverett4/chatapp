@@ -4,10 +4,45 @@ export default async function route({ request, reply, api, logger }) {
 
   const event = request.body;
 
-  logger.info("Resend webhook received", { body: request.body });
+  logger.info("Resend webhook received", { type: event.type, body: request.body });
 
   try {
-    // Get messageId from email tags or headers
+    // Handle inbound email (customer reply)
+    if (event.type === 'email.received') {
+      const toAddress = event.data?.to?.[0];
+      const fromEmail = event.data?.from;
+      const textBody = event.data?.text || event.data?.html?.replace(/<[^>]*>/g, '') || '';
+
+      // Extract conversationId from reply+{conversationId}@chat.ordersplitpro.co.uk
+      const match = toAddress?.match(/reply\+([^@]+)@/);
+      if (match && match[1]) {
+        const conversationId = match[1];
+
+        // Clean up the reply - remove quoted text (lines starting with >)
+        const cleanedContent = textBody
+          .split('\n')
+          .filter(line => !line.trim().startsWith('>'))
+          .join('\n')
+          .trim()
+          .split(/On .* wrote:/)[0] // Remove "On [date] [person] wrote:" and everything after
+          .trim();
+
+        if (cleanedContent) {
+          // Create message from customer
+          await api.message.create({
+            content: cleanedContent,
+            senderType: 'merchant',
+            conversation: { _link: conversationId }
+          });
+          logger.info("Inbound email added to conversation", { conversationId, fromEmail });
+        }
+      } else {
+        logger.warn("Could not extract conversationId from to address", { toAddress });
+      }
+      return reply.send({ received: true });
+    }
+
+    // Handle outbound email events
     const messageId = event.data?.tags?.messageId;
 
     if (!messageId) {
