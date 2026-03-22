@@ -3,7 +3,7 @@
 ## jsDelivr CDN URL
 
 ```
-https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@main/shopifyappchat-widget/dist/widget.iife.js
+https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.6.0/shopifyappchat-widget/dist/widget.iife.js
 ```
 
 ## Embed Code
@@ -19,7 +19,7 @@ Add this to any website:
     environment: "production"  // Use "development" for testing
   };
 </script>
-<script src="https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@main/shopifyappchat-widget/dist/widget.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.6.0/shopifyappchat-widget/dist/widget.iife.js">
 ```
 
 ## Configuration Options
