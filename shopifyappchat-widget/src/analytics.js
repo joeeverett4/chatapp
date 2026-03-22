@@ -1,13 +1,15 @@
-// Analytics SDK - standalone script for tracking events
-(function () {
-  const config = window.SHOPAPPCHAT_CONFIG || {};
+import { Client } from '@gadget-client/shopappchat';
 
-  if (!config.orgSlug) {
-    console.warn('Analytics: orgSlug not configured');
-    return;
-  }
+const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 
-  const API_URL = 'https://shopappchat--development.gadget.app/api/actions/trackEvent';
+const config = getConfig();
+
+if (!config.orgSlug) {
+  console.warn('Analytics: orgSlug not configured');
+} else {
+  const api = new Client({
+    environment: config.environment || 'development'
+  });
 
   // Get or create unique user ID
   const getDistinctId = () => {
@@ -35,33 +37,27 @@
   let queue = [];
   let flushTimeout = null;
 
-  const flush = () => {
+  const flush = async () => {
     if (queue.length === 0) return;
 
     const events = [...queue];
     queue = [];
 
-    const payload = JSON.stringify({
-      batch: events.map(e => ({
-        ...e,
-        properties: {
-          ...e.properties,
-          orgSlug: config.orgSlug,
-          shopId: config.shopId
-        }
-      }))
-    });
-
-    // Use sendBeacon for reliability
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(API_URL, payload);
-    } else {
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-        keepalive: true
-      });
+    for (const e of events) {
+      try {
+        await api.trackEvent({
+          event: e.event,
+          properties: {
+            ...e.properties,
+            orgSlug: config.orgSlug,
+            shopId: config.shopId
+          },
+          distinctId: e.distinctId,
+          sessionId: e.sessionId
+        });
+      } catch (err) {
+        console.warn('Analytics: failed to track event', err);
+      }
     }
   };
 
@@ -74,8 +70,7 @@
         $referrer: document.referrer
       },
       distinctId: getDistinctId(),
-      sessionId: getSessionId(),
-      timestamp: new Date().toISOString()
+      sessionId: getSessionId()
     });
 
     // Flush after 5 seconds or when queue hits 10
@@ -98,8 +93,8 @@
   };
 
   // Flush on page unload
-  window.addEventListener('beforeunload', flush);
-  window.addEventListener('pagehide', flush);
+  window.addEventListener('beforeunload', () => flush());
+  window.addEventListener('pagehide', () => flush());
 
   // Expose globally
   window.shopAnalytics = {
@@ -113,4 +108,4 @@
   if (config.autoTrackPageviews !== false) {
     page(document.title);
   }
-})();
+}
