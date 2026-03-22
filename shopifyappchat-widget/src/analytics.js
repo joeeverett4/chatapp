@@ -1,13 +1,16 @@
-// Define shopAnalytics immediately before any imports
-const queue = [];
-let flushTimeout = null;
-let api = null;
-let Client = null;
+import { Client } from '@gadget-client/shopappchat';
 
 const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 
+const config = getConfig();
+const api = new Client({
+  environment: config.environment || 'development'
+});
+
+const queue = [];
+let flushTimeout = null;
+
 const getDistinctId = () => {
-  const config = getConfig();
   const key = `osp_distinct_${config.orgSlug || 'default'}`;
   let id = localStorage.getItem(key);
   if (!id) {
@@ -18,7 +21,6 @@ const getDistinctId = () => {
 };
 
 const getSessionId = () => {
-  const config = getConfig();
   const key = `osp_session_${config.orgSlug || 'default'}`;
   let id = sessionStorage.getItem(key);
   if (!id) {
@@ -28,43 +30,20 @@ const getSessionId = () => {
   return id;
 };
 
-const ensureClient = async () => {
-  if (api) return api;
-  const config = getConfig();
-  if (!config.orgSlug) return null;
-
-  if (!Client) {
-    const module = await import('@gadget-client/shopappchat');
-    Client = module.Client;
-  }
-
-  api = new Client({
-    environment: config.environment || 'development'
-  });
-  return api;
-};
-
 const flush = async () => {
   if (queue.length === 0) return;
+  if (!config.orgSlug) return;
 
-  const client = await ensureClient();
-  if (!client) return;
-
-  const config = getConfig();
   const events = [...queue];
   queue.length = 0;
 
-  for (const e of events) {
+  for (const evt of events) {
     try {
-      await client.trackEvent({
-        event: e.event,
-        properties: {
-          ...e.properties,
-          orgSlug: config.orgSlug,
-          shopId: config.shopId
-        },
-        distinctId: e.distinctId,
-        sessionId: e.sessionId
+      await api.trackEvent({
+        event: evt.eventName,
+        properties: evt.properties,
+        distinctId: evt.distinctId,
+        sessionId: evt.sessionId
       });
     } catch (err) {
       console.warn('Analytics: failed to track event', err);
@@ -72,11 +51,13 @@ const flush = async () => {
   }
 };
 
-const track = (event, properties = {}) => {
+const track = (eventName, properties = {}) => {
   queue.push({
-    event,
+    eventName,
     properties: {
       ...properties,
+      orgSlug: config.orgSlug,
+      shopId: config.shopId,
       $url: window.location.href,
       $referrer: document.referrer
     },
@@ -102,14 +83,11 @@ const identify = (userId, traits = {}) => {
   track('$identify', { userId, ...traits });
 };
 
-// Set globally FIRST
-window.shopAnalytics = { track, page, identify, flush };
-
-// Then set up listeners and auto-track
 window.addEventListener('beforeunload', () => flush());
 window.addEventListener('pagehide', () => flush());
 
-const config = getConfig();
+window.shopAnalytics = { track, page, identify, flush };
+
 if (config.orgSlug && config.autoTrackPageviews !== false) {
   page(document.title);
 }

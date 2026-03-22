@@ -1,3 +1,0 @@
-filter ($user: User, $session: Session) on AnalyticsEvent [
-  where userId == $user.id
-]

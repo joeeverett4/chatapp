@@ -16,17 +16,6 @@ export const permissions: GadgetPermissions = {
         action: true,
       },
       models: {
-        analyticsEvent: {
-          read: {
-            filter:
-              "accessControl/filters/analyticsEvent/tenant.gelly",
-          },
-          actions: {
-            create: true,
-            delete: true,
-            update: true,
-          },
-        },
         conversation: {
           read: true,
           actions: {
@@ -48,6 +37,16 @@ export const permissions: GadgetPermissions = {
           actions: {
             create: true,
             delete: true,
+          },
+        },
+        testModel: {
+          read: {
+            filter: "accessControl/filters/testModel/tenant.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
           },
         },
         user: {
@@ -73,19 +72,13 @@ export const permissions: GadgetPermissions = {
         markConversationRead: true,
         sendHeartbeat: true,
         sendWidgetMessage: true,
+        trackEvent: true,
+        trackEvents: true,
       },
     },
     unauthenticated: {
       storageKey: "unauthenticated",
       models: {
-        analyticsEvent: {
-          read: true,
-          actions: {
-            create: true,
-            delete: true,
-            update: true,
-          },
-        },
         conversation: {
           read: true,
           actions: {
@@ -120,6 +113,8 @@ export const permissions: GadgetPermissions = {
         sendHeartbeat: true,
         sendMessageEmail: true,
         sendWidgetMessage: true,
+        trackEvent: true,
+        trackEvents: true,
       },
     },
   },
