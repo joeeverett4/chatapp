@@ -3,7 +3,7 @@
 ## jsDelivr CDN URL
 
 ```
-https://cdn.jsdelivr.net/gh/joeeverett4/chatappwidget@main/widget.iife.js
+https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@main/shopifyappchat-widget/dist/widget.iife.js
 ```
 
 ## Embed Code
@@ -15,10 +15,11 @@ Add this to any website:
   window.SHOPAPPCHAT_CONFIG = {
     shopId: "your_shop_id",
     shopName: "Your Store",
-    orgSlug: "flexcommerce"
+    orgSlug: "flexcommerce",
+    environment: "production"  // Use "development" for testing
   };
 </script>
-<script src="https://cdn.jsdelivr.net/gh/joeeverett4/chatappwidget@main/widget.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@main/shopifyappchat-widget/dist/widget.iife.js"></script>
 ```
 
 ## Configuration Options
