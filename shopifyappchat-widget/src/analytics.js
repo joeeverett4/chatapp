@@ -1,26 +1,14 @@
-import { Client } from '@gadget-client/shopappchat';
+// Define shopAnalytics immediately before any imports
+const queue = [];
+let flushTimeout = null;
+let api = null;
+let Client = null;
 
 const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 
-let api = null;
-let queue = [];
-let flushTimeout = null;
-
-const init = () => {
-  const config = getConfig();
-  if (!config.orgSlug) return false;
-
-  if (!api) {
-    api = new Client({
-      environment: config.environment || 'development'
-    });
-  }
-  return true;
-};
-
 const getDistinctId = () => {
   const config = getConfig();
-  const key = `osp_distinct_${config.orgSlug}`;
+  const key = `osp_distinct_${config.orgSlug || 'default'}`;
   let id = localStorage.getItem(key);
   if (!id) {
     id = crypto.randomUUID();
@@ -31,7 +19,7 @@ const getDistinctId = () => {
 
 const getSessionId = () => {
   const config = getConfig();
-  const key = `osp_session_${config.orgSlug}`;
+  const key = `osp_session_${config.orgSlug || 'default'}`;
   let id = sessionStorage.getItem(key);
   if (!id) {
     id = crypto.randomUUID();
@@ -40,17 +28,35 @@ const getSessionId = () => {
   return id;
 };
 
+const ensureClient = async () => {
+  if (api) return api;
+  const config = getConfig();
+  if (!config.orgSlug) return null;
+
+  if (!Client) {
+    const module = await import('@gadget-client/shopappchat');
+    Client = module.Client;
+  }
+
+  api = new Client({
+    environment: config.environment || 'development'
+  });
+  return api;
+};
+
 const flush = async () => {
   if (queue.length === 0) return;
-  if (!init()) return;
+
+  const client = await ensureClient();
+  if (!client) return;
 
   const config = getConfig();
   const events = [...queue];
-  queue = [];
+  queue.length = 0;
 
   for (const e of events) {
     try {
-      await api.trackEvent({
+      await client.trackEvent({
         event: e.event,
         properties: {
           ...e.properties,
@@ -96,18 +102,13 @@ const identify = (userId, traits = {}) => {
   track('$identify', { userId, ...traits });
 };
 
+// Set globally FIRST
+window.shopAnalytics = { track, page, identify, flush };
+
+// Then set up listeners and auto-track
 window.addEventListener('beforeunload', () => flush());
 window.addEventListener('pagehide', () => flush());
 
-// Always expose globally - immediately
-window.shopAnalytics = {
-  track,
-  page,
-  identify,
-  flush
-};
-
-// Auto-track pageview
 const config = getConfig();
 if (config.orgSlug && config.autoTrackPageviews !== false) {
   page(document.title);
