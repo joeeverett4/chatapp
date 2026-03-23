@@ -1,4 +1,7 @@
 export const run = async ({ params, api, logger }) => {
+
+  console.log("params")
+  logger.info(params)
   const { event, properties, distinctId, sessionId, timestamp } = params;
 
   logger.info("Analytics event received", { event });
