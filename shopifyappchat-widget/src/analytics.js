@@ -1,17 +1,16 @@
-// Analytics SDK - standalone script for tracking events
-(function () {
-  window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };
+import { Client } from '@gadget-client/shopappchat';
 
-  const config = window.SHOPAPPCHAT_CONFIG || {};
+const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 
-  if (!config.orgSlug) {
-    console.warn('Analytics: orgSlug not configured');
-    return;
-  }
+const config = getConfig();
+const api = new Client({
+  environment: config.environment || 'development'
+});
 
-  const API_URL = 'https://shopappchat--development.gadget.app/api/actions/trackEvent';
+// Set stub immediately so calls don't crash before full init
+window.shopAnalytics = { track: () => {}, page: () => {}, identify: () => {}, flush: () => {} };
 
-  // Get or create unique user ID
+if (config.orgSlug) {
   const getDistinctId = () => {
     const key = `osp_distinct_${config.orgSlug}`;
     let id = localStorage.getItem(key);
@@ -22,7 +21,6 @@
     return id;
   };
 
-  // Get or create session ID
   const getSessionId = () => {
     const key = `osp_session_${config.orgSlug}`;
     let id = sessionStorage.getItem(key);
@@ -33,37 +31,27 @@
     return id;
   };
 
-  // Event queue for batching
   let queue = [];
   let flushTimeout = null;
 
-  const flush = () => {
+  const flush = async () => {
     if (queue.length === 0) return;
 
     const events = [...queue];
     queue = [];
 
-    const payload = JSON.stringify({
-      batch: events.map(e => ({
-        ...e,
-        properties: {
-          ...e.properties,
-          orgSlug: config.orgSlug,
-          shopId: config.shopId
-        }
-      }))
-    });
-
-    // Use sendBeacon for reliability
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(API_URL, payload);
-    } else {
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-        keepalive: true
-      });
+    for (const e of events) {
+      try {
+        await api.trackEventsTWO({
+          event: e.event,
+          properties: e.properties,
+          distinctId: e.distinctId,
+          sessionId: e.sessionId,
+          timestamp: e.timestamp
+        });
+      } catch (err) {
+        console.warn('Analytics: failed to track event', err);
+      }
     }
   };
 
@@ -72,6 +60,8 @@
       event,
       properties: {
         ...properties,
+        orgSlug: config.orgSlug,
+        shopId: config.shopId,
         $url: window.location.href,
         $referrer: document.referrer
       },
@@ -80,7 +70,6 @@
       timestamp: new Date().toISOString()
     });
 
-    // Flush after 5 seconds or when queue hits 10
     if (queue.length >= 10) {
       flush();
     } else if (!flushTimeout) {
@@ -99,20 +88,12 @@
     track('$identify', { userId, ...traits });
   };
 
-  // Flush on page unload
   window.addEventListener('beforeunload', flush);
   window.addEventListener('pagehide', flush);
 
-  // Expose globally
-  window.shopAnalytics = {
-    track,
-    page,
-    identify,
-    flush
-  };
+  window.shopAnalytics = { track, page, identify, flush };
 
-  // Auto-track page view if configured
   if (config.autoTrackPageviews !== false) {
     page(document.title);
   }
-})();
+}
