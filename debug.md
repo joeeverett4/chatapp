@@ -1,9 +1,9 @@
 # Latest Version
 
-v1.7.9
+v1.7.10
 
 Widget:
-https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.7.9/shopifyappchat-widget/dist/widget.iife.js
+https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.7.10/shopifyappchat-widget/dist/widget.iife.js
 
 Analytics:
-https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.7.9/shopifyappchat-widget/dist/analytics.iife.js
+https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@v1.7.10/shopifyappchat-widget/dist/analytics.iife.js
