@@ -2,6 +2,10 @@
 (function () {
   const config = window.SHOPAPPCHAT_CONFIG || {};
 
+  console.log("returning")
+
+  return
+
   if (!config.orgSlug) {
     console.warn('Analytics: orgSlug not configured');
     return;
