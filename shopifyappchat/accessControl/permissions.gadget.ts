@@ -16,6 +16,17 @@ export const permissions: GadgetPermissions = {
         action: true,
       },
       models: {
+        analyticsFIVE: {
+          read: {
+            filter:
+              "accessControl/filters/analyticsFIVE/tenant.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         conversation: {
           read: true,
           actions: {
@@ -72,8 +83,8 @@ export const permissions: GadgetPermissions = {
         markConversationRead: true,
         sendHeartbeat: true,
         sendWidgetMessage: true,
-        trackEvent: true,
         trackEvents: true,
+        trackEventsTWO: true,
       },
     },
     unauthenticated: {
@@ -113,7 +124,6 @@ export const permissions: GadgetPermissions = {
         sendHeartbeat: true,
         sendMessageEmail: true,
         sendWidgetMessage: true,
-        trackEvent: true,
         trackEvents: true,
       },
     },

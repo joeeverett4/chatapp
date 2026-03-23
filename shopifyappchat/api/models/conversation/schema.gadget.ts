@@ -7,22 +7,37 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v2",
   storageKey: "DataModel-Conversation",
   fields: {
-    country: { type: "string", storageKey: "conv-country-08" },
+    country: {
+      type: "string",
+      storageKey: "conv-country-08",
+      filterIndex: false,
+      searchIndex: false,
+    },
     customer: {
       type: "belongsTo",
       parent: { model: "customer" },
       storageKey: "conv-customer-09",
+      searchIndex: false,
     },
-    email: { type: "email", storageKey: "conv-email-07" },
+    email: {
+      type: "email",
+      storageKey: "conv-email-07",
+      filterIndex: false,
+      searchIndex: false,
+    },
     externalShopId: {
       type: "string",
       validations: { required: true },
       storageKey: "conv-extShopId-03",
+      filterIndex: false,
+      searchIndex: false,
     },
     lastReadAt: {
       type: "dateTime",
       includeTime: true,
       storageKey: "conv-lastReadAt-10",
+      filterIndex: false,
+      searchIndex: false,
     },
     messages: {
       type: "hasMany",
@@ -33,14 +48,22 @@ export const schema: GadgetModel = {
       type: "dateTime",
       includeTime: true,
       storageKey: "conv-operatorLastReadAt-11",
+      filterIndex: false,
+      searchIndex: false,
     },
     organization: {
       type: "belongsTo",
       validations: { required: true },
       parent: { model: "organization" },
       storageKey: "conv-organization-06",
+      searchIndex: false,
     },
-    shopName: { type: "string", storageKey: "conv-shopName-04" },
+    shopName: {
+      type: "string",
+      storageKey: "conv-shopName-04",
+      filterIndex: false,
+      searchIndex: false,
+    },
     status: {
       type: "enum",
       default: "open",
@@ -49,6 +72,11 @@ export const schema: GadgetModel = {
       options: ["open", "pending", "closed"],
       storageKey: "conv-status-02",
     },
-    subject: { type: "string", storageKey: "conv-subject-01" },
+    subject: {
+      type: "string",
+      storageKey: "conv-subject-01",
+      filterIndex: false,
+      searchIndex: false,
+    },
   },
 };

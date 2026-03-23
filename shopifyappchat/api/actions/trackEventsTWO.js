@@ -3,7 +3,7 @@ export const run = async ({ params, api, logger }) => {
 
   logger.info("Analytics event received", { event });
 
-  await api.analyticsEvent.create({
+  await api.analyticsFIVE.create({
     event,
     properties: properties || {},
     distinctId,

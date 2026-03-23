@@ -1,95 +1,116 @@
-import { Client } from '@gadget-client/shopappchat';
+// Analytics SDK - standalone script for tracking events
+(function () {
+  const config = window.SHOPAPPCHAT_CONFIG || {};
 
-const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
-
-const config = getConfig();
-const api = new Client({
-  environment: config.environment || 'development'
-});
-
-console.log('Gadget client:', api);
-
-const queue = [];
-let flushTimeout = null;
-
-const getDistinctId = () => {
-  const key = `osp_distinct_${config.orgSlug || 'default'}`;
-  let id = localStorage.getItem(key);
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem(key, id);
+  if (!config.orgSlug) {
+    console.warn('Analytics: orgSlug not configured');
+    return;
   }
-  return id;
-};
 
-const getSessionId = () => {
-  const key = `osp_session_${config.orgSlug || 'default'}`;
-  let id = sessionStorage.getItem(key);
-  if (!id) {
-    id = crypto.randomUUID();
-    sessionStorage.setItem(key, id);
-  }
-  return id;
-};
+  const API_URL = 'https://shopappchat--development.gadget.app/api/actions/trackEvent';
 
-const flush = async () => {
-  if (queue.length === 0) return;
-  if (!config.orgSlug) return;
-
-  const events = [...queue];
-  queue.length = 0;
-
-  for (const evt of events) {
-    try {
-      await api.trackEventsTWO({
-        event: evt.eventName,
-        properties: evt.properties,
-        distinctId: evt.distinctId,
-        sessionId: evt.sessionId
-      });
-    } catch (err) {
-      console.warn('Analytics: failed to track event', err);
+  // Get or create unique user ID
+  const getDistinctId = () => {
+    const key = `osp_distinct_${config.orgSlug}`;
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem(key, id);
     }
-  }
-};
+    return id;
+  };
 
-const track = (eventName, properties = {}) => {
-  queue.push({
-    eventName,
-    properties: {
-      ...properties,
-      orgSlug: config.orgSlug,
-      shopId: config.shopId,
-      $url: window.location.href,
-      $referrer: document.referrer
-    },
-    distinctId: getDistinctId(),
-    sessionId: getSessionId()
-  });
+  // Get or create session ID
+  const getSessionId = () => {
+    const key = `osp_session_${config.orgSlug}`;
+    let id = sessionStorage.getItem(key);
+    if (!id) {
+      id = crypto.randomUUID();
+      sessionStorage.setItem(key, id);
+    }
+    return id;
+  };
 
-  if (queue.length >= 10) {
-    flush();
-  } else if (!flushTimeout) {
-    flushTimeout = setTimeout(() => {
+  // Event queue for batching
+  let queue = [];
+  let flushTimeout = null;
+
+  const flush = () => {
+    if (queue.length === 0) return;
+
+    const events = [...queue];
+    queue = [];
+
+    const payload = JSON.stringify({
+      batch: events.map(e => ({
+        ...e,
+        properties: {
+          ...e.properties,
+          orgSlug: config.orgSlug,
+          shopId: config.shopId
+        }
+      }))
+    });
+
+    // Use sendBeacon for reliability
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(API_URL, payload);
+    } else {
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true
+      });
+    }
+  };
+
+  const track = (event, properties = {}) => {
+    queue.push({
+      event,
+      properties: {
+        ...properties,
+        $url: window.location.href,
+        $referrer: document.referrer
+      },
+      distinctId: getDistinctId(),
+      sessionId: getSessionId(),
+      timestamp: new Date().toISOString()
+    });
+
+    // Flush after 5 seconds or when queue hits 10
+    if (queue.length >= 10) {
       flush();
-      flushTimeout = null;
-    }, 5000);
+    } else if (!flushTimeout) {
+      flushTimeout = setTimeout(() => {
+        flush();
+        flushTimeout = null;
+      }, 5000);
+    }
+  };
+
+  const page = (pageName, properties = {}) => {
+    track('$pageview', { pageName, ...properties });
+  };
+
+  const identify = (userId, traits = {}) => {
+    track('$identify', { userId, ...traits });
+  };
+
+  // Flush on page unload
+  window.addEventListener('beforeunload', flush);
+  window.addEventListener('pagehide', flush);
+
+  // Expose globally
+  window.shopAnalytics = {
+    track,
+    page,
+    identify,
+    flush
+  };
+
+  // Auto-track page view if configured
+  if (config.autoTrackPageviews !== false) {
+    page(document.title);
   }
-};
-
-const page = (pageName, properties = {}) => {
-  track('$pageview', { pageName, ...properties });
-};
-
-const identify = (userId, traits = {}) => {
-  track('$identify', { userId, ...traits });
-};
-
-window.addEventListener('beforeunload', () => flush());
-window.addEventListener('pagehide', () => flush());
-
-window.shopAnalytics = { track, page, identify, flush };
-
-if (config.orgSlug && config.autoTrackPageviews !== false) {
-  page(document.title);
-}
+})();

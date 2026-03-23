@@ -21,5 +21,17 @@ export const run = async ({ params, api, logger }) => {
 };
 
 export const params = {
-  batch: { type: "array" }
+  batch: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        event: { type: "string" },
+        properties: { type: "object", properties: {} },
+        distinctId: { type: "string" },
+        sessionId: { type: "string" },
+        timestamp: { type: "string" }
+      }
+    }
+  }
 };
