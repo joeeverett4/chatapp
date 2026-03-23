@@ -8,6 +8,9 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
+console.log("this is the gadget client")
+console.log(api)
+
 // Storage key for persisting conversation
 const getStorageKey = (shopId) => `sac_conversation_${shopId}`;
 
