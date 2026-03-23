@@ -1,10 +1,8 @@
 // Analytics SDK - standalone script for tracking events
 (function () {
-  const config = window.SHOPAPPCHAT_CONFIG || {};
-
-  console.log("returning")
-
-  return
+  window.shopAnalytics = { track: () => {}, page: () => {}, identify: () => {}, flush: () => {} };
+  console.log("returning");
+  return;
 
   if (!config.orgSlug) {
     console.warn('Analytics: orgSlug not configured');
