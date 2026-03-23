@@ -7,6 +7,8 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
+console.log('Gadget client:', api);
+
 const queue = [];
 let flushTimeout = null;
 
