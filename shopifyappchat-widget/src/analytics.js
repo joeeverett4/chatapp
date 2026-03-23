@@ -34,20 +34,18 @@ const flush = async () => {
   if (queue.length === 0) return;
   if (!config.orgSlug) return;
 
-  const events = [...queue];
+  const batch = queue.map(evt => ({
+    event: evt.eventName,
+    properties: evt.properties,
+    distinctId: evt.distinctId,
+    sessionId: evt.sessionId
+  }));
   queue.length = 0;
 
-  for (const evt of events) {
-    try {
-      await api.trackEvent({
-        event: evt.eventName,
-        properties: evt.properties,
-        distinctId: evt.distinctId,
-        sessionId: evt.sessionId
-      });
-    } catch (err) {
-      console.warn('Analytics: failed to track event', err);
-    }
+  try {
+    await api.trackEvents({ batch });
+  } catch (err) {
+    console.warn('Analytics: failed to track events', err);
   }
 };
 
