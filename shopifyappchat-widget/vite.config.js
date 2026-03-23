@@ -18,6 +18,7 @@ export default defineConfig({
       output: {
         extend: true
       }
-    }
+    },
+    minify: false
   }
 });
