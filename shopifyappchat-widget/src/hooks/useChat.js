@@ -16,6 +16,8 @@ const saveSession = (shopId, data) => {
     localStorage.setItem(getStorageKey(shopId), JSON.stringify(data));
   } catch (e) {
     // localStorage not available
+    // u
+
   }
 };
 
