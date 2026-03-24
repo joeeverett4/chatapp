@@ -8627,6 +8627,7 @@ stack: ${String(
     event: true,
     properties: true,
     sessionId: true,
+    shopId: true,
     timestamp: true,
     updatedAt: true,
     userId: true
