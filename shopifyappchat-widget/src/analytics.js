@@ -7,8 +7,13 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
+const getShopDomain = () => {
+  const match = window.location.pathname.match(/^\/store\/([^/]+)/);
+  return match ? match[1] : null;
+};
+
 // Set stub immediately so calls don't crash before full init
-window.shopAnalytics = { track: () => {}, page: () => {}, identify: () => {}, flush: () => {} };
+window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };
 
 if (config.orgSlug) {
   const getDistinctId = () => {
@@ -47,7 +52,8 @@ if (config.orgSlug) {
           properties: e.properties,
           distinctId: e.distinctId,
           sessionId: e.sessionId,
-          timestamp: e.timestamp
+          timestamp: e.timestamp,
+          shopId: config.shopId
         });
       } catch (err) {
         console.warn('Analytics: failed to track event', err);
@@ -62,6 +68,7 @@ if (config.orgSlug) {
         ...properties,
         orgSlug: config.orgSlug,
         shopId: config.shopId,
+        shopDomain: getShopDomain(),
         $url: window.location.href,
         $referrer: document.referrer
       },

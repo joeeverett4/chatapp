@@ -50,6 +50,16 @@ export const permissions: GadgetPermissions = {
             delete: true,
           },
         },
+        shop: {
+          read: {
+            filter: "accessControl/filters/shop/tenant.gelly",
+          },
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         testModel: {
           read: {
             filter: "accessControl/filters/testModel/tenant.gelly",
@@ -83,6 +93,7 @@ export const permissions: GadgetPermissions = {
         markConversationRead: true,
         sendHeartbeat: true,
         sendWidgetMessage: true,
+        shopifyPartnerApi: true,
         trackEvent: true,
         trackEvents: true,
         trackEventsTWO: true,
@@ -106,6 +117,14 @@ export const permissions: GadgetPermissions = {
             delete: true,
           },
         },
+        shop: {
+          read: true,
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         user: {
           actions: {
             resetPassword: true,
@@ -127,6 +146,7 @@ export const permissions: GadgetPermissions = {
         sendWidgetMessage: true,
         trackEvent: true,
         trackEvents: true,
+        trackEventsTWO: true,
       },
     },
   },

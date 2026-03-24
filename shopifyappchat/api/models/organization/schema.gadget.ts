@@ -7,6 +7,7 @@ export const schema: GadgetModel = {
   type: "gadget/model-schema/v2",
   storageKey: "DataModel-Organization",
   fields: {
+    accessToken: { type: "string", storageKey: "5U2kZ2-gk_I3" },
     conversations: {
       type: "hasMany",
       children: {
@@ -19,6 +20,14 @@ export const schema: GadgetModel = {
       type: "string",
       validations: { required: true },
       storageKey: "org-name-01",
+    },
+    shops: {
+      type: "hasMany",
+      children: {
+        model: "shop",
+        belongsToField: "parentOrganization",
+      },
+      storageKey: "6OyY0UAjsoQd",
     },
     slug: {
       type: "string",
