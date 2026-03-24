@@ -6783,6 +6783,115 @@ stack: ${String(
       console.warn("[gadget] error dispatching gadget dev harness event", error2);
     }
   };
+  const DefaultSessionSelection$1 = {
+    __typename: true,
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    userId: true
+  };
+  const modelApiIdentifier$9 = "session";
+  const pluralModelApiIdentifier$9 = "sessions";
+  const operations$9 = [
+    {
+      type: "findOne",
+      operationName: modelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
+      findByVariableName: "id",
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: modelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
+      findByVariableName: "id",
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findMany",
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findFirst",
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindFirst",
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findOne",
+      operationName: pluralModelApiIdentifier$9,
+      functionName: "findById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier: modelApiIdentifier$9,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: pluralModelApiIdentifier$9,
+      functionName: "maybeFindById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier: modelApiIdentifier$9,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "computedView",
+      operationName: "view",
+      functionName: "view",
+      gqlFieldName: "sessionGellyView",
+      namespace: null,
+      variables: {
+        query: { type: "String", required: true },
+        args: { type: "JSONObject" }
+      }
+    }
+  ];
+  const SessionManager = buildModelManager(
+    modelApiIdentifier$9,
+    pluralModelApiIdentifier$9,
+    DefaultSessionSelection$1,
+    operations$9
+  );
+  const DefaultSessionSelection = {
+    __typename: true,
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    userId: true
+  };
+  const modelApiIdentifier$8 = "session";
+  const pluralModelApiIdentifier$8 = "sessions";
+  const operations$8 = [
+    {
+      type: "get",
+      operationName: "currentSession",
+      defaultSelection: DefaultSessionSelection,
+      modelApiIdentifier: modelApiIdentifier$8,
+      namespace: null
+    }
+  ];
+  const CurrentSessionManager = buildModelManager(
+    modelApiIdentifier$8,
+    pluralModelApiIdentifier$8,
+    DefaultSessionSelection,
+    operations$8
+  );
   const DefaultUserSelection = {
     __typename: true,
     id: true,
@@ -6803,83 +6912,83 @@ stack: ${String(
     roles: { key: true, name: true },
     updatedAt: true
   };
-  const modelApiIdentifier$8 = "user";
-  const pluralModelApiIdentifier$8 = "users";
-  const operations$8 = [
+  const modelApiIdentifier$7 = "user";
+  const pluralModelApiIdentifier$7 = "users";
+  const operations$7 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$8,
-      modelApiIdentifier: modelApiIdentifier$8,
+      operationName: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       findByVariableName: "id",
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$8,
-      modelApiIdentifier: modelApiIdentifier$8,
+      operationName: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       findByVariableName: "id",
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$8,
-      modelApiIdentifier: modelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$8,
-      modelApiIdentifier: modelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$8,
-      modelApiIdentifier: modelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "findByEmail",
       findByField: "email",
       findByVariableName: "email",
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$8,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "maybeFindByEmail",
       findByField: "email",
       findByVariableName: "email",
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
@@ -6889,9 +6998,9 @@ stack: ${String(
       operationReturnType: "SignUpUser",
       functionName: "signUp",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -6915,8 +7024,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "signUp",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkSignUpUsersInput!]" } },
       paramOnlyVariables: [],
@@ -6928,9 +7037,9 @@ stack: ${String(
       operationReturnType: "SignInUser",
       functionName: "signIn",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -6954,8 +7063,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "signIn",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkSignInUsersInput!]" } },
       paramOnlyVariables: [],
@@ -6967,9 +7076,9 @@ stack: ${String(
       operationReturnType: "SignOutUser",
       functionName: "signOut",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -6990,8 +7099,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "signOut",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7003,9 +7112,9 @@ stack: ${String(
       operationReturnType: "UpdateUser",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7029,8 +7138,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpdateUsersInput!]" } },
       paramOnlyVariables: [],
@@ -7042,9 +7151,9 @@ stack: ${String(
       operationReturnType: "DeleteUser",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7065,8 +7174,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7078,9 +7187,9 @@ stack: ${String(
       operationReturnType: "SendVerifyEmailUser",
       functionName: "sendVerifyEmail",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: { email: { required: true, type: "String" } },
@@ -7101,8 +7210,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "sendVerifyEmail",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkSendVerifyEmailUsersInput!]" }
@@ -7116,9 +7225,9 @@ stack: ${String(
       operationReturnType: "VerifyEmailUser",
       functionName: "verifyEmail",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: { code: { required: true, type: "String" } },
@@ -7139,8 +7248,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "verifyEmail",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkVerifyEmailUsersInput!]" }
@@ -7154,9 +7263,9 @@ stack: ${String(
       operationReturnType: "SendResetPasswordUser",
       functionName: "sendResetPassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: { email: { required: true, type: "String" } },
@@ -7177,8 +7286,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "sendResetPassword",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkSendResetPasswordUsersInput!]" }
@@ -7192,9 +7301,9 @@ stack: ${String(
       operationReturnType: "ResetPasswordUser",
       functionName: "resetPassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7218,8 +7327,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "resetPassword",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkResetPasswordUsersInput!]" }
@@ -7233,9 +7342,9 @@ stack: ${String(
       operationReturnType: "ChangePasswordUser",
       functionName: "changePassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7260,8 +7369,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "changePassword",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkChangePasswordUsersInput!]" }
@@ -7275,9 +7384,9 @@ stack: ${String(
       operationReturnType: "UpsertUser",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$8,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7313,8 +7422,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$8,
-      modelSelectionField: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpsertUsersInput!]" } },
       paramOnlyVariables: ["on"],
@@ -7333,10 +7442,10 @@ stack: ${String(
     }
   ];
   const UserManager = buildModelManager(
-    modelApiIdentifier$8,
-    pluralModelApiIdentifier$8,
+    modelApiIdentifier$7,
+    pluralModelApiIdentifier$7,
     DefaultUserSelection,
-    operations$8
+    operations$7
   );
   const DefaultConversationSelection = {
     __typename: true,
@@ -7354,63 +7463,63 @@ stack: ${String(
     subject: true,
     updatedAt: true
   };
-  const modelApiIdentifier$7 = "conversation";
-  const pluralModelApiIdentifier$7 = "conversations";
-  const operations$7 = [
+  const modelApiIdentifier$6 = "conversation";
+  const pluralModelApiIdentifier$6 = "conversations";
+  const operations$6 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
       findByVariableName: "id",
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
       findByVariableName: "id",
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$6,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$6,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
@@ -7420,9 +7529,9 @@ stack: ${String(
       operationReturnType: "CreateConversation",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$6,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7445,8 +7554,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
+      modelSelectionField: pluralModelApiIdentifier$6,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkCreateConversationsInput!]" }
@@ -7460,9 +7569,9 @@ stack: ${String(
       operationReturnType: "UpdateConversation",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$6,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7486,8 +7595,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
+      modelSelectionField: pluralModelApiIdentifier$6,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpdateConversationsInput!]" }
@@ -7501,9 +7610,9 @@ stack: ${String(
       operationReturnType: "DeleteConversation",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$6,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7524,8 +7633,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
+      modelSelectionField: pluralModelApiIdentifier$6,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7537,9 +7646,9 @@ stack: ${String(
       operationReturnType: "UpsertConversation",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$6,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7566,8 +7675,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$6,
+      modelSelectionField: pluralModelApiIdentifier$6,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpsertConversationsInput!]" }
@@ -7588,10 +7697,10 @@ stack: ${String(
     }
   ];
   const ConversationManager = buildModelManager(
-    modelApiIdentifier$7,
-    pluralModelApiIdentifier$7,
+    modelApiIdentifier$6,
+    pluralModelApiIdentifier$6,
     DefaultConversationSelection,
-    operations$7
+    operations$6
   );
   const DefaultMessageSelection = {
     __typename: true,
@@ -7607,63 +7716,63 @@ stack: ${String(
     updatedAt: true,
     userId: true
   };
-  const modelApiIdentifier$6 = "message";
-  const pluralModelApiIdentifier$6 = "messages";
-  const operations$6 = [
+  const modelApiIdentifier$5 = "message";
+  const pluralModelApiIdentifier$5 = "messages";
+  const operations$5 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$5,
       findByVariableName: "id",
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$5,
       findByVariableName: "id",
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$5,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$5,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$5,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$5,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$5,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
@@ -7673,9 +7782,9 @@ stack: ${String(
       operationReturnType: "CreateMessage",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$5,
       isBulk: false,
       isDeleter: false,
       variables: { message: { required: false, type: "CreateMessageInput" } },
@@ -7696,8 +7805,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
+      modelSelectionField: pluralModelApiIdentifier$5,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkCreateMessagesInput!]" } },
       paramOnlyVariables: [],
@@ -7709,9 +7818,9 @@ stack: ${String(
       operationReturnType: "DeleteMessage",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$5,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7732,8 +7841,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$5,
+      modelSelectionField: pluralModelApiIdentifier$5,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7752,205 +7861,97 @@ stack: ${String(
     }
   ];
   const MessageManager = buildModelManager(
-    modelApiIdentifier$6,
-    pluralModelApiIdentifier$6,
-    DefaultMessageSelection,
-    operations$6
-  );
-  const DefaultSessionSelection$1 = {
-    __typename: true,
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    userId: true
-  };
-  const modelApiIdentifier$5 = "session";
-  const pluralModelApiIdentifier$5 = "sessions";
-  const operations$5 = [
-    {
-      type: "findOne",
-      operationName: modelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
-      findByVariableName: "id",
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindOne",
-      operationName: modelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
-      findByVariableName: "id",
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findMany",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findFirst",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findOne",
-      operationName: pluralModelApiIdentifier$5,
-      functionName: "findById",
-      findByField: "id",
-      findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$5,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$5,
-      functionName: "maybeFindById",
-      findByField: "id",
-      findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$5,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "computedView",
-      operationName: "view",
-      functionName: "view",
-      gqlFieldName: "sessionGellyView",
-      namespace: null,
-      variables: {
-        query: { type: "String", required: true },
-        args: { type: "JSONObject" }
-      }
-    }
-  ];
-  const SessionManager = buildModelManager(
     modelApiIdentifier$5,
     pluralModelApiIdentifier$5,
-    DefaultSessionSelection$1,
+    DefaultMessageSelection,
     operations$5
-  );
-  const DefaultSessionSelection = {
-    __typename: true,
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    userId: true
-  };
-  const modelApiIdentifier$4 = "session";
-  const pluralModelApiIdentifier$4 = "sessions";
-  const operations$4 = [
-    {
-      type: "get",
-      operationName: "currentSession",
-      defaultSelection: DefaultSessionSelection,
-      modelApiIdentifier: modelApiIdentifier$4,
-      namespace: null
-    }
-  ];
-  const CurrentSessionManager = buildModelManager(
-    modelApiIdentifier$4,
-    pluralModelApiIdentifier$4,
-    DefaultSessionSelection,
-    operations$4
   );
   const DefaultOrganizationSelection = {
     __typename: true,
     id: true,
+    accessToken: true,
     createdAt: true,
     name: true,
     slug: true,
     updatedAt: true
   };
-  const modelApiIdentifier$3 = "organization";
-  const pluralModelApiIdentifier$3 = "organizations";
-  const operations$3 = [
+  const modelApiIdentifier$4 = "organization";
+  const pluralModelApiIdentifier$4 = "organizations";
+  const operations$4 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$3,
-      modelApiIdentifier: modelApiIdentifier$3,
+      operationName: modelApiIdentifier$4,
+      modelApiIdentifier: modelApiIdentifier$4,
       findByVariableName: "id",
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$3,
-      modelApiIdentifier: modelApiIdentifier$3,
+      operationName: modelApiIdentifier$4,
+      modelApiIdentifier: modelApiIdentifier$4,
       findByVariableName: "id",
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$3,
-      modelApiIdentifier: modelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$3,
-      modelApiIdentifier: modelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$3,
-      modelApiIdentifier: modelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
       functionName: "findBySlug",
       findByField: "slug",
       findByVariableName: "slug",
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$3,
+      operationName: pluralModelApiIdentifier$4,
       functionName: "maybeFindBySlug",
       findByField: "slug",
       findByVariableName: "slug",
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       defaultSelection: DefaultOrganizationSelection,
       namespace: null
     },
@@ -7960,9 +7961,9 @@ stack: ${String(
       operationReturnType: "CreateOrganization",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$3,
+      modelSelectionField: modelApiIdentifier$4,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7985,8 +7986,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$3,
-      modelSelectionField: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
+      modelSelectionField: pluralModelApiIdentifier$4,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkCreateOrganizationsInput!]" }
@@ -8000,9 +8001,9 @@ stack: ${String(
       operationReturnType: "UpdateOrganization",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$3,
+      modelSelectionField: modelApiIdentifier$4,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8026,8 +8027,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$3,
-      modelSelectionField: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
+      modelSelectionField: pluralModelApiIdentifier$4,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpdateOrganizationsInput!]" }
@@ -8041,9 +8042,9 @@ stack: ${String(
       operationReturnType: "DeleteOrganization",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$3,
+      modelSelectionField: modelApiIdentifier$4,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -8064,8 +8065,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$3,
-      modelSelectionField: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
+      modelSelectionField: pluralModelApiIdentifier$4,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -8077,9 +8078,9 @@ stack: ${String(
       operationReturnType: "UpsertOrganization",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$3,
+      modelSelectionField: modelApiIdentifier$4,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8106,8 +8107,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$3,
-      modelSelectionField: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$4,
+      modelSelectionField: pluralModelApiIdentifier$4,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpsertOrganizationsInput!]" }
@@ -8128,10 +8129,10 @@ stack: ${String(
     }
   ];
   const OrganizationManager = buildModelManager(
-    modelApiIdentifier$3,
-    pluralModelApiIdentifier$3,
+    modelApiIdentifier$4,
+    pluralModelApiIdentifier$4,
     DefaultOrganizationSelection,
-    operations$3
+    operations$4
   );
   const DefaultCustomerSelection = {
     __typename: true,
@@ -8143,63 +8144,63 @@ stack: ${String(
     name: true,
     updatedAt: true
   };
-  const modelApiIdentifier$2 = "customer";
-  const pluralModelApiIdentifier$2 = "customers";
-  const operations$2 = [
+  const modelApiIdentifier$3 = "customer";
+  const pluralModelApiIdentifier$3 = "customers";
+  const operations$3 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$2,
-      modelApiIdentifier: modelApiIdentifier$2,
+      operationName: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$3,
       findByVariableName: "id",
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$2,
-      modelApiIdentifier: modelApiIdentifier$2,
+      operationName: modelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$3,
       findByVariableName: "id",
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$2,
-      modelApiIdentifier: modelApiIdentifier$2,
+      operationName: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$3,
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$2,
-      modelApiIdentifier: modelApiIdentifier$2,
+      operationName: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$3,
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$2,
-      modelApiIdentifier: modelApiIdentifier$2,
+      operationName: pluralModelApiIdentifier$3,
+      modelApiIdentifier: modelApiIdentifier$3,
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$2,
+      operationName: pluralModelApiIdentifier$3,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$2,
+      operationName: pluralModelApiIdentifier$3,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       defaultSelection: DefaultCustomerSelection,
       namespace: null
     },
@@ -8209,9 +8210,9 @@ stack: ${String(
       operationReturnType: "CreateCustomer",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$2,
+      modelSelectionField: modelApiIdentifier$3,
       isBulk: false,
       isDeleter: false,
       variables: { customer: { required: false, type: "CreateCustomerInput" } },
@@ -8232,8 +8233,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$2,
-      modelSelectionField: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
+      modelSelectionField: pluralModelApiIdentifier$3,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkCreateCustomersInput!]" } },
       paramOnlyVariables: [],
@@ -8245,9 +8246,9 @@ stack: ${String(
       operationReturnType: "UpdateCustomer",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$2,
+      modelSelectionField: modelApiIdentifier$3,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8271,8 +8272,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$2,
-      modelSelectionField: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
+      modelSelectionField: pluralModelApiIdentifier$3,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpdateCustomersInput!]" } },
       paramOnlyVariables: [],
@@ -8284,9 +8285,9 @@ stack: ${String(
       operationReturnType: "DeleteCustomer",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$2,
+      modelSelectionField: modelApiIdentifier$3,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -8307,8 +8308,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$2,
-      modelSelectionField: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
+      modelSelectionField: pluralModelApiIdentifier$3,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -8320,9 +8321,9 @@ stack: ${String(
       operationReturnType: "UpsertCustomer",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$2,
+      modelSelectionField: modelApiIdentifier$3,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8349,8 +8350,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$2,
-      modelSelectionField: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$3,
+      modelSelectionField: pluralModelApiIdentifier$3,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpsertCustomersInput!]" } },
       paramOnlyVariables: ["on"],
@@ -8369,10 +8370,10 @@ stack: ${String(
     }
   ];
   const CustomerManager = buildModelManager(
-    modelApiIdentifier$2,
-    pluralModelApiIdentifier$2,
+    modelApiIdentifier$3,
+    pluralModelApiIdentifier$3,
     DefaultCustomerSelection,
-    operations$2
+    operations$3
   );
   const DefaultTestModelSelection = {
     __typename: true,
@@ -8381,63 +8382,63 @@ stack: ${String(
     updatedAt: true,
     userId: true
   };
-  const modelApiIdentifier$1 = "testModel";
-  const pluralModelApiIdentifier$1 = "testModels";
-  const operations$1 = [
+  const modelApiIdentifier$2 = "testModel";
+  const pluralModelApiIdentifier$2 = "testModels";
+  const operations$2 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$1,
-      modelApiIdentifier: modelApiIdentifier$1,
+      operationName: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$2,
       findByVariableName: "id",
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$1,
-      modelApiIdentifier: modelApiIdentifier$1,
+      operationName: modelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$2,
       findByVariableName: "id",
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$1,
-      modelApiIdentifier: modelApiIdentifier$1,
+      operationName: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$2,
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$1,
-      modelApiIdentifier: modelApiIdentifier$1,
+      operationName: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$2,
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$1,
-      modelApiIdentifier: modelApiIdentifier$1,
+      operationName: pluralModelApiIdentifier$2,
+      modelApiIdentifier: modelApiIdentifier$2,
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$1,
+      operationName: pluralModelApiIdentifier$2,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$1,
+      operationName: pluralModelApiIdentifier$2,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       defaultSelection: DefaultTestModelSelection,
       namespace: null
     },
@@ -8447,9 +8448,9 @@ stack: ${String(
       operationReturnType: "CreateTestModel",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$1,
+      modelSelectionField: modelApiIdentifier$2,
       isBulk: false,
       isDeleter: false,
       variables: { testModel: { required: false, type: "CreateTestModelInput" } },
@@ -8470,8 +8471,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$1,
-      modelSelectionField: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
+      modelSelectionField: pluralModelApiIdentifier$2,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkCreateTestModelsInput!]" }
@@ -8485,9 +8486,9 @@ stack: ${String(
       operationReturnType: "UpdateTestModel",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$1,
+      modelSelectionField: modelApiIdentifier$2,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8511,8 +8512,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$1,
-      modelSelectionField: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
+      modelSelectionField: pluralModelApiIdentifier$2,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpdateTestModelsInput!]" }
@@ -8526,9 +8527,9 @@ stack: ${String(
       operationReturnType: "DeleteTestModel",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$1,
+      modelSelectionField: modelApiIdentifier$2,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -8549,8 +8550,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$1,
-      modelSelectionField: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
+      modelSelectionField: pluralModelApiIdentifier$2,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -8562,9 +8563,9 @@ stack: ${String(
       operationReturnType: "UpsertTestModel",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$1,
+      modelSelectionField: modelApiIdentifier$2,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8591,8 +8592,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$1,
-      modelSelectionField: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$2,
+      modelSelectionField: pluralModelApiIdentifier$2,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpsertTestModelsInput!]" }
@@ -8613,10 +8614,10 @@ stack: ${String(
     }
   ];
   const TestModelManager = buildModelManager(
-    modelApiIdentifier$1,
-    pluralModelApiIdentifier$1,
+    modelApiIdentifier$2,
+    pluralModelApiIdentifier$2,
     DefaultTestModelSelection,
-    operations$1
+    operations$2
   );
   const DefaultAnalyticsFIVESelection = {
     __typename: true,
@@ -8630,63 +8631,63 @@ stack: ${String(
     updatedAt: true,
     userId: true
   };
-  const modelApiIdentifier = "analyticsFIVE";
-  const pluralModelApiIdentifier = "analyticsFIVEs";
-  const operations = [
+  const modelApiIdentifier$1 = "analyticsFIVE";
+  const pluralModelApiIdentifier$1 = "analyticsFIVEs";
+  const operations$1 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier,
-      modelApiIdentifier,
+      operationName: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$1,
       findByVariableName: "id",
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier,
-      modelApiIdentifier,
+      operationName: modelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$1,
       findByVariableName: "id",
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier,
-      modelApiIdentifier,
+      operationName: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$1,
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier,
-      modelApiIdentifier,
+      operationName: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$1,
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier,
-      modelApiIdentifier,
+      operationName: pluralModelApiIdentifier$1,
+      modelApiIdentifier: modelApiIdentifier$1,
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier,
+      operationName: pluralModelApiIdentifier$1,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier,
+      operationName: pluralModelApiIdentifier$1,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       defaultSelection: DefaultAnalyticsFIVESelection,
       namespace: null
     },
@@ -8696,9 +8697,9 @@ stack: ${String(
       operationReturnType: "CreateAnalyticsFIVE",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier,
+      modelSelectionField: modelApiIdentifier$1,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8721,8 +8722,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier,
-      modelSelectionField: pluralModelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
+      modelSelectionField: pluralModelApiIdentifier$1,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkCreateAnalyticsFIVEsInput!]" }
@@ -8736,9 +8737,9 @@ stack: ${String(
       operationReturnType: "UpdateAnalyticsFIVE",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier,
+      modelSelectionField: modelApiIdentifier$1,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8762,8 +8763,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier,
-      modelSelectionField: pluralModelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
+      modelSelectionField: pluralModelApiIdentifier$1,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpdateAnalyticsFIVEsInput!]" }
@@ -8777,9 +8778,9 @@ stack: ${String(
       operationReturnType: "DeleteAnalyticsFIVE",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier,
+      modelSelectionField: modelApiIdentifier$1,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -8800,8 +8801,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier,
-      modelSelectionField: pluralModelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
+      modelSelectionField: pluralModelApiIdentifier$1,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -8813,9 +8814,9 @@ stack: ${String(
       operationReturnType: "UpsertAnalyticsFIVE",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier,
+      modelSelectionField: modelApiIdentifier$1,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -8842,8 +8843,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier,
-      modelSelectionField: pluralModelApiIdentifier,
+      modelApiIdentifier: modelApiIdentifier$1,
+      modelSelectionField: pluralModelApiIdentifier$1,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpsertAnalyticsFIVEsInput!]" }
@@ -8864,9 +8865,252 @@ stack: ${String(
     }
   ];
   const AnalyticsFIVEManager = buildModelManager(
+    modelApiIdentifier$1,
+    pluralModelApiIdentifier$1,
+    DefaultAnalyticsFIVESelection,
+    operations$1
+  );
+  const DefaultShopSelection = {
+    __typename: true,
+    id: true,
+    createdAt: true,
+    domain: true,
+    name: true,
+    updatedAt: true,
+    state: true,
+    parentOrganizationId: true,
+    shopId: true,
+    userId: true
+  };
+  const modelApiIdentifier = "shop";
+  const pluralModelApiIdentifier = "shops";
+  const operations = [
+    {
+      type: "findOne",
+      operationName: modelApiIdentifier,
+      modelApiIdentifier,
+      findByVariableName: "id",
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: modelApiIdentifier,
+      modelApiIdentifier,
+      findByVariableName: "id",
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "findMany",
+      operationName: pluralModelApiIdentifier,
+      modelApiIdentifier,
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "findFirst",
+      operationName: pluralModelApiIdentifier,
+      modelApiIdentifier,
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "maybeFindFirst",
+      operationName: pluralModelApiIdentifier,
+      modelApiIdentifier,
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "findOne",
+      operationName: pluralModelApiIdentifier,
+      functionName: "findById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier,
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: pluralModelApiIdentifier,
+      functionName: "maybeFindById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier,
+      defaultSelection: DefaultShopSelection,
+      namespace: null
+    },
+    {
+      type: "action",
+      operationName: "createShop",
+      operationReturnType: "CreateShop",
+      functionName: "create",
+      namespace: null,
+      modelApiIdentifier,
+      operatesWithRecordIdentity: false,
+      modelSelectionField: modelApiIdentifier,
+      isBulk: false,
+      isDeleter: false,
+      variables: { shop: { required: false, type: "CreateShopInput" } },
+      hasAmbiguousIdentifier: false,
+      paramOnlyVariables: [],
+      hasReturnType: false,
+      acceptsModelInput: true,
+      hasCreateOrUpdateEffect: true,
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "action",
+      operationName: "bulkCreateShops",
+      functionName: "bulkCreate",
+      isBulk: true,
+      isDeleter: false,
+      hasReturnType: false,
+      acceptsModelInput: true,
+      operatesWithRecordIdentity: false,
+      singleActionFunctionName: "create",
+      modelApiIdentifier,
+      modelSelectionField: pluralModelApiIdentifier,
+      namespace: null,
+      variables: { inputs: { required: true, type: "[BulkCreateShopsInput!]" } },
+      paramOnlyVariables: [],
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "action",
+      operationName: "updateShop",
+      operationReturnType: "UpdateShop",
+      functionName: "update",
+      namespace: null,
+      modelApiIdentifier,
+      operatesWithRecordIdentity: true,
+      modelSelectionField: modelApiIdentifier,
+      isBulk: false,
+      isDeleter: false,
+      variables: {
+        id: { required: true, type: "GadgetID" },
+        shop: { required: false, type: "UpdateShopInput" }
+      },
+      hasAmbiguousIdentifier: false,
+      paramOnlyVariables: [],
+      hasReturnType: false,
+      acceptsModelInput: true,
+      hasCreateOrUpdateEffect: true,
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "action",
+      operationName: "bulkUpdateShops",
+      functionName: "bulkUpdate",
+      isBulk: true,
+      isDeleter: false,
+      hasReturnType: false,
+      acceptsModelInput: true,
+      operatesWithRecordIdentity: true,
+      singleActionFunctionName: "update",
+      modelApiIdentifier,
+      modelSelectionField: pluralModelApiIdentifier,
+      namespace: null,
+      variables: { inputs: { required: true, type: "[BulkUpdateShopsInput!]" } },
+      paramOnlyVariables: [],
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "action",
+      operationName: "deleteShop",
+      operationReturnType: "DeleteShop",
+      functionName: "delete",
+      namespace: null,
+      modelApiIdentifier,
+      operatesWithRecordIdentity: true,
+      modelSelectionField: modelApiIdentifier,
+      isBulk: false,
+      isDeleter: true,
+      variables: { id: { required: true, type: "GadgetID" } },
+      hasAmbiguousIdentifier: false,
+      paramOnlyVariables: [],
+      hasReturnType: false,
+      acceptsModelInput: false,
+      hasCreateOrUpdateEffect: false,
+      defaultSelection: null
+    },
+    {
+      type: "action",
+      operationName: "bulkDeleteShops",
+      functionName: "bulkDelete",
+      isBulk: true,
+      isDeleter: true,
+      hasReturnType: false,
+      acceptsModelInput: false,
+      operatesWithRecordIdentity: true,
+      singleActionFunctionName: "delete",
+      modelApiIdentifier,
+      modelSelectionField: pluralModelApiIdentifier,
+      namespace: null,
+      variables: { ids: { required: true, type: "[GadgetID!]" } },
+      paramOnlyVariables: [],
+      defaultSelection: null
+    },
+    {
+      type: "action",
+      operationName: "upsertShop",
+      operationReturnType: "UpsertShop",
+      functionName: "upsert",
+      namespace: null,
+      modelApiIdentifier,
+      operatesWithRecordIdentity: false,
+      modelSelectionField: modelApiIdentifier,
+      isBulk: false,
+      isDeleter: false,
+      variables: {
+        on: { required: false, type: "[String!]" },
+        shop: { required: false, type: "UpsertShopInput" }
+      },
+      hasAmbiguousIdentifier: false,
+      paramOnlyVariables: ["on"],
+      hasReturnType: {
+        "... on CreateShopResult": { hasReturnType: false },
+        "... on UpdateShopResult": { hasReturnType: false }
+      },
+      acceptsModelInput: true,
+      hasCreateOrUpdateEffect: true,
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "action",
+      operationName: "bulkUpsertShops",
+      functionName: "bulkUpsert",
+      isBulk: true,
+      isDeleter: false,
+      hasReturnType: false,
+      acceptsModelInput: true,
+      operatesWithRecordIdentity: false,
+      singleActionFunctionName: "upsert",
+      modelApiIdentifier,
+      modelSelectionField: pluralModelApiIdentifier,
+      namespace: null,
+      variables: { inputs: { required: true, type: "[BulkUpsertShopsInput!]" } },
+      paramOnlyVariables: ["on"],
+      defaultSelection: DefaultShopSelection
+    },
+    {
+      type: "computedView",
+      operationName: "view",
+      functionName: "view",
+      gqlFieldName: "shopGellyView",
+      namespace: null,
+      variables: {
+        query: { type: "String", required: true },
+        args: { type: "JSONObject" }
+      }
+    }
+  ];
+  const ShopManager = buildModelManager(
     modelApiIdentifier,
     pluralModelApiIdentifier,
-    DefaultAnalyticsFIVESelection,
+    DefaultShopSelection,
     operations
   );
   const __vite_import_meta_env__ = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false };
@@ -9002,6 +9246,17 @@ stack: ${String(
           attachmentMimeType: { required: false, type: "String" }
         }
       });
+      this.shopifyPartnerApi = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "shopifyPartnerApi",
+        operationName: "shopifyPartnerApi",
+        operationReturnType: "ShopifyPartnerApi",
+        namespace: null,
+        variables: {
+          accessToken: { required: false, type: "String" },
+          organizationId: { required: false, type: "String" }
+        }
+      });
       this.testParams = buildGlobalAction(this, {
         type: "globalAction",
         functionName: "testParams",
@@ -9043,7 +9298,8 @@ stack: ${String(
           event: { required: false, type: "String" },
           distinctId: { required: false, type: "String" },
           sessionId: { required: false, type: "String" },
-          timestamp: { required: false, type: "String" }
+          timestamp: { required: false, type: "String" },
+          shopId: { required: false, type: "String" }
         }
       });
       this.view = buildInlineComputedView(this, {
@@ -9128,24 +9384,26 @@ stack: ${String(
       if (typeof window != "undefined" && typeof window.document != "undefined" && this.connection.authenticationMode == AuthenticationMode.APIKey && !((_b = options == null ? void 0 : options.authenticationMode) == null ? void 0 : _b.dangerouslyAllowBrowserApiKey)) {
         throw new Error("GGT_BROWSER_API_KEY_USAGE: Using a Gadget API key to authenticate this client object is insecure and will leak your API keys to attackers. Please use a different authentication mode.");
       }
+      this.session = new SessionManager(this.connection);
+      this.currentSession = new CurrentSessionManager(this.connection);
       this.user = new UserManager(this.connection);
       this.conversation = new ConversationManager(this.connection);
       this.message = new MessageManager(this.connection);
-      this.session = new SessionManager(this.connection);
-      this.currentSession = new CurrentSessionManager(this.connection);
       this.organization = new OrganizationManager(this.connection);
       this.customer = new CustomerManager(this.connection);
       this.testModel = new TestModelManager(this.connection);
       this.analyticsFIVE = new AnalyticsFIVEManager(this.connection);
+      this.shop = new ShopManager(this.connection);
       this.internal = {
+        session: new InternalModelManager("session", this.connection, { "pluralApiIdentifier": "sessions", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         user: new InternalModelManager("user", this.connection, { "pluralApiIdentifier": "users", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         conversation: new InternalModelManager("conversation", this.connection, { "pluralApiIdentifier": "conversations", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         message: new InternalModelManager("message", this.connection, { "pluralApiIdentifier": "messages", "hasAmbiguousIdentifiers": false, "namespace": [] }),
-        session: new InternalModelManager("session", this.connection, { "pluralApiIdentifier": "sessions", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         organization: new InternalModelManager("organization", this.connection, { "pluralApiIdentifier": "organizations", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         customer: new InternalModelManager("customer", this.connection, { "pluralApiIdentifier": "customers", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         testModel: new InternalModelManager("testModel", this.connection, { "pluralApiIdentifier": "testModels", "hasAmbiguousIdentifiers": false, "namespace": [] }),
-        analyticsFIVE: new InternalModelManager("analyticsFIVE", this.connection, { "pluralApiIdentifier": "analyticsFIVEs", "hasAmbiguousIdentifiers": false, "namespace": [] })
+        analyticsFIVE: new InternalModelManager("analyticsFIVE", this.connection, { "pluralApiIdentifier": "analyticsFIVEs", "hasAmbiguousIdentifiers": false, "namespace": [] }),
+        shop: new InternalModelManager("shop", this.connection, { "pluralApiIdentifier": "shops", "hasAmbiguousIdentifiers": false, "namespace": [] })
       };
     }
     /**
@@ -9257,7 +9515,7 @@ stack: ${String(
       return this.toString();
     }
   }
-  ShopappchatClient.prototype[$modelRelationships] = { "user": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" } }, "conversation": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" }, "customer": { "type": "BelongsTo", "model": "customer" } }, "message": { "conversation": { "type": "BelongsTo", "model": "conversation" }, "user": { "type": "BelongsTo", "model": "user" } }, "session": { "user": { "type": "BelongsTo", "model": "user" } }, "organization": { "conversations": { "type": "HasMany", "model": "conversation" }, "users": { "type": "HasMany", "model": "user" } }, "customer": {}, "testModel": { "user": { "type": "BelongsTo", "model": "user" } }, "analyticsFIVE": { "user": { "type": "BelongsTo", "model": "user" } } };
+  ShopappchatClient.prototype[$modelRelationships] = { "session": { "user": { "type": "BelongsTo", "model": "user" } }, "user": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" } }, "conversation": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" }, "customer": { "type": "BelongsTo", "model": "customer" } }, "message": { "conversation": { "type": "BelongsTo", "model": "conversation" }, "user": { "type": "BelongsTo", "model": "user" } }, "organization": { "conversations": { "type": "HasMany", "model": "conversation" }, "users": { "type": "HasMany", "model": "user" }, "shops": { "type": "HasMany", "model": "shop" } }, "customer": {}, "testModel": { "user": { "type": "BelongsTo", "model": "user" } }, "analyticsFIVE": { "user": { "type": "BelongsTo", "model": "user" } }, "shop": { "user": { "type": "BelongsTo", "model": "user" }, "parentOrganization": { "type": "BelongsTo", "model": "organization" } } };
   const coreImplementation = {
     GadgetRecord,
     disambiguateActionVariables,
