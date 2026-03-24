@@ -53,7 +53,7 @@ if (config.orgSlug) {
           distinctId: e.distinctId,
           sessionId: e.sessionId,
           timestamp: e.timestamp,
-          shopId: config.shopId
+          shopId: getShopDomain()
         });
       } catch (err) {
         console.warn('Analytics: failed to track event', err);

@@ -9576,7 +9576,7 @@ stack: ${String(
             distinctId: e2.distinctId,
             sessionId: e2.sessionId,
             timestamp: e2.timestamp,
-            shopId: config.shopId
+            shopId: getShopDomain()
           });
         } catch (err) {
           console.warn("Analytics: failed to track event", err);
