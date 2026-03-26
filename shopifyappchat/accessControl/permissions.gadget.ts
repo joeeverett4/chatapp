@@ -51,9 +51,7 @@ export const permissions: GadgetPermissions = {
           },
         },
         shop: {
-          read: {
-            filter: "accessControl/filters/shop/tenant.gelly",
-          },
+          read: true,
           actions: {
             create: true,
             delete: true,

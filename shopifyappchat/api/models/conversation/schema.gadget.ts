@@ -19,8 +19,6 @@ export const schema: GadgetModel = {
       type: "string",
       validations: { required: true },
       storageKey: "conv-extShopId-03",
-      filterIndex: false,
-      searchIndex: false,
     },
     lastReadAt: {
       type: "dateTime",

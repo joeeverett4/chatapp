@@ -1,6 +1,10 @@
 export const run = async ({ params, api, logger }) => {
-  const { event, properties, distinctId, sessionId, timestamp } = params;
+  
+  const { event, properties, distinctId, sessionId, timestamp, shopId } = params;
 
+  console.log("params")
+  logger.info(params)
+  
   logger.info("Analytics event received", { event });
 
   await api.analyticsFIVE.create({
@@ -8,7 +12,8 @@ export const run = async ({ params, api, logger }) => {
     properties: properties || {},
     distinctId,
     sessionId,
-    timestamp: timestamp ? new Date(timestamp) : new Date()
+    timestamp: timestamp ? new Date(timestamp) : new Date(),
+    shopId: "wijkmerch.myshopify.com"
   });
 
   return { success: true };
@@ -19,5 +24,6 @@ export const params = {
   properties: { type: "object", properties: {} },
   distinctId: { type: "string" },
   sessionId: { type: "string" },
-  timestamp: { type: "string" }
+  timestamp: { type: "string" },
+  shopId: {type: "string"}
 };

@@ -22,29 +22,11 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
-import { useSignOut, useFindMany, useUser } from "@gadgetinc/react";
+import { useSignOut } from "@gadgetinc/react";
 import { NavDrawer } from "../shared/NavDrawer";
-import { Home, User, LogOut, MessageSquare } from "lucide-react";
+import { User, LogOut, Inbox, Store } from "lucide-react";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { api } from "../../api";
-
-const countryCodeToFlag = (code) => {
-  if (!code || code.length !== 2) return code;
-  return code
-    .toUpperCase()
-    .split('')
-    .map(char => String.fromCodePoint(0x1F1E6 + char.charCodeAt(0) - 65))
-    .join('');
-};
-
-const getPresenceStatus = (lastActiveAt) => {
-  if (!lastActiveAt) return 'offline';
-  const seconds = (Date.now() - new Date(lastActiveAt)) / 1000;
-  if (seconds < 60) return 'online';
-  if (seconds < 300) return 'idle';
-  return 'offline';
-};
 
 /**
  * The main navigation items for the left sidebar.
@@ -56,9 +38,14 @@ const getPresenceStatus = (lastActiveAt) => {
  */
 const navigationItems = [
   {
-    title: "Home",
-    path: "/signed-in",
-    icon: Home,
+    title: "Inbox",
+    path: "/inbox",
+    icon: Inbox,
+  },
+  {
+    title: "Merchants",
+    path: "/merchants",
+    icon: Store,
   },
 ];
 
@@ -102,29 +89,6 @@ const secondaryNavigationItems = [
 
 export const Navigation = ({ onLinkClick }) => {
   const location = useLocation();
-  const user = useUser(api);
-
-  const [{ data: conversations, fetching }] = useFindMany(api.conversation, {
-    filter: user?.organizationId ? { organizationId: { equals: user.organizationId } } : undefined,
-    select: {
-      id: true,
-      shopName: true,
-      externalShopId: true,
-      status: true,
-      customer: {
-        id: true,
-        name: true,
-        email: true,
-        country: true,
-        lastActiveAt: true,
-      },
-    },
-    sort: { createdAt: "Descending" },
-    live: true,
-  });
-
-  console.log("data")
-  console.log(conversations);
 
   return (
     <>
@@ -133,44 +97,22 @@ export const Navigation = ({ onLinkClick }) => {
           <img src="/api/assets/autologo?background=light" alt="App logo" className="h-8 w-auto" />
         </Link>
       </div>
-      <nav className="flex-1 px-4 py-4 flex flex-col gap-1 overflow-y-auto">
-        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-2">
-          Conversations
-        </div>
-        {fetching ? (
-          <p className="px-4 py-2 text-sm text-muted-foreground">Loading...</p>
-        ) : conversations?.length === 0 ? (
-          <p className="px-4 py-2 text-sm text-muted-foreground">No conversations yet</p>
-        ) : (
-          conversations?.map((conv) => (
-            <Link
-              key={conv.id}
-              to={`/conversation/${conv.id}`}
-              className={`flex items-start px-4 py-2 text-sm rounded-md transition-colors
-                ${location.pathname === `/conversation/${conv.id}`
-                  ? "bg-accent text-accent-foreground"
-                  : "hover:bg-accent hover:text-accent-foreground"
-                }`}
-              onClick={onLinkClick}
-            >
-              <MessageSquare className="mr-3 h-4 w-4 flex-shrink-0 mt-0.5" />
-              <div className="flex-1 min-w-0">
-                <div className="truncate">{conv.shopName || conv.externalShopId}</div>
-                <div className="truncate text-xs text-muted-foreground">{conv.customer.email} {countryCodeToFlag(conv.customer.country)}</div>
-              </div>
-              {(() => {
-                const presence = getPresenceStatus(conv.customer?.lastActiveAt);
-                if (presence === 'online') {
-                  return <span className="ml-2 w-2 h-2 bg-green-500 rounded-full flex-shrink-0 mt-1.5" />;
-                }
-                if (presence === 'idle') {
-                  return <span className="ml-2 w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1.5" />;
-                }
-                return null;
-              })()}
-            </Link>
-          ))
-        )}
+      <nav className="flex-1 px-4 py-4 flex flex-col gap-1">
+        {navigationItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`flex items-center px-4 py-2 text-sm rounded-md transition-colors
+              ${location.pathname === item.path
+                ? "bg-accent text-accent-foreground"
+                : "hover:bg-accent hover:text-accent-foreground"
+              }`}
+            onClick={onLinkClick}
+          >
+            <item.icon className="mr-3 h-4 w-4" />
+            {item.title}
+          </Link>
+        ))}
       </nav>
     </>
   );

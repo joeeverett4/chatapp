@@ -11,6 +11,7 @@ export const schema: GadgetModel = {
     event: { type: "string", storageKey: "QbFtEY3XHNux" },
     properties: { type: "json", storageKey: "ENBhBqs2LZSW" },
     sessionId: { type: "string", storageKey: "-gb92JFbbwO7" },
+    shopId: { type: "string", storageKey: "M82xazmvH9kX" },
     timestamp: {
       type: "dateTime",
       includeTime: true,
