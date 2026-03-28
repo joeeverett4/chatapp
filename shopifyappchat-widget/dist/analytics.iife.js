@@ -4805,8 +4805,8 @@ stack: ${String(
     }
   });
   const addUrlParams = (url, paramsToAdd) => {
-    const [start2, params] = url.split("?");
-    const paramsObj = new URLSearchParams(params);
+    const [start2, params2] = url.split("?");
+    const paramsObj = new URLSearchParams(params2);
     for (const [key2, value2] of Object.entries(paramsToAdd)) {
       paramsObj.set(key2, value2);
     }
@@ -6729,17 +6729,17 @@ stack: ${String(
   }
   function actionArgs(operation, hasId, hasOthers, args) {
     let id = void 0;
-    let params = void 0;
+    let params2 = void 0;
     if (hasId) {
       id = args.shift();
     }
     if (hasOthers) {
-      params = args.shift();
+      params2 = args.shift();
     }
     const options = args.shift();
-    let unambiguousParams = params;
-    if (id || params) {
-      unambiguousParams = disambiguateActionParams(operation, id, params);
+    let unambiguousParams = params2;
+    if (id || params2) {
+      unambiguousParams = disambiguateActionParams(operation, id, params2);
     }
     const resultVariables = {};
     for (const [name2, variable] of Object.entries(operation.variables)) {
@@ -9545,15 +9545,17 @@ stack: ${String(
   } catch (err) {
     console.error("[ShopAppChat Analytics] Failed to init client:", err);
   }
-  let shopDomain = null;
+  const params = new URLSearchParams(window.location.search);
+  let shopDomain = params.get("shop");
+  console.log("[ShopAppChat Analytics] Shop from URL:", shopDomain);
   window.addEventListener("message", (e2) => {
     var _a;
     if (((_a = e2.data) == null ? void 0 : _a.type) === "SHOPAPPCHAT_SHOP" && e2.data.shop) {
-      console.log("[ShopAppChat Analytics] Received shop:", e2.data.shop);
+      console.log("[ShopAppChat Analytics] Received shop from bridge:", e2.data.shop);
       shopDomain = e2.data.shop;
     }
   });
-  if (window.parent !== window) {
+  if (window.parent !== window && !shopDomain) {
     console.log("[ShopAppChat Analytics] Requesting shop from parent");
     window.parent.postMessage({ type: "SHOPAPPCHAT_GET_SHOP" }, "*");
   }
@@ -9635,10 +9637,10 @@ stack: ${String(
       page(document.title);
     }
   }
-  function patch(params) {
+  function patch(params2) {
     const context = {
-      left: params.left,
-      delta: params.delta,
+      left: params2.left,
+      delta: params2.delta,
       children: void 0,
       name: void 0,
       nested: false,

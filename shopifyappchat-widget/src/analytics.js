@@ -15,19 +15,21 @@ try {
   console.error('[ShopAppChat Analytics] Failed to init client:', err);
 }
 
-// Shop domain received from bridge script via postMessage
-let shopDomain = null;
+// Try to get shop domain directly from URL first
+const params = new URLSearchParams(window.location.search);
+let shopDomain = params.get('shop');
+console.log('[ShopAppChat Analytics] Shop from URL:', shopDomain);
 
-// Listen for shop domain from bridge script
+// Also listen for shop from bridge (in case we're in an iframe)
 window.addEventListener('message', (e) => {
   if (e.data?.type === 'SHOPAPPCHAT_SHOP' && e.data.shop) {
-    console.log('[ShopAppChat Analytics] Received shop:', e.data.shop);
+    console.log('[ShopAppChat Analytics] Received shop from bridge:', e.data.shop);
     shopDomain = e.data.shop;
   }
 });
 
-// Request shop from parent (bridge script will respond)
-if (window.parent !== window) {
+// Request from parent if we're in an iframe and don't have shop yet
+if (window.parent !== window && !shopDomain) {
   console.log('[ShopAppChat Analytics] Requesting shop from parent');
   window.parent.postMessage({ type: 'SHOPAPPCHAT_GET_SHOP' }, '*');
 }
