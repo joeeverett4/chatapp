@@ -9530,11 +9530,21 @@ stack: ${String(
   };
   ShopappchatClient.prototype[$coreImplementation] = coreImplementation;
   const Client = ShopappchatClient;
+  window.shopAnalytics = window.shopAnalytics || { track: () => {
+  }, page: () => {
+  }, identify: () => {
+  }, flush: () => {
+  } };
   const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
   const config = getConfig();
-  const api = new Client({
-    environment: config.environment || "development"
-  });
+  let api;
+  try {
+    api = new Client({
+      environment: config.environment || "development"
+    });
+  } catch (err) {
+    console.error("[ShopAppChat Analytics] Failed to init client:", err);
+  }
   let shopDomain = null;
   window.addEventListener("message", (e2) => {
     var _a;
@@ -9548,12 +9558,7 @@ stack: ${String(
     window.parent.postMessage({ type: "SHOPAPPCHAT_GET_SHOP" }, "*");
   }
   const getShopDomain = () => shopDomain;
-  window.shopAnalytics = { track: () => {
-  }, page: () => {
-  }, identify: () => {
-  }, flush: () => {
-  } };
-  if (config.orgSlug) {
+  if (config.orgSlug && api) {
     const getDistinctId = () => {
       const key2 = `osp_distinct_${config.orgSlug}`;
       let id = localStorage.getItem(key2);

@@ -1,11 +1,19 @@
+// Set stub IMMEDIATELY so calls never crash
+window.shopAnalytics = window.shopAnalytics || { track: () => {}, page: () => {}, identify: () => {}, flush: () => {} };
+
 import { Client } from '@gadget-client/shopappchat';
 
 const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
-
 const config = getConfig();
-const api = new Client({
-  environment: config.environment || 'development'
-});
+
+let api;
+try {
+  api = new Client({
+    environment: config.environment || 'development'
+  });
+} catch (err) {
+  console.error('[ShopAppChat Analytics] Failed to init client:', err);
+}
 
 // Shop domain received from bridge script via postMessage
 let shopDomain = null;
@@ -26,10 +34,7 @@ if (window.parent !== window) {
 
 const getShopDomain = () => shopDomain;
 
-// Set stub immediately so calls don't crash before full init
-window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };
-
-if (config.orgSlug) {
+if (config.orgSlug && api) {
   const getDistinctId = () => {
     const key = `osp_distinct_${config.orgSlug}`;
     let id = localStorage.getItem(key);
