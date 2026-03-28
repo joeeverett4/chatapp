@@ -9,14 +9,11 @@ const api = new Client({
 
 const getShopDomain = () => {
   const match = window.location.pathname.match(/^\/store\/([^/]+)/);
-  console.log("matched", match);
-  console.log("match", match ? match[1] : null);
+  console.log("matchmaker", match);
+  console.log(window.location.pathname)
+  console.log(window.location.hred)
   return match ? match[1] : null;
 };
-
-// Log the full URL and shop param to see what's available
-console.log('[ShopAppChat Analytics] URL:', window.location.href);
-console.log('[ShopAppChat Analytics] Shop param:', new URLSearchParams(window.location.search).get('shop'));
 
 // Set stub immediately so calls don't crash before full init
 window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };
