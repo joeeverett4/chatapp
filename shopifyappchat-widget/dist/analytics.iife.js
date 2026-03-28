@@ -9535,12 +9535,17 @@ stack: ${String(
   const api = new Client({
     environment: config.environment || "development"
   });
-  const getShopDomain = () => {
-    const match = window.location.pathname.match(/^\/store\/([^/]+)/);
-    console.log("match", match);
-    console.log("match", match ? match[1] : null);
-    return match ? match[1] : null;
-  };
+  let shopDomain = null;
+  window.addEventListener("message", (e2) => {
+    var _a;
+    if (((_a = e2.data) == null ? void 0 : _a.type) === "SHOPAPPCHAT_SHOP" && e2.data.shop) {
+      shopDomain = e2.data.shop;
+    }
+  });
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: "SHOPAPPCHAT_GET_SHOP" }, "*");
+  }
+  const getShopDomain = () => shopDomain;
   window.shopAnalytics = { track: () => {
   }, page: () => {
   }, identify: () => {
