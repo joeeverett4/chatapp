@@ -9,7 +9,7 @@ const api = new Client({
 
 const getShopDomain = () => {
   const match = window.location.pathname.match(/^\/store\/([^/]+)/);
-  console.log("match", match);
+  console.log("matched", match);
   console.log("match", match ? match[1] : null);
   return match ? match[1] : null;
 };
