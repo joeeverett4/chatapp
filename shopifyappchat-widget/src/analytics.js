@@ -7,12 +7,24 @@ const api = new Client({
   environment: config.environment || 'development'
 });
 
-const getShopDomain = () => {
-  const match = window.location.pathname.match(/^\/store\/([^/]+)/);
-  console.log("match", match);
-  console.log("match", match ? match[1] : null);
-  return match ? match[1] : null;
-};
+// Shop domain received from bridge script via postMessage
+let shopDomain = null;
+
+// Listen for shop domain from bridge script
+window.addEventListener('message', (e) => {
+  if (e.data?.type === 'SHOPAPPCHAT_SHOP' && e.data.shop) {
+    console.log('[ShopAppChat Analytics] Received shop:', e.data.shop);
+    shopDomain = e.data.shop;
+  }
+});
+
+// Request shop from parent (bridge script will respond)
+if (window.parent !== window) {
+  console.log('[ShopAppChat Analytics] Requesting shop from parent');
+  window.parent.postMessage({ type: 'SHOPAPPCHAT_GET_SHOP' }, '*');
+}
+
+const getShopDomain = () => shopDomain;
 
 // Set stub immediately so calls don't crash before full init
 window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };

@@ -9539,10 +9539,12 @@ stack: ${String(
   window.addEventListener("message", (e2) => {
     var _a;
     if (((_a = e2.data) == null ? void 0 : _a.type) === "SHOPAPPCHAT_SHOP" && e2.data.shop) {
+      console.log("[ShopAppChat Analytics] Received shop:", e2.data.shop);
       shopDomain = e2.data.shop;
     }
   });
   if (window.parent !== window) {
+    console.log("[ShopAppChat Analytics] Requesting shop from parent");
     window.parent.postMessage({ type: "SHOPAPPCHAT_GET_SHOP" }, "*");
   }
   const getShopDomain = () => shopDomain;

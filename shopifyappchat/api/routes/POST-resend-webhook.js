@@ -1,3 +1,5 @@
+import { Resend } from 'resend';
+
 export default async function route({ request, reply, api, logger }) {
   // Return 200 immediately so Resend doesn't retry
   reply.header('Content-Type', 'application/json');
@@ -11,7 +13,22 @@ export default async function route({ request, reply, api, logger }) {
     if (event.type === 'email.received') {
       const toAddress = event.data?.to?.[0];
       const fromEmail = event.data?.from;
-      const textBody = event.data?.text || event.data?.html?.replace(/<[^>]*>/g, '') || '';
+      const emailId = event.data?.email_id;
+
+      // Fetch full email content from Resend API (webhook only contains metadata)
+      let textBody = '';
+      if (emailId) {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const { data: email, error } = await resend.emails.receiving.get(emailId);
+
+        if (error) {
+          logger.error("Failed to fetch inbound email", { emailId, error });
+          return reply.send({ received: true, error: "Failed to fetch email content" });
+        }
+
+        logger.info("Fetched email content", { emailId, hasText: !!email?.text, hasHtml: !!email?.html });
+        textBody = email?.text || email?.html?.replace(/<[^>]*>/g, '') || '';
+      }
 
       // Extract conversationId from reply+{conversationId}@chat.ordersplitpro.co.uk
       const match = toAddress?.match(/reply\+([^@]+)@/);
