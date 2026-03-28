@@ -1,42 +1,27 @@
-// Set stub IMMEDIATELY so calls never crash
-window.shopAnalytics = window.shopAnalytics || { track: () => {}, page: () => {}, identify: () => {}, flush: () => {} };
-
 import { Client } from '@gadget-client/shopappchat';
 
 const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
+
 const config = getConfig();
-
-let api;
-try {
-  api = new Client({
-    environment: config.environment || 'development'
-  });
-} catch (err) {
-  console.error('[ShopAppChat Analytics] Failed to init client:', err);
-}
-
-// Try to get shop domain directly from URL first
-const params = new URLSearchParams(window.location.search);
-let shopDomain = params.get('shop');
-console.log('[ShopAppChat Analytics] Shop from URL:', shopDomain);
-
-// Also listen for shop from bridge (in case we're in an iframe)
-window.addEventListener('message', (e) => {
-  if (e.data?.type === 'SHOPAPPCHAT_SHOP' && e.data.shop) {
-    console.log('[ShopAppChat Analytics] Received shop from bridge:', e.data.shop);
-    shopDomain = e.data.shop;
-  }
+const api = new Client({
+  environment: config.environment || 'development'
 });
 
-// Request from parent if we're in an iframe and don't have shop yet
-if (window.parent !== window && !shopDomain) {
-  console.log('[ShopAppChat Analytics] Requesting shop from parent');
-  window.parent.postMessage({ type: 'SHOPAPPCHAT_GET_SHOP' }, '*');
-}
+const getShopDomain = () => {
+  const match = window.location.pathname.match(/^\/store\/([^/]+)/);
+  console.log("match", match);
+  console.log("match", match ? match[1] : null);
+  return match ? match[1] : null;
+};
 
-const getShopDomain = () => shopDomain;
+// Log the full URL and shop param to see what's available
+console.log('[ShopAppChat Analytics] URL:', window.location.href);
+console.log('[ShopAppChat Analytics] Shop param:', new URLSearchParams(window.location.search).get('shop'));
 
-if (config.orgSlug && api) {
+// Set stub immediately so calls don't crash before full init
+window.shopAnalytics = { track: () => { }, page: () => { }, identify: () => { }, flush: () => { } };
+
+if (config.orgSlug) {
   const getDistinctId = () => {
     const key = `osp_distinct_${config.orgSlug}`;
     let id = localStorage.getItem(key);

@@ -4805,8 +4805,8 @@ stack: ${String(
     }
   });
   const addUrlParams = (url, paramsToAdd) => {
-    const [start2, params2] = url.split("?");
-    const paramsObj = new URLSearchParams(params2);
+    const [start2, params] = url.split("?");
+    const paramsObj = new URLSearchParams(params);
     for (const [key2, value2] of Object.entries(paramsToAdd)) {
       paramsObj.set(key2, value2);
     }
@@ -6729,17 +6729,17 @@ stack: ${String(
   }
   function actionArgs(operation, hasId, hasOthers, args) {
     let id = void 0;
-    let params2 = void 0;
+    let params = void 0;
     if (hasId) {
       id = args.shift();
     }
     if (hasOthers) {
-      params2 = args.shift();
+      params = args.shift();
     }
     const options = args.shift();
-    let unambiguousParams = params2;
-    if (id || params2) {
-      unambiguousParams = disambiguateActionParams(operation, id, params2);
+    let unambiguousParams = params;
+    if (id || params) {
+      unambiguousParams = disambiguateActionParams(operation, id, params);
     }
     const resultVariables = {};
     for (const [name2, variable] of Object.entries(operation.variables)) {
@@ -9530,37 +9530,25 @@ stack: ${String(
   };
   ShopappchatClient.prototype[$coreImplementation] = coreImplementation;
   const Client = ShopappchatClient;
-  window.shopAnalytics = window.shopAnalytics || { track: () => {
+  const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
+  const config = getConfig();
+  const api = new Client({
+    environment: config.environment || "development"
+  });
+  const getShopDomain = () => {
+    const match = window.location.pathname.match(/^\/store\/([^/]+)/);
+    console.log("match", match);
+    console.log("match", match ? match[1] : null);
+    return match ? match[1] : null;
+  };
+  console.log("[ShopAppChat Analytics] URL:", window.location.href);
+  console.log("[ShopAppChat Analytics] Shop param:", new URLSearchParams(window.location.search).get("shop"));
+  window.shopAnalytics = { track: () => {
   }, page: () => {
   }, identify: () => {
   }, flush: () => {
   } };
-  const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
-  const config = getConfig();
-  let api;
-  try {
-    api = new Client({
-      environment: config.environment || "development"
-    });
-  } catch (err) {
-    console.error("[ShopAppChat Analytics] Failed to init client:", err);
-  }
-  const params = new URLSearchParams(window.location.search);
-  let shopDomain = params.get("shop");
-  console.log("[ShopAppChat Analytics] Shop from URL:", shopDomain);
-  window.addEventListener("message", (e2) => {
-    var _a;
-    if (((_a = e2.data) == null ? void 0 : _a.type) === "SHOPAPPCHAT_SHOP" && e2.data.shop) {
-      console.log("[ShopAppChat Analytics] Received shop from bridge:", e2.data.shop);
-      shopDomain = e2.data.shop;
-    }
-  });
-  if (window.parent !== window && !shopDomain) {
-    console.log("[ShopAppChat Analytics] Requesting shop from parent");
-    window.parent.postMessage({ type: "SHOPAPPCHAT_GET_SHOP" }, "*");
-  }
-  const getShopDomain = () => shopDomain;
-  if (config.orgSlug && api) {
+  if (config.orgSlug) {
     const getDistinctId = () => {
       const key2 = `osp_distinct_${config.orgSlug}`;
       let id = localStorage.getItem(key2);
@@ -9637,10 +9625,10 @@ stack: ${String(
       page(document.title);
     }
   }
-  function patch(params2) {
+  function patch(params) {
     const context = {
-      left: params2.left,
-      delta: params2.delta,
+      left: params.left,
+      delta: params.delta,
       children: void 0,
       name: void 0,
       nested: false,
