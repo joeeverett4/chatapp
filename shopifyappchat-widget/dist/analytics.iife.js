@@ -9537,8 +9537,10 @@ stack: ${String(
   });
   const getShopDomain = () => {
     const match = window.location.pathname.match(/^\/store\/([^/]+)/);
-    console.log("match", match);
-    console.log("match", match ? match[1] : null);
+    console.log("yo");
+    console.log(match);
+    console.log(window.location.pathname);
+    console.log(window.location.href);
     return match ? match[1] : null;
   };
   window.shopAnalytics = { track: () => {
