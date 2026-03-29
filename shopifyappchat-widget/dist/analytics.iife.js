@@ -9536,11 +9536,10 @@ stack: ${String(
     environment: config.environment || "development"
   });
   const getShopDomain = () => {
-    const match = window.location.href.match(/^\/store\/([^/]+)/);
-    console.log("yo");
-    console.log(match);
-    console.log(window.location.href);
-    return match ? match[1] : null;
+    const params = new URLSearchParams(window.location.search);
+    console.log("params");
+    console.log(params);
+    return params.get("shop");
   };
   window.shopAnalytics = { track: () => {
   }, page: () => {
