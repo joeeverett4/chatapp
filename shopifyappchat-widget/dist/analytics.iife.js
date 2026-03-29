@@ -9536,10 +9536,9 @@ stack: ${String(
     environment: config.environment || "development"
   });
   const getShopDomain = () => {
-    const match = window.location.pathname.match(/^\/store\/([^/]+)/);
+    const match = window.location.href.match(/^\/store\/([^/]+)/);
     console.log("yo");
     console.log(match);
-    console.log(window.location.pathname);
     console.log(window.location.href);
     return match ? match[1] : null;
   };
