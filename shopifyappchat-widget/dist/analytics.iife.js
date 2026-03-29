@@ -9533,7 +9533,7 @@ stack: ${String(
   const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
   const config = getConfig();
   const api = new Client({
-    environment: "production"
+    environment: config.environment || "development"
   });
   const getShopDomain = () => {
     const params = new URLSearchParams(window.location.search);
