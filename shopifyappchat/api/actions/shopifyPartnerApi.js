@@ -4,13 +4,6 @@ export const run = async ({ params, logger, api }) => {
 
   let { accessToken, organizationId } = params;
 
-  if (!accessToken) {
-    throw new Error("accessToken is required");
-  }
-
-  if (!organizationId) {
-    throw new Error("organizationId is required");
-  }
 
   const query = `
   query AppInstallInfo(
@@ -26,7 +19,7 @@ export const run = async ({ params, logger, api }) => {
 
     events(
       first: $first,
-      types: [RELATIONSHIP_INSTALLED],
+      types: [RELATIONSHIP_INSTALLED, RELATIONSHIP_UNINSTALLED],
       occurredAtMin: $occurredAtMin,
       occurredAtMax: $occurredAtMax
     ) {
@@ -52,8 +45,8 @@ export const run = async ({ params, logger, api }) => {
   }
 }
   `
-  organizationId = organizationId || process.env.SHOPIFY_PARTNER_ORG_ID;
-  accessToken = accessToken || process.env.SHOPIFY_PARTNER_ACCESS_TOKEN;
+  organizationId = process.env.SHOPIFY_PARTNER_ORG_ID;
+  accessToken = process.env.SHOPIFY_PARTNER_ACCESS_TOKEN;
   const apiVersion = "2026-01";
   const endpoint = `https://partners.shopify.com/${organizationId}/api/${apiVersion}/graphql.json`;
 
@@ -84,6 +77,9 @@ export const run = async ({ params, logger, api }) => {
 
   const events = data.data.app.events.edges.map(edge => edge.node);
 
+  console.log("events")
+  console.log(events)
+
   for (const event of events) {
     // Extract numeric ID from GID (e.g., "gid://partners/Shop/12345" -> 12345)
     const shopId = parseInt(event.shop.id.split("/").pop(), 10);
@@ -94,12 +90,16 @@ export const run = async ({ params, logger, api }) => {
 
     if (existingShop) {
       logger.info({ shopId }, "Shop already exists");
+      await api.shop.update(existingShop.id, {
+        state: event.type === "RELATIONSHIP_INSTALLED" ? "INSTALLED" : "UNINSTALLED",
+      });
+      logger.info({ shopId }, "Shop updated");
     } else {
       await api.shop.create({
         shopId,
         name: event.shop.name,
         domain: event.shop.myshopifyDomain,
-        state: "INSTALLED",
+        state: event.type === "RELATIONSHIP_INSTALLED" ? "INSTALLED" : "UNINSTALLED",
         parentOrganization: { _link: "1" } // TODO: replace with actual organization ID
       });
       logger.info({ shopId }, "Shop created");
@@ -123,6 +123,11 @@ export const params = {
 
 export const options = {
   timeoutMS: 3600000,
-  returnType: true
+  returnType: true,
+  triggers: {
+    scheduler: [
+      { every: "hour", at: "45 mins" },
+    ],
+  },
 };
 

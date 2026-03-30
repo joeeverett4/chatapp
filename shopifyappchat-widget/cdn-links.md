@@ -1,5 +1,11 @@
 # CDN Links
 
+## Vercel (recommended - fast updates)
+```html
+<script src="https://chatappwidget.vercel.app/widget.iife.js"></script>
+<script src="https://chatappwidget.vercel.app/analytics.iife.js"></script>
+```
+
 ## jsDelivr 3.0.1 (WORKS - no 'v' prefix)
 ```html
 <script src="https://cdn.jsdelivr.net/gh/joeeverett4/chatapp@3.0.1/shopifyappchat-widget/dist/widget.iife.js"></script>

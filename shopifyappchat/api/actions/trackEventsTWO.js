@@ -13,7 +13,7 @@ export const run = async ({ params, api, logger }) => {
     distinctId,
     sessionId,
     timestamp: timestamp ? new Date(timestamp) : new Date(),
-    shopId: "wijkmerch.myshopify.com"
+    shopId: shopId
   });
 
   return { success: true };

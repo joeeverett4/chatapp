@@ -8,7 +8,7 @@ export const run = async ({ params, api, logger }) => {
   logger.info("Analytics batch received", { count: batch.length });
 
   for (const event of batch) {
-    await api.analyticsEvent.create({
+    await api.analyticsFIVE.create({
       event: event.event,
       properties: event.properties || {},
       distinctId: event.distinctId,
