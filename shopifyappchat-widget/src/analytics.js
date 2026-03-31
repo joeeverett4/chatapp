@@ -104,8 +104,4 @@ if (config.orgSlug) {
   window.addEventListener('pagehide', flush);
 
   window.shopAnalytics = { track, page, identify, flush };
-
-  if (config.autoTrackPageviews !== false) {
-    page(document.title);
-  }
 }

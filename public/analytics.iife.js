@@ -9622,9 +9622,6 @@ stack: ${String(
     window.addEventListener("beforeunload", flush);
     window.addEventListener("pagehide", flush);
     window.shopAnalytics = { track, page, identify, flush };
-    if (config.autoTrackPageviews !== false) {
-      page(document.title);
-    }
   }
   function patch(params) {
     const context = {
