@@ -9539,6 +9539,8 @@ stack: ${String(
     const params = new URLSearchParams(window.location.search);
     console.log("params");
     console.log(params);
+    console.log(params.get("shop"));
+    console.log("yo");
     return params.get("shop");
   };
   window.shopAnalytics = { track: () => {

@@ -11,7 +11,7 @@ export default defineConfig({
       fileName: 'analytics',
       formats: ['iife']
     },
-    outDir: 'dist',
+    outDir: '../public',
     emptyOutDir: false,
     minify: false
   }
