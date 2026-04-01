@@ -6783,115 +6783,6 @@ stack: ${String(
       console.warn("[gadget] error dispatching gadget dev harness event", error2);
     }
   };
-  const DefaultSessionSelection$1 = {
-    __typename: true,
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    userId: true
-  };
-  const modelApiIdentifier$9 = "session";
-  const pluralModelApiIdentifier$9 = "sessions";
-  const operations$9 = [
-    {
-      type: "findOne",
-      operationName: modelApiIdentifier$9,
-      modelApiIdentifier: modelApiIdentifier$9,
-      findByVariableName: "id",
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindOne",
-      operationName: modelApiIdentifier$9,
-      modelApiIdentifier: modelApiIdentifier$9,
-      findByVariableName: "id",
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findMany",
-      operationName: pluralModelApiIdentifier$9,
-      modelApiIdentifier: modelApiIdentifier$9,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findFirst",
-      operationName: pluralModelApiIdentifier$9,
-      modelApiIdentifier: modelApiIdentifier$9,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$9,
-      modelApiIdentifier: modelApiIdentifier$9,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "findOne",
-      operationName: pluralModelApiIdentifier$9,
-      functionName: "findById",
-      findByField: "id",
-      findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$9,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$9,
-      functionName: "maybeFindById",
-      findByField: "id",
-      findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$9,
-      defaultSelection: DefaultSessionSelection$1,
-      namespace: null
-    },
-    {
-      type: "computedView",
-      operationName: "view",
-      functionName: "view",
-      gqlFieldName: "sessionGellyView",
-      namespace: null,
-      variables: {
-        query: { type: "String", required: true },
-        args: { type: "JSONObject" }
-      }
-    }
-  ];
-  const SessionManager = buildModelManager(
-    modelApiIdentifier$9,
-    pluralModelApiIdentifier$9,
-    DefaultSessionSelection$1,
-    operations$9
-  );
-  const DefaultSessionSelection = {
-    __typename: true,
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    userId: true
-  };
-  const modelApiIdentifier$8 = "session";
-  const pluralModelApiIdentifier$8 = "sessions";
-  const operations$8 = [
-    {
-      type: "get",
-      operationName: "currentSession",
-      defaultSelection: DefaultSessionSelection,
-      modelApiIdentifier: modelApiIdentifier$8,
-      namespace: null
-    }
-  ];
-  const CurrentSessionManager = buildModelManager(
-    modelApiIdentifier$8,
-    pluralModelApiIdentifier$8,
-    DefaultSessionSelection,
-    operations$8
-  );
   const DefaultUserSelection = {
     __typename: true,
     id: true,
@@ -6912,83 +6803,83 @@ stack: ${String(
     roles: { key: true, name: true },
     updatedAt: true
   };
-  const modelApiIdentifier$7 = "user";
-  const pluralModelApiIdentifier$7 = "users";
-  const operations$7 = [
+  const modelApiIdentifier$9 = "user";
+  const pluralModelApiIdentifier$9 = "users";
+  const operations$9 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: modelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
       findByVariableName: "id",
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: modelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
       findByVariableName: "id",
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$7,
-      modelApiIdentifier: modelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
       functionName: "findByEmail",
       findByField: "email",
       findByVariableName: "email",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$7,
+      operationName: pluralModelApiIdentifier$9,
       functionName: "maybeFindByEmail",
       findByField: "email",
       findByVariableName: "email",
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       defaultSelection: DefaultUserSelection,
       namespace: null
     },
@@ -6998,9 +6889,9 @@ stack: ${String(
       operationReturnType: "SignUpUser",
       functionName: "signUp",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7024,8 +6915,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "signUp",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkSignUpUsersInput!]" } },
       paramOnlyVariables: [],
@@ -7037,9 +6928,9 @@ stack: ${String(
       operationReturnType: "SignInUser",
       functionName: "signIn",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7063,8 +6954,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "signIn",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkSignInUsersInput!]" } },
       paramOnlyVariables: [],
@@ -7076,9 +6967,9 @@ stack: ${String(
       operationReturnType: "SignOutUser",
       functionName: "signOut",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7099,8 +6990,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "signOut",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7112,9 +7003,9 @@ stack: ${String(
       operationReturnType: "UpdateUser",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7138,8 +7029,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpdateUsersInput!]" } },
       paramOnlyVariables: [],
@@ -7151,9 +7042,9 @@ stack: ${String(
       operationReturnType: "DeleteUser",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7174,8 +7065,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7187,9 +7078,9 @@ stack: ${String(
       operationReturnType: "SendVerifyEmailUser",
       functionName: "sendVerifyEmail",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: { email: { required: true, type: "String" } },
@@ -7210,8 +7101,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "sendVerifyEmail",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkSendVerifyEmailUsersInput!]" }
@@ -7225,9 +7116,9 @@ stack: ${String(
       operationReturnType: "VerifyEmailUser",
       functionName: "verifyEmail",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: { code: { required: true, type: "String" } },
@@ -7248,8 +7139,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "verifyEmail",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkVerifyEmailUsersInput!]" }
@@ -7263,9 +7154,9 @@ stack: ${String(
       operationReturnType: "SendResetPasswordUser",
       functionName: "sendResetPassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: { email: { required: true, type: "String" } },
@@ -7286,8 +7177,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "sendResetPassword",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkSendResetPasswordUsersInput!]" }
@@ -7301,9 +7192,9 @@ stack: ${String(
       operationReturnType: "ResetPasswordUser",
       functionName: "resetPassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7327,8 +7218,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "resetPassword",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkResetPasswordUsersInput!]" }
@@ -7342,9 +7233,9 @@ stack: ${String(
       operationReturnType: "ChangePasswordUser",
       functionName: "changePassword",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7369,8 +7260,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "changePassword",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkChangePasswordUsersInput!]" }
@@ -7384,9 +7275,9 @@ stack: ${String(
       operationReturnType: "UpsertUser",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$7,
+      modelSelectionField: modelApiIdentifier$9,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7422,8 +7313,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$7,
-      modelSelectionField: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$9,
+      modelSelectionField: pluralModelApiIdentifier$9,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkUpsertUsersInput!]" } },
       paramOnlyVariables: ["on"],
@@ -7442,10 +7333,10 @@ stack: ${String(
     }
   ];
   const UserManager = buildModelManager(
-    modelApiIdentifier$7,
-    pluralModelApiIdentifier$7,
+    modelApiIdentifier$9,
+    pluralModelApiIdentifier$9,
     DefaultUserSelection,
-    operations$7
+    operations$9
   );
   const DefaultConversationSelection = {
     __typename: true,
@@ -7463,63 +7354,63 @@ stack: ${String(
     subject: true,
     updatedAt: true
   };
-  const modelApiIdentifier$6 = "conversation";
-  const pluralModelApiIdentifier$6 = "conversations";
-  const operations$6 = [
+  const modelApiIdentifier$8 = "conversation";
+  const pluralModelApiIdentifier$8 = "conversations";
+  const operations$8 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$8,
       findByVariableName: "id",
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: modelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$8,
       findByVariableName: "id",
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$8,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$8,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$6,
-      modelApiIdentifier: modelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$8,
+      modelApiIdentifier: modelApiIdentifier$8,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$8,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$6,
+      operationName: pluralModelApiIdentifier$8,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       defaultSelection: DefaultConversationSelection,
       namespace: null
     },
@@ -7529,9 +7420,9 @@ stack: ${String(
       operationReturnType: "CreateConversation",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$8,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7554,8 +7445,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
+      modelSelectionField: pluralModelApiIdentifier$8,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkCreateConversationsInput!]" }
@@ -7569,9 +7460,9 @@ stack: ${String(
       operationReturnType: "UpdateConversation",
       functionName: "update",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$8,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7595,8 +7486,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "update",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
+      modelSelectionField: pluralModelApiIdentifier$8,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpdateConversationsInput!]" }
@@ -7610,9 +7501,9 @@ stack: ${String(
       operationReturnType: "DeleteConversation",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$8,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7633,8 +7524,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
+      modelSelectionField: pluralModelApiIdentifier$8,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7646,9 +7537,9 @@ stack: ${String(
       operationReturnType: "UpsertConversation",
       functionName: "upsert",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$6,
+      modelSelectionField: modelApiIdentifier$8,
       isBulk: false,
       isDeleter: false,
       variables: {
@@ -7675,8 +7566,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "upsert",
-      modelApiIdentifier: modelApiIdentifier$6,
-      modelSelectionField: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$8,
+      modelSelectionField: pluralModelApiIdentifier$8,
       namespace: null,
       variables: {
         inputs: { required: true, type: "[BulkUpsertConversationsInput!]" }
@@ -7697,10 +7588,10 @@ stack: ${String(
     }
   ];
   const ConversationManager = buildModelManager(
-    modelApiIdentifier$6,
-    pluralModelApiIdentifier$6,
+    modelApiIdentifier$8,
+    pluralModelApiIdentifier$8,
     DefaultConversationSelection,
-    operations$6
+    operations$8
   );
   const DefaultMessageSelection = {
     __typename: true,
@@ -7716,63 +7607,63 @@ stack: ${String(
     updatedAt: true,
     userId: true
   };
-  const modelApiIdentifier$5 = "message";
-  const pluralModelApiIdentifier$5 = "messages";
-  const operations$5 = [
+  const modelApiIdentifier$7 = "message";
+  const pluralModelApiIdentifier$7 = "messages";
+  const operations$7 = [
     {
       type: "findOne",
-      operationName: modelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
+      operationName: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       findByVariableName: "id",
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: modelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
+      operationName: modelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       findByVariableName: "id",
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findMany",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findFirst",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindFirst",
-      operationName: pluralModelApiIdentifier$5,
-      modelApiIdentifier: modelApiIdentifier$5,
+      operationName: pluralModelApiIdentifier$7,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "findOne",
-      operationName: pluralModelApiIdentifier$5,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "findById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
     {
       type: "maybeFindOne",
-      operationName: pluralModelApiIdentifier$5,
+      operationName: pluralModelApiIdentifier$7,
       functionName: "maybeFindById",
       findByField: "id",
       findByVariableName: "id",
-      modelApiIdentifier: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
       defaultSelection: DefaultMessageSelection,
       namespace: null
     },
@@ -7782,9 +7673,9 @@ stack: ${String(
       operationReturnType: "CreateMessage",
       functionName: "create",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: false,
-      modelSelectionField: modelApiIdentifier$5,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: false,
       variables: { message: { required: false, type: "CreateMessageInput" } },
@@ -7805,8 +7696,8 @@ stack: ${String(
       acceptsModelInput: true,
       operatesWithRecordIdentity: false,
       singleActionFunctionName: "create",
-      modelApiIdentifier: modelApiIdentifier$5,
-      modelSelectionField: pluralModelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { inputs: { required: true, type: "[BulkCreateMessagesInput!]" } },
       paramOnlyVariables: [],
@@ -7818,9 +7709,9 @@ stack: ${String(
       operationReturnType: "DeleteMessage",
       functionName: "delete",
       namespace: null,
-      modelApiIdentifier: modelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
       operatesWithRecordIdentity: true,
-      modelSelectionField: modelApiIdentifier$5,
+      modelSelectionField: modelApiIdentifier$7,
       isBulk: false,
       isDeleter: true,
       variables: { id: { required: true, type: "GadgetID" } },
@@ -7841,8 +7732,8 @@ stack: ${String(
       acceptsModelInput: false,
       operatesWithRecordIdentity: true,
       singleActionFunctionName: "delete",
-      modelApiIdentifier: modelApiIdentifier$5,
-      modelSelectionField: pluralModelApiIdentifier$5,
+      modelApiIdentifier: modelApiIdentifier$7,
+      modelSelectionField: pluralModelApiIdentifier$7,
       namespace: null,
       variables: { ids: { required: true, type: "[GadgetID!]" } },
       paramOnlyVariables: [],
@@ -7861,9 +7752,118 @@ stack: ${String(
     }
   ];
   const MessageManager = buildModelManager(
+    modelApiIdentifier$7,
+    pluralModelApiIdentifier$7,
+    DefaultMessageSelection,
+    operations$7
+  );
+  const DefaultSessionSelection$1 = {
+    __typename: true,
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    userId: true
+  };
+  const modelApiIdentifier$6 = "session";
+  const pluralModelApiIdentifier$6 = "sessions";
+  const operations$6 = [
+    {
+      type: "findOne",
+      operationName: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
+      findByVariableName: "id",
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: modelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
+      findByVariableName: "id",
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findMany",
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findFirst",
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindFirst",
+      operationName: pluralModelApiIdentifier$6,
+      modelApiIdentifier: modelApiIdentifier$6,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "findOne",
+      operationName: pluralModelApiIdentifier$6,
+      functionName: "findById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier: modelApiIdentifier$6,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "maybeFindOne",
+      operationName: pluralModelApiIdentifier$6,
+      functionName: "maybeFindById",
+      findByField: "id",
+      findByVariableName: "id",
+      modelApiIdentifier: modelApiIdentifier$6,
+      defaultSelection: DefaultSessionSelection$1,
+      namespace: null
+    },
+    {
+      type: "computedView",
+      operationName: "view",
+      functionName: "view",
+      gqlFieldName: "sessionGellyView",
+      namespace: null,
+      variables: {
+        query: { type: "String", required: true },
+        args: { type: "JSONObject" }
+      }
+    }
+  ];
+  const SessionManager = buildModelManager(
+    modelApiIdentifier$6,
+    pluralModelApiIdentifier$6,
+    DefaultSessionSelection$1,
+    operations$6
+  );
+  const DefaultSessionSelection = {
+    __typename: true,
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    userId: true
+  };
+  const modelApiIdentifier$5 = "session";
+  const pluralModelApiIdentifier$5 = "sessions";
+  const operations$5 = [
+    {
+      type: "get",
+      operationName: "currentSession",
+      defaultSelection: DefaultSessionSelection,
+      modelApiIdentifier: modelApiIdentifier$5,
+      namespace: null
+    }
+  ];
+  const CurrentSessionManager = buildModelManager(
     modelApiIdentifier$5,
     pluralModelApiIdentifier$5,
-    DefaultMessageSelection,
+    DefaultSessionSelection,
     operations$5
   );
   const DefaultOrganizationSelection = {
@@ -8877,10 +8877,10 @@ stack: ${String(
     createdAt: true,
     domain: true,
     name: true,
-    updatedAt: true,
-    state: true,
     parentOrganizationId: true,
     shopId: true,
+    updatedAt: true,
+    state: true,
     userId: true
   };
   const modelApiIdentifier = "shop";
@@ -9258,14 +9258,6 @@ stack: ${String(
           organizationId: { required: false, type: "String" }
         }
       });
-      this.testParams = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "testParams",
-        operationName: "testParams",
-        operationReturnType: "TestParams",
-        namespace: null,
-        variables: { testString: { required: false, type: "String" } }
-      });
       this.trackEvent = buildGlobalAction(this, {
         type: "globalAction",
         functionName: "trackEvent",
@@ -9385,21 +9377,21 @@ stack: ${String(
       if (typeof window != "undefined" && typeof window.document != "undefined" && this.connection.authenticationMode == AuthenticationMode.APIKey && !((_b = options == null ? void 0 : options.authenticationMode) == null ? void 0 : _b.dangerouslyAllowBrowserApiKey)) {
         throw new Error("GGT_BROWSER_API_KEY_USAGE: Using a Gadget API key to authenticate this client object is insecure and will leak your API keys to attackers. Please use a different authentication mode.");
       }
-      this.session = new SessionManager(this.connection);
-      this.currentSession = new CurrentSessionManager(this.connection);
       this.user = new UserManager(this.connection);
       this.conversation = new ConversationManager(this.connection);
       this.message = new MessageManager(this.connection);
+      this.session = new SessionManager(this.connection);
+      this.currentSession = new CurrentSessionManager(this.connection);
       this.organization = new OrganizationManager(this.connection);
       this.customer = new CustomerManager(this.connection);
       this.testModel = new TestModelManager(this.connection);
       this.analyticsFIVE = new AnalyticsFIVEManager(this.connection);
       this.shop = new ShopManager(this.connection);
       this.internal = {
-        session: new InternalModelManager("session", this.connection, { "pluralApiIdentifier": "sessions", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         user: new InternalModelManager("user", this.connection, { "pluralApiIdentifier": "users", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         conversation: new InternalModelManager("conversation", this.connection, { "pluralApiIdentifier": "conversations", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         message: new InternalModelManager("message", this.connection, { "pluralApiIdentifier": "messages", "hasAmbiguousIdentifiers": false, "namespace": [] }),
+        session: new InternalModelManager("session", this.connection, { "pluralApiIdentifier": "sessions", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         organization: new InternalModelManager("organization", this.connection, { "pluralApiIdentifier": "organizations", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         customer: new InternalModelManager("customer", this.connection, { "pluralApiIdentifier": "customers", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         testModel: new InternalModelManager("testModel", this.connection, { "pluralApiIdentifier": "testModels", "hasAmbiguousIdentifiers": false, "namespace": [] }),
@@ -9516,7 +9508,7 @@ stack: ${String(
       return this.toString();
     }
   }
-  ShopappchatClient.prototype[$modelRelationships] = { "session": { "user": { "type": "BelongsTo", "model": "user" } }, "user": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" } }, "conversation": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" }, "customer": { "type": "BelongsTo", "model": "customer" } }, "message": { "conversation": { "type": "BelongsTo", "model": "conversation" }, "user": { "type": "BelongsTo", "model": "user" } }, "organization": { "conversations": { "type": "HasMany", "model": "conversation" }, "users": { "type": "HasMany", "model": "user" }, "shops": { "type": "HasMany", "model": "shop" } }, "customer": {}, "testModel": { "user": { "type": "BelongsTo", "model": "user" } }, "analyticsFIVE": { "user": { "type": "BelongsTo", "model": "user" } }, "shop": { "user": { "type": "BelongsTo", "model": "user" }, "parentOrganization": { "type": "BelongsTo", "model": "organization" } } };
+  ShopappchatClient.prototype[$modelRelationships] = { "user": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" } }, "conversation": { "messages": { "type": "HasMany", "model": "message" }, "organization": { "type": "BelongsTo", "model": "organization" }, "customer": { "type": "BelongsTo", "model": "customer" } }, "message": { "conversation": { "type": "BelongsTo", "model": "conversation" }, "user": { "type": "BelongsTo", "model": "user" } }, "session": { "user": { "type": "BelongsTo", "model": "user" } }, "organization": { "conversations": { "type": "HasMany", "model": "conversation" }, "users": { "type": "HasMany", "model": "user" }, "shops": { "type": "HasMany", "model": "shop" } }, "customer": {}, "testModel": { "user": { "type": "BelongsTo", "model": "user" } }, "analyticsFIVE": { "user": { "type": "BelongsTo", "model": "user" } }, "shop": { "user": { "type": "BelongsTo", "model": "user" }, "parentOrganization": { "type": "BelongsTo", "model": "organization" } } };
   const coreImplementation = {
     GadgetRecord,
     disambiguateActionVariables,
