@@ -9114,6 +9114,114 @@ stack: ${String(
     DefaultShopSelection,
     operations
   );
+  class WidgetNamespace {
+    constructor(clientOrParent) {
+      this.clientOrParent = clientOrParent;
+      this.getWidgetMessages = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "getWidgetMessages",
+        operationName: "getWidgetMessages",
+        operationReturnType: "WidgetGetWidgetMessages",
+        namespace: "widget",
+        variables: {
+          conversationId: { required: false, type: "String" },
+          shopId: { required: false, type: "String" }
+        }
+      });
+      this.initWidgetTwo = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "initWidgetTwo",
+        operationName: "initWidgetTwo",
+        operationReturnType: "WidgetInitWidgetTwo",
+        namespace: "widget",
+        variables: {
+          shopId: { required: false, type: "String" },
+          shopName: { required: false, type: "String" },
+          orgSlug: { required: false, type: "String" },
+          email: { required: false, type: "String" },
+          country: { required: false, type: "String" }
+        }
+      });
+      this.logEvent = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "logEvent",
+        operationName: "logEvent",
+        operationReturnType: "WidgetLogEvent",
+        namespace: "widget",
+        variables: {
+          event: { required: false, type: "String" },
+          properties: { required: false, type: "JSONObject" },
+          distinctId: { required: false, type: "String" },
+          sessionId: { required: false, type: "String" }
+        }
+      });
+      this.markConversationRead = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "markConversationRead",
+        operationName: "markConversationRead",
+        operationReturnType: "WidgetMarkConversationRead",
+        namespace: "widget",
+        variables: {
+          conversationId: { required: false, type: "String" },
+          shopId: { required: false, type: "String" }
+        }
+      });
+      this.markEmailRead = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "markEmailRead",
+        operationName: "markEmailRead",
+        operationReturnType: "WidgetMarkEmailRead",
+        namespace: "widget",
+        variables: { messageId: { required: false, type: "String" } }
+      });
+      this.sendHeartbeat = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "sendHeartbeat",
+        operationName: "sendHeartbeat",
+        operationReturnType: "WidgetSendHeartbeat",
+        namespace: "widget",
+        variables: { email: { required: false, type: "String" } }
+      });
+      this.sendMessageEmail = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "sendMessageEmail",
+        operationName: "sendMessageEmail",
+        operationReturnType: "WidgetSendMessageEmail",
+        namespace: "widget",
+        variables: {
+          messageId: { required: false, type: "String" },
+          conversationId: { required: false, type: "String" }
+        }
+      });
+      this.sendWidgetMessage = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "sendWidgetMessage",
+        operationName: "sendWidgetMessage",
+        operationReturnType: "WidgetSendWidgetMessage",
+        namespace: "widget",
+        variables: {
+          conversationId: { required: false, type: "String" },
+          content: { required: false, type: "String" },
+          shopId: { required: false, type: "String" },
+          attachmentBase64: { required: false, type: "String" },
+          attachmentFileName: { required: false, type: "String" },
+          attachmentMimeType: { required: false, type: "String" }
+        }
+      });
+      this.view = buildInlineComputedView(this, {
+        type: "computedView",
+        operationName: "gellyView",
+        functionName: "view",
+        gqlFieldName: "gellyView",
+        namespace: "widget",
+        variables: {
+          query: { type: "String", required: true },
+          args: { type: "JSONObject" }
+        }
+      });
+      this.connection = this.clientOrParent.connection;
+    }
+  }
   const __vite_import_meta_env__ = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false };
   const productionEnv = "production";
   const fallbackEnv = "development";
@@ -9156,97 +9264,6 @@ stack: ${String(
     constructor(options) {
       var _a, _b;
       this.$args = Symbol.for("gadget/fieldArgs");
-      this.getWidgetMessages = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "getWidgetMessages",
-        operationName: "getWidgetMessages",
-        operationReturnType: "GetWidgetMessages",
-        namespace: null,
-        variables: {
-          conversationId: { required: false, type: "String" },
-          shopId: { required: false, type: "String" }
-        }
-      });
-      this.initWidgetTwo = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "initWidgetTwo",
-        operationName: "initWidgetTwo",
-        operationReturnType: "InitWidgetTwo",
-        namespace: null,
-        variables: {
-          shopId: { required: false, type: "String" },
-          shopName: { required: false, type: "String" },
-          orgSlug: { required: false, type: "String" },
-          email: { required: false, type: "String" },
-          country: { required: false, type: "String" }
-        }
-      });
-      this.logEvent = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "logEvent",
-        operationName: "logEvent",
-        operationReturnType: "LogEvent",
-        namespace: null,
-        variables: {
-          event: { required: false, type: "String" },
-          properties: { required: false, type: "JSONObject" },
-          distinctId: { required: false, type: "String" },
-          sessionId: { required: false, type: "String" }
-        }
-      });
-      this.markConversationRead = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "markConversationRead",
-        operationName: "markConversationRead",
-        operationReturnType: "MarkConversationRead",
-        namespace: null,
-        variables: {
-          conversationId: { required: false, type: "String" },
-          shopId: { required: false, type: "String" }
-        }
-      });
-      this.markEmailRead = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "markEmailRead",
-        operationName: "markEmailRead",
-        operationReturnType: "MarkEmailRead",
-        namespace: null,
-        variables: { messageId: { required: false, type: "String" } }
-      });
-      this.sendHeartbeat = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "sendHeartbeat",
-        operationName: "sendHeartbeat",
-        operationReturnType: "SendHeartbeat",
-        namespace: null,
-        variables: { email: { required: false, type: "String" } }
-      });
-      this.sendMessageEmail = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "sendMessageEmail",
-        operationName: "sendMessageEmail",
-        operationReturnType: "SendMessageEmail",
-        namespace: null,
-        variables: {
-          messageId: { required: false, type: "String" },
-          conversationId: { required: false, type: "String" }
-        }
-      });
-      this.sendWidgetMessage = buildGlobalAction(this, {
-        type: "globalAction",
-        functionName: "sendWidgetMessage",
-        operationName: "sendWidgetMessage",
-        operationReturnType: "SendWidgetMessage",
-        namespace: null,
-        variables: {
-          conversationId: { required: false, type: "String" },
-          content: { required: false, type: "String" },
-          shopId: { required: false, type: "String" },
-          attachmentBase64: { required: false, type: "String" },
-          attachmentFileName: { required: false, type: "String" },
-          attachmentMimeType: { required: false, type: "String" }
-        }
-      });
       this.shopifyPartnerApi = buildGlobalAction(this, {
         type: "globalAction",
         functionName: "shopifyPartnerApi",
@@ -9271,15 +9288,13 @@ stack: ${String(
           timestamp: { required: false, type: "String" }
         }
       });
-      this.trackEvents = buildGlobalAction(this, {
+      this.trackEventQueue = buildGlobalAction(this, {
         type: "globalAction",
-        functionName: "trackEvents",
-        operationName: "trackEvents",
-        operationReturnType: "TrackEvents",
+        functionName: "trackEventQueue",
+        operationName: "trackEventQueue",
+        operationReturnType: "TrackEventQueue",
         namespace: null,
-        variables: {
-          batch: { required: false, type: "[TrackEventsBatchElementTypeInput!]" }
-        }
+        variables: {}
       });
       this.trackEventsTWO = buildGlobalAction(this, {
         type: "globalAction",
@@ -9387,6 +9402,7 @@ stack: ${String(
       this.testModel = new TestModelManager(this.connection);
       this.analyticsFIVE = new AnalyticsFIVEManager(this.connection);
       this.shop = new ShopManager(this.connection);
+      this.widget = new WidgetNamespace(this);
       this.internal = {
         user: new InternalModelManager("user", this.connection, { "pluralApiIdentifier": "users", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         conversation: new InternalModelManager("conversation", this.connection, { "pluralApiIdentifier": "conversations", "hasAmbiguousIdentifiers": false, "namespace": [] }),
@@ -9396,7 +9412,8 @@ stack: ${String(
         customer: new InternalModelManager("customer", this.connection, { "pluralApiIdentifier": "customers", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         testModel: new InternalModelManager("testModel", this.connection, { "pluralApiIdentifier": "testModels", "hasAmbiguousIdentifiers": false, "namespace": [] }),
         analyticsFIVE: new InternalModelManager("analyticsFIVE", this.connection, { "pluralApiIdentifier": "analyticsFIVEs", "hasAmbiguousIdentifiers": false, "namespace": [] }),
-        shop: new InternalModelManager("shop", this.connection, { "pluralApiIdentifier": "shops", "hasAmbiguousIdentifiers": false, "namespace": [] })
+        shop: new InternalModelManager("shop", this.connection, { "pluralApiIdentifier": "shops", "hasAmbiguousIdentifiers": false, "namespace": [] }),
+        widget: {}
       };
     }
     /**
