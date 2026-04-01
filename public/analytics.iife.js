@@ -9535,6 +9535,8 @@ stack: ${String(
   const api = new Client({
     environment: "production"
   });
+  console.log("Gadget client:");
+  console.log(api);
   const getShopDomain = () => {
     const params = new URLSearchParams(window.location.search);
     const shop = params.get("shop");
