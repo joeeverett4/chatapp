@@ -3,7 +3,7 @@ export default async function route({ request, reply, api, logger }) {
 
   if (messageId) {
     try {
-      await api.markEmailRead({ messageId });
+      await api.widget.markEmailRead({ messageId });
     } catch (err) {
       logger.error("Failed to mark email as read", { error: err.message });
     }

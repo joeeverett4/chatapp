@@ -30,7 +30,7 @@ export async function onSuccess({ record, api, logger }) {
 
     if (isOffline) {
       logger.info("Customer offline, sending email", { messageId: record.id });
-      await api.sendMessageEmail({
+      await api.widget.sendMessageEmail({
         messageId: record.id,
         conversationId: record.conversationId
       });

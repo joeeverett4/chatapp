@@ -16482,7 +16482,7 @@ stack: ${String(
       try {
         const country = await getCountry();
         console.log("Country:", country);
-        const data = await api.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail, country });
+        const data = await api.widget.initWidgetTwo({ shopId, shopName, orgSlug, email: userEmail, country });
         setConversationId(data.conversationId);
         setMessages(data.messages || []);
         saveSession(shopId, { conversationId: data.conversationId, email: userEmail });
@@ -16498,7 +16498,7 @@ stack: ${String(
       console.log("calcs");
       try {
         console.log("zalcs");
-        await api.markConversationRead({ conversationId, shopId });
+        await api.widget.markConversationRead({ conversationId, shopId });
       } catch (err) {
       }
     }, [conversationId, shopId]);
@@ -16506,7 +16506,7 @@ stack: ${String(
       var _a, _b;
       if (!conversationId || !shopId) return;
       try {
-        const data = await api.getWidgetMessages({ conversationId, shopId });
+        const data = await api.widget.getWidgetMessages({ conversationId, shopId });
         console.log("getWidgetMessages response:", data);
         console.log("operatorLastReadAt from API:", data.operatorLastReadAt);
         setMessages(data.messages || []);
@@ -16548,7 +16548,7 @@ stack: ${String(
           params.attachmentFileName = file.name;
           params.attachmentMimeType = file.type;
         }
-        const data = await api.sendWidgetMessage(params);
+        const data = await api.widget.sendWidgetMessage(params);
         setMessages((prev) => [...prev, data.message]);
       } catch (err) {
         setError(err.message);
@@ -16593,7 +16593,7 @@ stack: ${String(
           console.log("Heartbeat check:", { isActive, visible: document.visibilityState, email });
           if (isActive && document.visibilityState === "visible") {
             try {
-              await api.sendHeartbeat({ email });
+              await api.widget.sendHeartbeat({ email });
               console.log("Heartbeat sent successfully");
             } catch (err) {
               console.log("Heartbeat failed:", err);
