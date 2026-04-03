@@ -9601,6 +9601,9 @@ stack: ${String(
       }
     };
     const track = (event, properties = {}) => {
+      console.log("event", event);
+      console.log("properties");
+      console.log(properties);
       queue.push({
         event,
         properties: {
