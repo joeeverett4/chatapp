@@ -9304,6 +9304,9 @@ stack: ${String(
         namespace: null,
         variables: {
           event: { required: false, type: "String" },
+          properties: { required: false, type: "JSONObject" },
+          testProp: { required: false, type: "String" },
+          testPropObject: { required: false, type: "JSONObject" },
           distinctId: { required: false, type: "String" },
           sessionId: { required: false, type: "String" },
           timestamp: { required: false, type: "String" },
