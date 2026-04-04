@@ -9610,12 +9610,7 @@ stack: ${String(
       queue.push({
         event,
         properties: {
-          ...properties,
-          orgSlug: config.orgSlug,
-          shopId: config.shopId,
-          shopDomain: getShopDomain(),
-          $url: window.location.href,
-          $referrer: document.referrer
+          ...properties
         },
         distinctId: getDistinctId(),
         sessionId: getSessionId(),
