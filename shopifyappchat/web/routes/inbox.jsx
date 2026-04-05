@@ -109,7 +109,7 @@ export default function AppShell() {
       {/* Content Area - adapts to layout type */}
       {viewData.layout === "single" ? (
         // Single column layout
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {viewData.fullContent}
         </div>
       ) : (

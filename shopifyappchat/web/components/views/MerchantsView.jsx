@@ -1,106 +1,74 @@
 import { useFindMany } from "@gadgetinc/react";
 import { api } from "../../api";
-import { Users, Plus, Globe, ExternalLink } from "lucide-react";
-import { ConversationAvatar } from "../shared/ViewComponents";
 
 export function MerchantsView({ isActive = true, onSelectMerchant }) {
 
-  const [{ data: merchants, error }] = useFindMany(api.shop, {
+  const [{ data: merchants, fetching, error }] = useFindMany(api.shop, {
     filter: {
       parentOrganizationId: { equals: "1" },
     },
     sort: { createdAt: "Descending" },
+    pause: !isActive,
   });
 
-  console.log("merchantss:", merchants);
-  if (error) console.log("error:", error);
+  const getStatusTone = (state) => {
+    switch (state) {
+      case "INSTALLED": return "success";
+      case "UNINSTALLED": return "critical";
+      default: return "info";
+    }
+  };
+
+  const handleRowClick = (merchant) => {
+    onSelectMerchant?.(merchant.domain);
+  };
 
   return {
-    layout: "single", // Use single column layout
+    layout: "single",
 
     fullContent: (
-      <div className="flex-1 flex flex-col bg-white">
-        {/* Header */}
-        <div className="p-4 border-b border-gray-200">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-900">Merchants</h2>
-            <button className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-              <Plus className="w-4 h-4" />
-              Add Merchant
-            </button>
-          </div>
-        </div>
-
-        {/* Merchant Table */}
-        <div className="flex-1 overflow-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 sticky top-0">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Domain</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop ID</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {merchants?.map((merchant) => (
-                <tr
-                  key={merchant.id}
-                  className="hover:bg-gray-50 cursor-pointer"
-                  onClick={() => onSelectMerchant?.(merchant.domain)}
-                >
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-3">
-                      <ConversationAvatar name={merchant.name || merchant.domain} size="sm" />
-                      <span className="font-medium text-gray-900">
-                        {merchant.name || "Unnamed Shop"}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-500">
-                    {merchant.domain}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-500">
-                    {merchant.shopId}
-                  </td>
-                  <td className="px-4 py-4">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${merchant.state === "INSTALLED"
-                      ? "bg-green-50 text-green-700 border-green-200"
-                      : "bg-gray-50 text-gray-700 border-gray-200"
-                      }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${merchant.state === "INSTALLED" ? "bg-green-500" : "bg-gray-500"
-                        }`} />
-                      {merchant.state || "Unknown"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4">
-                    <button
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(`https://${merchant.domain}`, '_blank');
-                      }}
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <s-page heading="Merchants" inlineSize="small">
+          <s-section>
+            <s-table loading={fetching}>
+                <s-table-header-row>
+                  <s-table-header>Shop</s-table-header>
+                  <s-table-header>Domain</s-table-header>
+                  <s-table-header>Status</s-table-header>
+                </s-table-header-row>
+                <s-table-body>
+                  {merchants?.map((merchant) => (
+                    <s-table-row
+                      key={merchant.id}
+                      onClick={() => handleRowClick(merchant)}
+                      style={{ cursor: 'pointer' }}
                     >
-                      <ExternalLink className="w-4 h-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <s-table-cell>
+                        <s-text fontWeight="semibold">{merchant.name || "Unnamed Shop"}</s-text>
+                      </s-table-cell>
+                      <s-table-cell>
+                        <s-text tone="subdued">{merchant.domain}</s-text>
+                      </s-table-cell>
+                      <s-table-cell>
+                        <s-badge tone={getStatusTone(merchant.state)}>
+                          {merchant.state || "Unknown"}
+                        </s-badge>
+                      </s-table-cell>
+                    </s-table-row>
+                  ))}
+                </s-table-body>
+              </s-table>
 
-          {(!merchants || merchants.length === 0) && (
-            <div className="flex items-center justify-center h-64">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-gray-400" />
-                </div>
-                <p className="text-sm text-gray-500">No merchants found</p>
-              </div>
-            </div>
-          )}
-        </div>
+            {/* Empty State */}
+            {!fetching && (!merchants || merchants.length === 0) && (
+              <s-box padding="800">
+                <s-stack align="center" gap="300">
+                  <s-text tone="subdued">No merchants found</s-text>
+                </s-stack>
+              </s-box>
+            )}
+          </s-section>
+        </s-page>
       </div>
     ),
 
