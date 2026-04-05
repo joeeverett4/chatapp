@@ -5,7 +5,7 @@ const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 
 const config = getConfig();
 const api = new Client({
-  environment: config.environment || 'development'
+  environment: config.environment || 'production'
 });
 
 console.log("this is the gadget client")

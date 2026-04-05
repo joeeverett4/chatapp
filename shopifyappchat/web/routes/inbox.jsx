@@ -1,44 +1,54 @@
 import { useState } from "react";
 import { useUser } from "@gadgetinc/react";
 import { api } from "../api";
-import { Inbox, Users } from "lucide-react";
-import { NavItem } from "../components/shared/ViewComponents";
 import { InboxView } from "../components/views/InboxView";
 import { MerchantsView } from "../components/views/MerchantsView";
 import { MerchantView } from "../components/views/MerchantView";
 
-// View configuration - add new views here
+// View configuration
 const viewConfig = {
   inbox: {
     label: "Inbox",
-    icon: Inbox,
-    useView: InboxView,
+    icon: "message",
   },
   merchants: {
     label: "Merchants",
-    icon: Users,
-    useView: MerchantsView,
+    icon: "store",
   },
-  // Easy to add more views:
-  // settings: {
-  //   label: "Settings",
-  //   icon: Settings,
-  //   useView: SettingsView,
-  // },
 };
+
+function SidebarNavItem({ icon, label, active, badge, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        padding: '8px 12px',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        backgroundColor: active ? '#f3f3f3' : 'transparent',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+      }}
+    >
+      <s-icon name={icon} />
+      <s-text fontWeight={active ? "semibold" : "regular"}>{label}</s-text>
+      {badge > 0 && (
+        <s-badge tone="info">{badge}</s-badge>
+      )}
+    </div>
+  );
+}
 
 export default function AppShell() {
   const user = useUser(api);
   const [activeView, setActiveView] = useState("inbox");
   const [selectedMerchantDomain, setSelectedMerchantDomain] = useState(null);
 
-  // Always call all hooks (React requires consistent hook calls)
-  // Pass isActive so views can pause queries when not visible
   const inboxData = InboxView({ isActive: activeView === "inbox" });
   const merchantsData = MerchantsView({
     isActive: activeView === "merchants" && !selectedMerchantDomain,
     onSelectMerchant: (domain) => {
-      console.log("Selected merchant domain:", domain);
       setSelectedMerchantDomain(domain);
     },
   });
@@ -47,7 +57,6 @@ export default function AppShell() {
     onBack: () => setSelectedMerchantDomain(null),
   });
 
-  // Map view keys to their data
   const viewDataMap = {
     inbox: inboxData,
     merchants: selectedMerchantDomain ? merchantData : merchantsData,
@@ -55,7 +64,6 @@ export default function AppShell() {
 
   const viewData = viewDataMap[activeView];
 
-  // Reset selected merchant when switching away from merchants view
   const handleViewChange = (key) => {
     if (key !== "merchants") {
       setSelectedMerchantDomain(null);
@@ -64,23 +72,40 @@ export default function AppShell() {
   };
 
   return (
-    <div className="flex h-screen bg-[#f3f4f6] text-[#1d1f27]">
-      {/* Left Sidebar - Navigation */}
-      <div className="w-56 bg-[#e8e8e4] flex flex-col border-r border-[#d9d9d5]">
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {/* Left Sidebar */}
+      <div style={{
+        width: '220px',
+        backgroundColor: '#f6f6f7',
+        borderRight: '1px solid #e1e3e5',
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
         {/* Logo */}
-        <div className="p-3 border-b border-[#d9d9d5]">
-          <div className="flex items-center gap-2 px-2 py-1.5">
-            <div className="w-5 h-5 bg-orange-500 rounded flex items-center justify-center">
-              <span className="text-white text-xs font-bold">S</span>
+        <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              backgroundColor: '#f97316',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '12px',
+            }}>
+              S
             </div>
-            <span className="text-sm font-medium">Support Chat</span>
+            <s-text fontWeight="semibold">Support Chat</s-text>
           </div>
         </div>
 
-        {/* Main Navigation - Generated from config */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        {/* Navigation */}
+        <div style={{ flex: 1, padding: '8px' }}>
           {Object.entries(viewConfig).map(([key, config]) => (
-            <NavItem
+            <SidebarNavItem
               key={key}
               icon={config.icon}
               label={config.label}
@@ -89,19 +114,13 @@ export default function AppShell() {
               onClick={() => handleViewChange(key)}
             />
           ))}
-        </nav>
+        </div>
 
         {/* User Profile */}
-        <div className="p-3 border-t border-[#d9d9d5]">
-          <div className="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-[#dcdbcf] cursor-pointer transition-colors">
-            <div className="w-7 h-7 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-medium">
-                {user?.email?.charAt(0).toUpperCase() || 'U'}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium truncate">{user?.email?.split('@')[0] || 'User'}</div>
-            </div>
+        <div style={{ padding: '16px', borderTop: '1px solid #e1e3e5' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <s-avatar name={user?.email || 'User'} size="small" />
+            <s-text>{user?.email?.split('@')[0] || 'User'}</s-text>
           </div>
         </div>
       </div>
