@@ -1,0 +1,56 @@
+.timeline-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+}
+
+.timeline-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% + 16px);
+  background-color: #E1E3E5;
+  z-index: 0;
+}
+
+.timeline-icon-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #E1E3E5;
+}
+
+.timeline-icon-base-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+.timeline-icon-polaris-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.timeline-event-description {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.timeline-event-link-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
