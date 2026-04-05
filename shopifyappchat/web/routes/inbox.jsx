@@ -5,6 +5,7 @@ import { Inbox, Users } from "lucide-react";
 import { NavItem } from "../components/shared/ViewComponents";
 import { InboxView } from "../components/views/InboxView";
 import { MerchantsView } from "../components/views/MerchantsView";
+import { MerchantView } from "../components/views/MerchantView";
 
 // View configuration - add new views here
 const viewConfig = {
@@ -29,19 +30,38 @@ const viewConfig = {
 export default function AppShell() {
   const user = useUser(api);
   const [activeView, setActiveView] = useState("inbox");
+  const [selectedMerchantDomain, setSelectedMerchantDomain] = useState(null);
 
   // Always call all hooks (React requires consistent hook calls)
   // Pass isActive so views can pause queries when not visible
   const inboxData = InboxView({ isActive: activeView === "inbox" });
-  const merchantsData = MerchantsView({ isActive: activeView === "merchants" });
+  const merchantsData = MerchantsView({
+    isActive: activeView === "merchants" && !selectedMerchantDomain,
+    onSelectMerchant: (domain) => {
+      console.log("Selected merchant domain:", domain);
+      setSelectedMerchantDomain(domain);
+    },
+  });
+  const merchantData = MerchantView({
+    domain: selectedMerchantDomain,
+    onBack: () => setSelectedMerchantDomain(null),
+  });
 
   // Map view keys to their data
   const viewDataMap = {
     inbox: inboxData,
-    merchants: merchantsData,
+    merchants: selectedMerchantDomain ? merchantData : merchantsData,
   };
 
   const viewData = viewDataMap[activeView];
+
+  // Reset selected merchant when switching away from merchants view
+  const handleViewChange = (key) => {
+    if (key !== "merchants") {
+      setSelectedMerchantDomain(null);
+    }
+    setActiveView(key);
+  };
 
   return (
     <div className="flex h-screen bg-[#f3f4f6] text-[#1d1f27]">
@@ -66,7 +86,7 @@ export default function AppShell() {
               label={config.label}
               active={activeView === key}
               badge={viewDataMap[key]?.badge || 0}
-              onClick={() => setActiveView(key)}
+              onClick={() => handleViewChange(key)}
             />
           ))}
         </nav>

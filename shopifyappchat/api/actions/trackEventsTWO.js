@@ -1,10 +1,10 @@
 export const run = async ({ params, api, logger }) => {
-  
+
   const { event, properties, distinctId, sessionId, timestamp, shopId } = params;
 
   console.log("params")
   logger.info(params)
-  
+
   logger.info("Analytics event received", { event });
 
   await api.analyticsFIVE.create({
@@ -21,9 +21,11 @@ export const run = async ({ params, api, logger }) => {
 
 export const params = {
   event: { type: "string" },
-  properties: { type: "object", properties: {} },
+  properties: { type: "object", additionalProperties: true },
+  testProp: { type: "string" },
+  testPropObject: { type: "object", additionalProperties: true },
   distinctId: { type: "string" },
   sessionId: { type: "string" },
   timestamp: { type: "string" },
-  shopId: {type: "string"}
+  shopId: { type: "string" }
 };

@@ -70,15 +70,13 @@ if (config.orgSlug) {
   };
 
   const track = (event, properties = {}) => {
+    console.log("event", event);
+    console.log("properties");
+    console.log(properties);
     queue.push({
       event,
       properties: {
         ...properties,
-        orgSlug: config.orgSlug,
-        shopId: config.shopId,
-        shopDomain: getShopDomain(),
-        $url: window.location.href,
-        $referrer: document.referrer
       },
       distinctId: getDistinctId(),
       sessionId: getSessionId(),

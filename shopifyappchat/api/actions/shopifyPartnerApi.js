@@ -47,6 +47,7 @@ export const run = async ({ params, logger, api }) => {
   `
   organizationId = process.env.SHOPIFY_PARTNER_ORG_ID;
   accessToken = process.env.SHOPIFY_PARTNER_ACCESS_TOKEN;
+
   const apiVersion = "2026-01";
   const endpoint = `https://partners.shopify.com/${organizationId}/api/${apiVersion}/graphql.json`;
 
@@ -80,20 +81,33 @@ export const run = async ({ params, logger, api }) => {
   console.log("events")
   console.log(events)
 
+  const checkedShops = []
+
   for (const event of events) {
     // Extract numeric ID from GID (e.g., "gid://partners/Shop/12345" -> 12345)
     const shopId = parseInt(event.shop.id.split("/").pop(), 10);
+
+    if (checkedShops.includes(shopId)) {
+      console.log("shop already ran")
+      continue;
+    }
+
+    checkedShops.push(shopId)
 
     const existingShop = await api.shop.maybeFindFirst({
       filter: { shopId: { equals: shopId } }
     });
 
     if (existingShop) {
-      logger.info({ shopId }, "Shop already exists");
+      console.log("Shop already exists");
+      logger.info(existingShop)
+      console.log("event.type")
+      logger.info(event.type)
       await api.shop.update(existingShop.id, {
         state: event.type === "RELATIONSHIP_INSTALLED" ? "INSTALLED" : "UNINSTALLED",
       });
-      logger.info({ shopId }, "Shop updated");
+      console.log("shop updated")
+      logger.info(event.shop.myshopifyDomain);
     } else {
       await api.shop.create({
         shopId,
@@ -102,7 +116,8 @@ export const run = async ({ params, logger, api }) => {
         state: event.type === "RELATIONSHIP_INSTALLED" ? "INSTALLED" : "UNINSTALLED",
         parentOrganization: { _link: "1" } // TODO: replace with actual organization ID
       });
-      logger.info({ shopId }, "Shop created");
+      console.log("shop created")
+      logger.info(event.shop.myshopifyDomain);
     }
   }
 
@@ -123,11 +138,6 @@ export const params = {
 
 export const options = {
   timeoutMS: 3600000,
-  returnType: true,
-  triggers: {
-    scheduler: [
-      { every: "hour", at: "45 mins" },
-    ],
-  },
+  returnType: true
 };
 

@@ -17,10 +17,7 @@ export const permissions: GadgetPermissions = {
       },
       models: {
         analyticsFIVE: {
-          read: {
-            filter:
-              "accessControl/filters/analyticsFIVE/tenant.gelly",
-          },
+          read: true,
           actions: {
             create: true,
             delete: true,

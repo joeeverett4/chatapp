@@ -3,15 +3,16 @@ import { api } from "../../api";
 import { Users, Plus, Globe, ExternalLink } from "lucide-react";
 import { ConversationAvatar } from "../shared/ViewComponents";
 
-export function MerchantsView({ isActive = true }) {
+export function MerchantsView({ isActive = true, onSelectMerchant }) {
 
   const [{ data: merchants, error }] = useFindMany(api.shop, {
     filter: {
       parentOrganizationId: { equals: "1" },
     },
+    sort: { createdAt: "Descending" },
   });
 
-  console.log("merchants:", merchants);
+  console.log("merchantss:", merchants);
   if (error) console.log("error:", error);
 
   return {
@@ -44,7 +45,11 @@ export function MerchantsView({ isActive = true }) {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {merchants?.map((merchant) => (
-                <tr key={merchant.id} className="hover:bg-gray-50">
+                <tr
+                  key={merchant.id}
+                  className="hover:bg-gray-50 cursor-pointer"
+                  onClick={() => onSelectMerchant?.(merchant.domain)}
+                >
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
                       <ConversationAvatar name={merchant.name || merchant.domain} size="sm" />
@@ -70,7 +75,13 @@ export function MerchantsView({ isActive = true }) {
                     </span>
                   </td>
                   <td className="px-4 py-4">
-                    <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                    <button
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(`https://${merchant.domain}`, '_blank');
+                      }}
+                    >
                       <ExternalLink className="w-4 h-4" />
                     </button>
                   </td>
