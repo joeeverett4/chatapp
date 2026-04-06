@@ -41,7 +41,8 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
   if (!customer) {
     customer = await api.customer.create({
       email: email,
-      country: country
+      country: country,
+      lastActiveAt: new Date().toISOString()
     });
     console.log("customer created")
     console.log(customer);

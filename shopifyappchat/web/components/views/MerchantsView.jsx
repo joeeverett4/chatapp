@@ -1,11 +1,19 @@
+import { useState } from "react";
 import { useFindMany } from "@gadgetinc/react";
 import { api } from "../../api";
 
 export function MerchantsView({ isActive = true, onSelectMerchant }) {
+  const [search, setSearch] = useState("");
 
   const [{ data: merchants, fetching, error }] = useFindMany(api.shop, {
     filter: {
       parentOrganizationId: { equals: "1" },
+      ...(search && {
+        OR: [
+          { name: { startsWith: search } },
+          { domain: { startsWith: search } },
+        ]
+      })
     },
     sort: { createdAt: "Descending" },
     pause: !isActive,
@@ -30,6 +38,14 @@ export function MerchantsView({ isActive = true, onSelectMerchant }) {
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
         <s-page heading="Merchants" inlineSize="small">
           <s-section>
+            <s-stack gap="400">
+              <s-search-field
+                placeholder="Search by name or domain..."
+                value={search}
+                onInput={(e) => setSearch(e.target.value)}
+                onClear={() => setSearch("")}
+              />
+              <div style={{ marginTop: '20px' }}>
             <s-table loading={fetching}>
                 <s-table-header-row>
                   <s-table-header>Shop</s-table-header>
@@ -58,6 +74,7 @@ export function MerchantsView({ isActive = true, onSelectMerchant }) {
                   ))}
                 </s-table-body>
               </s-table>
+              </div>
 
             {/* Empty State */}
             {!fetching && (!merchants || merchants.length === 0) && (
@@ -67,6 +84,7 @@ export function MerchantsView({ isActive = true, onSelectMerchant }) {
                 </s-stack>
               </s-box>
             )}
+            </s-stack>
           </s-section>
         </s-page>
       </div>

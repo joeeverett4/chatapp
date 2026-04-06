@@ -16,13 +16,20 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
     filter: { email: { equals: email } }
   });
 
+  console.log("customer");
+  logger.info(customer);
+
   if (!customer) {
+    logger.info("customer not found");
     return { success: false };
   }
 
-  await api.customer.update(customer.id, {
+  let customerUpdated = await api.customer.update(customer.id, {
     lastActiveAt: new Date().toISOString()
   });
+
+  console.log("customer updated");
+  logger.info(customerUpdated);
 
   return { success: true };
 };

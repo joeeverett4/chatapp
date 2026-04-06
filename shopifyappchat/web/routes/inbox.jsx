@@ -4,6 +4,7 @@ import { api } from "../api";
 import { InboxView } from "../components/views/InboxView";
 import { MerchantsView } from "../components/views/MerchantsView";
 import { MerchantView } from "../components/views/MerchantView";
+import { ImportView } from "../components/views/ImportView";
 
 // View configuration
 const viewConfig = {
@@ -14,6 +15,12 @@ const viewConfig = {
   merchants: {
     label: "Merchants",
     icon: "store",
+    submenus: {
+      import: {
+        label: "Import",
+        icon: "import",
+      },
+    },
   },
 };
 
@@ -56,10 +63,12 @@ export default function AppShell() {
     domain: selectedMerchantDomain,
     onBack: () => setSelectedMerchantDomain(null),
   });
+  const importData = ImportView({ isActive: activeView === "import", user });
 
   const viewDataMap = {
     inbox: inboxData,
     merchants: selectedMerchantDomain ? merchantData : merchantsData,
+    import: importData,
   };
 
   const viewData = viewDataMap[activeView];
@@ -104,16 +113,39 @@ export default function AppShell() {
 
         {/* Navigation */}
         <div style={{ flex: 1, padding: '8px' }}>
-          {Object.entries(viewConfig).map(([key, config]) => (
-            <SidebarNavItem
-              key={key}
-              icon={config.icon}
-              label={config.label}
-              active={activeView === key}
-              badge={viewDataMap[key]?.badge || 0}
-              onClick={() => handleViewChange(key)}
-            />
-          ))}
+          {Object.entries(viewConfig).map(([key, config]) => {
+            const submenuKeys = config.submenus ? Object.keys(config.submenus) : [];
+            const isParentActive = activeView === key;
+            const isSubmenuActive = submenuKeys.includes(activeView);
+            const showSubmenus = isParentActive || isSubmenuActive;
+
+            return (
+              <div key={key}>
+                <SidebarNavItem
+                  icon={config.icon}
+                  label={config.label}
+                  active={isParentActive || isSubmenuActive}
+                  badge={key === "merchants" ? 0 : (viewDataMap[key]?.badge || 0)}
+                  onClick={() => handleViewChange(key)}
+                />
+                {/* Render submenus when parent or a submenu is active */}
+                {config.submenus && showSubmenus && (
+                  <div style={{ paddingLeft: '24px' }}>
+                    {Object.entries(config.submenus).map(([subKey, subConfig]) => (
+                      <SidebarNavItem
+                        key={subKey}
+                        icon={subConfig.icon}
+                        label={subConfig.label}
+                        active={activeView === subKey}
+                        badge={viewDataMap[subKey]?.badge || 0}
+                        onClick={() => setActiveView(subKey)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* User Profile */}

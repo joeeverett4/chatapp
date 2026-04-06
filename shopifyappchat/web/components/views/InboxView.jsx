@@ -57,6 +57,9 @@ export function InboxView({ isActive = true }) {
     pause: !isActive || !user?.organizationId,
   });
 
+  console.log("conversations")
+  console.log(conversations)
+
   const [{ data: selectedConversation }] = useFindOne(api.conversation, selectedConversationId, {
     select: {
       id: true,
@@ -94,6 +97,9 @@ export function InboxView({ isActive = true }) {
     live: isActive,
     pause: !isActive || !selectedConversationId,
   });
+
+  console.log("selectedConversation")
+  console.log(selectedConversation)
 
   const messages = selectedConversation?.messages?.edges?.map(e => e.node) || [];
   const lastReadAt = selectedConversation?.lastReadAt ? new Date(selectedConversation.lastReadAt) : null;
@@ -207,9 +213,8 @@ export function InboxView({ isActive = true }) {
               <div
                 key={conv.id}
                 onClick={() => setSelectedConversationId(conv.id)}
-                className={`p-3 border-b border-gray-100 cursor-pointer transition-colors ${
-                  isSelected ? "bg-blue-50 border-l-2 border-l-blue-500" : "hover:bg-gray-50"
-                }`}
+                className={`p-3 border-b border-gray-100 cursor-pointer transition-colors ${isSelected ? "bg-blue-50 border-l-2 border-l-blue-500" : "hover:bg-gray-50"
+                  }`}
               >
                 <div className="flex items-start gap-3">
                   <ConversationAvatar name={conv.email || conv.shopName} />
@@ -275,11 +280,10 @@ export function InboxView({ isActive = true }) {
                 )}
                 <div>
                   <div
-                    className={`rounded-2xl px-4 py-2.5 ${
-                      msg.senderType === "support"
-                        ? "bg-blue-500 text-white rounded-br-md"
-                        : "bg-white border border-gray-200 text-gray-900 rounded-bl-md shadow-sm"
-                    }`}
+                    className={`rounded-2xl px-4 py-2.5 ${msg.senderType === "support"
+                      ? "bg-blue-500 text-white rounded-br-md"
+                      : "bg-white border border-gray-200 text-gray-900 rounded-bl-md shadow-sm"
+                      }`}
                   >
                     {msg.attachment?.url && (
                       <img
@@ -291,9 +295,8 @@ export function InboxView({ isActive = true }) {
                     )}
                     {msg.content && <p className="text-sm leading-relaxed">{msg.content}</p>}
                   </div>
-                  <div className={`flex items-center gap-2 mt-1 text-xs text-gray-400 ${
-                    msg.senderType === "support" ? "justify-end" : "justify-start"
-                  }`}>
+                  <div className={`flex items-center gap-2 mt-1 text-xs text-gray-400 ${msg.senderType === "support" ? "justify-end" : "justify-start"
+                    }`}>
                     <span>{formatMessageTime(msg.createdAt)}</span>
                     <MessageStatus message={msg} lastReadAt={lastReadAt} />
                   </div>
@@ -389,7 +392,7 @@ export function InboxView({ isActive = true }) {
             <div className="space-y-3 text-sm">
               <InfoRow icon={Mail} label="Email" value={selectedConversation.email} />
               <InfoRow icon={Globe} label="Location" value={selectedConversation.country || "Unknown"} />
-              <InfoRow icon={Clock} label="Local time" value={new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} />
+              <InfoRow icon={Clock} label="Local time" value={new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} />
               <InfoRow icon={MessageCircle} label="Channel" value="Chat" />
             </div>
           </CollapsibleSection>
@@ -467,11 +470,10 @@ function MessageStatus({ message, lastReadAt }) {
   }
 
   return (
-    <span className={`flex items-center gap-1 ${
-      isRead ? "text-blue-500" :
+    <span className={`flex items-center gap-1 ${isRead ? "text-blue-500" :
       isDelivered ? "text-green-500" :
-      "text-gray-400"
-    }`}>
+        "text-gray-400"
+      }`}>
       {isRead || isDelivered ? (
         <CheckCheck className="w-3 h-3" />
       ) : (
