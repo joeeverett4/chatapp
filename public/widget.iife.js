@@ -15025,6 +15025,7 @@ stack: ${String(
     country: true,
     createdAt: true,
     email: true,
+    isOnline: true,
     lastActiveAt: true,
     name: true,
     updatedAt: true
@@ -16002,6 +16003,18 @@ stack: ${String(
   class WidgetNamespace {
     constructor(clientOrParent) {
       this.clientOrParent = clientOrParent;
+      this.disconnect = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "disconnect",
+        operationName: "disconnect",
+        operationReturnType: "WidgetDisconnect",
+        namespace: "widget",
+        variables: {
+          email: { required: false, type: "String" },
+          conversationId: { required: false, type: "String" },
+          shopId: { required: false, type: "String" }
+        }
+      });
       this.getWidgetMessages = buildGlobalAction(this, {
         type: "globalAction",
         functionName: "getWidgetMessages",
@@ -16058,6 +16071,19 @@ stack: ${String(
         operationReturnType: "WidgetMarkEmailRead",
         namespace: "widget",
         variables: { messageId: { required: false, type: "String" } }
+      });
+      this.pusherAuth = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "pusherAuth",
+        operationName: "pusherAuth",
+        operationReturnType: "WidgetPusherAuth",
+        namespace: "widget",
+        variables: {
+          socketId: { required: false, type: "String" },
+          channelName: { required: false, type: "String" },
+          email: { required: false, type: "String" },
+          conversationId: { required: false, type: "String" }
+        }
       });
       this.sendHeartbeat = buildGlobalAction(this, {
         type: "globalAction",
@@ -16180,6 +16206,21 @@ stack: ${String(
         operationReturnType: "TrackEventQueue",
         namespace: null,
         variables: {}
+      });
+      this.trackEventsTHREE = buildGlobalAction(this, {
+        type: "globalAction",
+        functionName: "trackEventsTHREE",
+        operationName: "trackEventsTHREE",
+        operationReturnType: "TrackEventsTHREE",
+        namespace: null,
+        variables: {
+          event: { required: false, type: "String" },
+          properties: { required: false, type: "JSONObject" },
+          distinctId: { required: false, type: "String" },
+          sessionId: { required: false, type: "String" },
+          timestamp: { required: false, type: "String" },
+          shopId: { required: false, type: "String" }
+        }
       });
       this.trackEventsTWO = buildGlobalAction(this, {
         type: "globalAction",
