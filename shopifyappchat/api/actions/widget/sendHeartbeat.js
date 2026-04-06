@@ -25,7 +25,8 @@ export const run: GlobalActionRun = async ({ params, api, logger }) => {
   }
 
   let customerUpdated = await api.customer.update(customer.id, {
-    lastActiveAt: new Date().toISOString()
+    lastActiveAt: new Date().toISOString(),
+    isOnline: true
   });
 
   console.log("customer updated");

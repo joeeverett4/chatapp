@@ -274,6 +274,29 @@ export function useChat() {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [conversationId, shopId, isOpen, markAsRead]);
 
+  // Notify server when customer leaves/closes tab
+  useEffect(() => {
+    if (!email || !conversationId || !shopId) return;
+
+    const handleDisconnect = () => {
+      api.widget.disconnect({ email, conversationId, shopId });
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        handleDisconnect();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleDisconnect);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleDisconnect);
+    };
+  }, [email, conversationId, shopId]);
+
   return {
     isOpen,
     toggleChat,
