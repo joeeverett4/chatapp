@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gadget-client/shopappchat": "^1.29.0-development.801",
+    "pusher-js": "^8.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Client } from '@gadget-client/shopappchat';
+import Pusher from 'pusher-js';
 
 const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
+
+// Pusher configuration
+const PUSHER_KEY = 'e972331887dfc1bd1756';
+const PUSHER_CLUSTER = 'us3';
 
 const config = getConfig();
 const api = new Client({
@@ -45,6 +50,8 @@ export function useChat() {
   const pollIntervalRef = useRef(null);
   const heartbeatIntervalRef = useRef(null);
   const lastActivityRef = useRef(Date.now());
+  const pusherRef = useRef(null);
+  const channelRef = useRef(null);
 
   const config = getConfig();
   const shopId = config.shopId || '';
@@ -192,20 +199,64 @@ export function useChat() {
 
   // No auto-initialize - wait for email submission
 
-  // Poll for messages when chat is open
+  // Subscribe to Pusher channel for real-time updates
+  useEffect(() => {
+    if (!conversationId) return;
+
+    // Initialize Pusher
+    pusherRef.current = new Pusher(PUSHER_KEY, {
+      cluster: PUSHER_CLUSTER
+    });
+
+    // Subscribe to conversation channel
+    const channelName = `conversation-${conversationId}`;
+    channelRef.current = pusherRef.current.subscribe(channelName);
+
+    // Listen for new messages
+    channelRef.current.bind('new-message', (message) => {
+      console.log('Pusher: new message received', message);
+      setMessages(prev => {
+        // Avoid duplicates
+        if (prev.some(m => m.id === message.id)) return prev;
+        return [...prev, message];
+      });
+    });
+
+    // Listen for operator read receipts
+    channelRef.current.bind('operator-read', (data) => {
+      console.log('Pusher: operator read', data);
+      if (data.readAt) {
+        setOperatorLastReadAt(new Date(data.readAt));
+      }
+    });
+
+    console.log('Pusher: subscribed to', channelName);
+
+    return () => {
+      if (channelRef.current) {
+        channelRef.current.unbind_all();
+        pusherRef.current.unsubscribe(channelName);
+      }
+      if (pusherRef.current) {
+        pusherRef.current.disconnect();
+      }
+    };
+  }, [conversationId]);
+
+  // Initial fetch and fallback polling (slower, as backup to Pusher)
   useEffect(() => {
     if (isOpen && conversationId) {
       // Initial fetch and mark as read
       fetchMessages();
       markAsRead();
 
-      // Start polling every 5 seconds - also mark as read while customer is viewing
+      // Fallback polling every 30 seconds (in case Pusher misses something)
       pollIntervalRef.current = setInterval(() => {
         fetchMessages();
         if (document.visibilityState === 'visible') {
           markAsRead();
         }
-      }, 5000);
+      }, 30000);
 
       return () => {
         if (pollIntervalRef.current) {
