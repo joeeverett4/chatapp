@@ -1,8 +1,15 @@
 # Pusher Setup Guide
 
-## Environment Variables (Gadget)
+## ⚠️ IMPORTANT: Environment Variables (Gadget)
 
-Add these in Gadget dashboard → Settings → Environment Variables:
+**You MUST add these in Gadget dashboard → Settings → Environment Variables:**
+
+```
+PUSHER_APP_ID=2137606
+PUSHER_KEY=e972331887dfc1bd1756
+PUSHER_SECRET=e984e3cf5e46559a1306
+PUSHER_CLUSTER=us3
+```
 
 | Variable | Value |
 |----------|-------|
@@ -10,6 +17,8 @@ Add these in Gadget dashboard → Settings → Environment Variables:
 | `PUSHER_KEY` | `e972331887dfc1bd1756` |
 | `PUSHER_SECRET` | `e984e3cf5e46559a1306` |
 | `PUSHER_CLUSTER` | `us3` |
+
+**Without these, auth will fail with:** `The "key" argument must be of type string... Received undefined`
 
 ## Deploy to Gadget
 
