@@ -8,6 +8,9 @@ const getConfig = () => window.SHOPAPPCHAT_CONFIG || {};
 const PUSHER_KEY = 'e972331887dfc1bd1756';
 const PUSHER_CLUSTER = 'us3';
 
+// Enable Pusher logging for debugging
+Pusher.logToConsole = true;
+
 const config = getConfig();
 const api = new Client({
   environment: config.environment || 'production'
@@ -199,13 +202,19 @@ export function useChat() {
 
   // Subscribe to Pusher presence channel for real-time updates and online status
   useEffect(() => {
-    if (!conversationId || !email) return;
+    if (!conversationId || !email) {
+      console.log('Pusher: skipping - missing conversationId or email', { conversationId, email });
+      return;
+    }
+
+    console.log('Pusher: initializing connection', { conversationId, email, key: PUSHER_KEY, cluster: PUSHER_CLUSTER });
 
     // Initialize Pusher with custom authorizer that calls Gadget action
     pusherRef.current = new Pusher(PUSHER_KEY, {
       cluster: PUSHER_CLUSTER,
       authorizer: (channel) => ({
         authorize: async (socketId, callback) => {
+          console.log('Pusher: authorizing channel', { socketId, channelName: channel.name, email, conversationId });
           try {
             const auth = await api.widget.pusherAuth({
               socketId,
@@ -213,51 +222,85 @@ export function useChat() {
               email,
               conversationId
             });
+            console.log('Pusher: auth success', auth);
             callback(null, auth);
           } catch (err) {
-            console.error('Pusher auth error:', err);
+            console.error('Pusher: auth FAILED', err);
             callback(err, null);
           }
         }
       })
     });
 
+    // Log connection state changes
+    pusherRef.current.connection.bind('state_change', (states) => {
+      console.log('Pusher: connection state changed', { previous: states.previous, current: states.current });
+    });
+
+    pusherRef.current.connection.bind('connected', () => {
+      console.log('Pusher: connected! Socket ID:', pusherRef.current.connection.socket_id);
+    });
+
+    pusherRef.current.connection.bind('error', (err) => {
+      console.error('Pusher: connection error', err);
+    });
+
     // Subscribe to presence channel (tracks online/offline automatically)
     const channelName = `presence-conversation-${conversationId}`;
+    console.log('Pusher: subscribing to channel', channelName);
     channelRef.current = pusherRef.current.subscribe(channelName);
 
     // Listen for successful subscription
     channelRef.current.bind('pusher:subscription_succeeded', (members) => {
-      console.log('Pusher: subscribed to presence channel', { channelName, memberCount: members.count });
+      console.log('Pusher: subscription SUCCEEDED', { channelName, memberCount: members.count, members: members.members });
+    });
+
+    // Listen for subscription error
+    channelRef.current.bind('pusher:subscription_error', (error) => {
+      console.error('Pusher: subscription FAILED', { channelName, error });
+    });
+
+    // Listen for members joining
+    channelRef.current.bind('pusher:member_added', (member) => {
+      console.log('Pusher: member joined', member);
+    });
+
+    // Listen for members leaving
+    channelRef.current.bind('pusher:member_removed', (member) => {
+      console.log('Pusher: member left', member);
     });
 
     // Listen for new messages
     channelRef.current.bind('new-message', (message) => {
-      console.log('Pusher: new message received', message);
+      console.log('Pusher: new-message event received', message);
       setMessages(prev => {
         // Avoid duplicates
-        if (prev.some(m => m.id === message.id)) return prev;
+        if (prev.some(m => m.id === message.id)) {
+          console.log('Pusher: duplicate message, skipping', message.id);
+          return prev;
+        }
+        console.log('Pusher: adding message to state', message.id);
         return [...prev, message];
       });
     });
 
     // Listen for operator read receipts
     channelRef.current.bind('operator-read', (data) => {
-      console.log('Pusher: operator read', data);
+      console.log('Pusher: operator-read event received', data);
       if (data.readAt) {
         setOperatorLastReadAt(new Date(data.readAt));
       }
     });
 
-    console.log('Pusher: subscribing to', channelName);
-
     return () => {
+      console.log('Pusher: cleaning up, unsubscribing from', channelName);
       if (channelRef.current) {
         channelRef.current.unbind_all();
         pusherRef.current.unsubscribe(channelName);
       }
       if (pusherRef.current) {
         pusherRef.current.disconnect();
+        console.log('Pusher: disconnected');
       }
     };
   }, [conversationId, email]);

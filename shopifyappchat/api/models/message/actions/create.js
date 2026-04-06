@@ -18,10 +18,17 @@ export async function run({ params, record }) {
 }
 
 export async function onSuccess({ record, api, logger }) {
+  logger.info("=== MESSAGE CREATED ===", {
+    messageId: record.id,
+    conversationId: record.conversationId,
+    senderType: record.senderType,
+    contentLength: record.content?.length || 0
+  });
+
   // Send Pusher notification for all messages
   try {
     const channelName = `presence-conversation-${record.conversationId}`;
-    await pusher.trigger(channelName, 'new-message', {
+    const payload = {
       id: record.id,
       content: record.content,
       senderType: record.senderType,
@@ -31,36 +38,58 @@ export async function onSuccess({ record, api, logger }) {
         mimeType: record.attachment.mimeType,
         fileName: record.attachment.fileName
       } : null
-    });
-    logger.info("Pusher: sent new-message event", { channelName, messageId: record.id });
+    };
+
+    logger.info("Pusher: triggering event", { channelName, event: 'new-message', payload });
+
+    const result = await pusher.trigger(channelName, 'new-message', payload);
+
+    logger.info("Pusher: event sent successfully", { channelName, messageId: record.id, result });
   } catch (err) {
-    logger.error("Pusher: failed to send event", { error: err.message });
+    logger.error("Pusher: FAILED to send event", {
+      error: err.message,
+      stack: err.stack,
+      channelName: `presence-conversation-${record.conversationId}`
+    });
   }
 
   // Send email if support message and customer is offline
   if (record.senderType === 'support') {
+    logger.info("Support message - checking if customer is online");
+
     try {
       const conversation = await api.conversation.findOne(record.conversationId, {
         select: {
           id: true,
           customer: {
+            id: true,
+            email: true,
             isOnline: true
           }
         }
+      });
+
+      logger.info("Customer status", {
+        customerId: conversation.customer?.id,
+        email: conversation.customer?.email,
+        isOnline: conversation.customer?.isOnline
       });
 
       // Use isOnline field (set by Pusher presence webhooks)
       const isOffline = !conversation.customer?.isOnline;
 
       if (isOffline) {
-        logger.info("Customer offline, sending email", { messageId: record.id });
+        logger.info("Customer is OFFLINE, sending email notification", { messageId: record.id });
         await api.widget.sendMessageEmail({
           messageId: record.id,
           conversationId: record.conversationId
         });
+        logger.info("Email notification sent");
+      } else {
+        logger.info("Customer is ONLINE, skipping email notification");
       }
     } catch (err) {
-      logger.error("Failed to check/send email", { error: err.message });
+      logger.error("Failed to check/send email", { error: err.message, stack: err.stack });
     }
   }
 }

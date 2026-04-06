@@ -13,10 +13,18 @@ const pusher = new Pusher({
  * Receives notifications when users join/leave channels
  */
 export default async function route({ request, reply, api, logger }) {
+  logger.info("=== PUSHER WEBHOOK CALLED ===");
+
   try {
     const body = await request.text();
     const signature = request.headers["x-pusher-signature"];
     const key = request.headers["x-pusher-key"];
+
+    logger.info({
+      bodyLength: body.length,
+      hasSignature: !!signature,
+      hasKey: !!key
+    }, "Pusher webhook request received");
 
     // Verify webhook signature
     const expectedSignature = require("crypto")
@@ -24,13 +32,19 @@ export default async function route({ request, reply, api, logger }) {
       .update(body)
       .digest("hex");
 
+    logger.info({
+      receivedSignature: signature,
+      expectedSignature,
+      match: signature === expectedSignature
+    }, "Signature verification");
+
     if (signature !== expectedSignature) {
-      logger.warn("Invalid Pusher webhook signature");
+      logger.warn({ receivedSignature: signature, expectedSignature }, "Invalid Pusher webhook signature");
       return reply.status(401).send({ error: "Invalid signature" });
     }
 
     const data = JSON.parse(body);
-    logger.info({ events: data.events }, "Pusher webhook received");
+    logger.info({ events: data.events, time_ms: data.time_ms }, "Pusher webhook payload parsed");
 
     for (const event of data.events || []) {
       // member_removed = user disconnected from presence channel
