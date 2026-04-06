@@ -20385,8 +20385,6 @@ stack: ${String(
     const [email, setEmail] = reactExports.useState("");
     const [operatorLastReadAt, setOperatorLastReadAt] = reactExports.useState(null);
     const pollIntervalRef = reactExports.useRef(null);
-    const heartbeatIntervalRef = reactExports.useRef(null);
-    const lastActivityRef = reactExports.useRef(Date.now());
     const pusherRef = reactExports.useRef(null);
     const channelRef = reactExports.useRef(null);
     const config2 = getConfig();
@@ -20503,12 +20501,31 @@ stack: ${String(
       setIsOpen((prev) => !prev);
     }, []);
     reactExports.useEffect(() => {
-      if (!conversationId) return;
+      if (!conversationId || !email) return;
       pusherRef.current = new Pusher(PUSHER_KEY, {
-        cluster: PUSHER_CLUSTER
+        cluster: PUSHER_CLUSTER,
+        authorizer: (channel) => ({
+          authorize: async (socketId, callback) => {
+            try {
+              const auth = await api.widget.pusherAuth({
+                socketId,
+                channelName: channel.name,
+                email,
+                conversationId
+              });
+              callback(null, auth);
+            } catch (err) {
+              console.error("Pusher auth error:", err);
+              callback(err, null);
+            }
+          }
+        })
       });
-      const channelName = `conversation-${conversationId}`;
+      const channelName = `presence-conversation-${conversationId}`;
       channelRef.current = pusherRef.current.subscribe(channelName);
+      channelRef.current.bind("pusher:subscription_succeeded", (members) => {
+        console.log("Pusher: subscribed to presence channel", { channelName, memberCount: members.count });
+      });
       channelRef.current.bind("new-message", (message) => {
         console.log("Pusher: new message received", message);
         setMessages((prev) => {
@@ -20522,7 +20539,7 @@ stack: ${String(
           setOperatorLastReadAt(new Date(data.readAt));
         }
       });
-      console.log("Pusher: subscribed to", channelName);
+      console.log("Pusher: subscribing to", channelName);
       return () => {
         if (channelRef.current) {
           channelRef.current.unbind_all();
@@ -20532,7 +20549,7 @@ stack: ${String(
           pusherRef.current.disconnect();
         }
       };
-    }, [conversationId]);
+    }, [conversationId, email]);
     reactExports.useEffect(() => {
       if (isOpen && conversationId) {
         fetchMessages();
@@ -20551,39 +20568,6 @@ stack: ${String(
       }
     }, [isOpen, conversationId, fetchMessages, markAsRead]);
     reactExports.useEffect(() => {
-      const updateActivity = () => {
-        lastActivityRef.current = Date.now();
-      };
-      const events = ["mousemove", "keydown", "click", "touchstart", "scroll"];
-      events.forEach((event) => window.addEventListener(event, updateActivity));
-      return () => {
-        events.forEach((event) => window.removeEventListener(event, updateActivity));
-      };
-    }, []);
-    reactExports.useEffect(() => {
-      if (isOpen && email) {
-        const sendHeartbeat = async () => {
-          const isActive = Date.now() - lastActivityRef.current < 6e4;
-          console.log("Heartbeat check:", { isActive, visible: document.visibilityState, email });
-          if (isActive && document.visibilityState === "visible") {
-            try {
-              await api.widget.sendHeartbeat({ email });
-              console.log("Heartbeat sent successfully");
-            } catch (err) {
-              console.log("Heartbeat failed:", err);
-            }
-          }
-        };
-        sendHeartbeat();
-        heartbeatIntervalRef.current = setInterval(sendHeartbeat, 3e4);
-        return () => {
-          if (heartbeatIntervalRef.current) {
-            clearInterval(heartbeatIntervalRef.current);
-          }
-        };
-      }
-    }, [isOpen, email]);
-    reactExports.useEffect(() => {
       if (!conversationId || !shopId) return;
       const handleVisibilityChange = () => {
         if (document.visibilityState === "visible" && isOpen) {
@@ -20594,23 +20578,6 @@ stack: ${String(
       document.addEventListener("visibilitychange", handleVisibilityChange);
       return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
     }, [conversationId, shopId, isOpen, markAsRead]);
-    reactExports.useEffect(() => {
-      if (!email || !conversationId || !shopId) return;
-      const handleDisconnect = () => {
-        api.widget.disconnect({ email, conversationId, shopId });
-      };
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === "hidden") {
-          handleDisconnect();
-        }
-      };
-      document.addEventListener("visibilitychange", handleVisibilityChange);
-      window.addEventListener("beforeunload", handleDisconnect);
-      return () => {
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
-        window.removeEventListener("beforeunload", handleDisconnect);
-      };
-    }, [email, conversationId, shopId]);
     return {
       isOpen,
       toggleChat,

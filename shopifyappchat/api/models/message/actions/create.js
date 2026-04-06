@@ -20,7 +20,7 @@ export async function run({ params, record }) {
 export async function onSuccess({ record, api, logger }) {
   // Send Pusher notification for all messages
   try {
-    const channelName = `conversation-${record.conversationId}`;
+    const channelName = `presence-conversation-${record.conversationId}`;
     await pusher.trigger(channelName, 'new-message', {
       id: record.id,
       content: record.content,
@@ -44,14 +44,13 @@ export async function onSuccess({ record, api, logger }) {
         select: {
           id: true,
           customer: {
-            lastActiveAt: true
+            isOnline: true
           }
         }
       });
 
-      const lastActiveAt = conversation.customer?.lastActiveAt;
-      const isOffline = !lastActiveAt ||
-        (Date.now() - new Date(lastActiveAt).getTime() > 2 * 60 * 1000); // 2 minutes
+      // Use isOnline field (set by Pusher presence webhooks)
+      const isOffline = !conversation.customer?.isOnline;
 
       if (isOffline) {
         logger.info("Customer offline, sending email", { messageId: record.id });

@@ -48,8 +48,6 @@ export function useChat() {
   const [email, setEmail] = useState('');
   const [operatorLastReadAt, setOperatorLastReadAt] = useState(null);
   const pollIntervalRef = useRef(null);
-  const heartbeatIntervalRef = useRef(null);
-  const lastActivityRef = useRef(Date.now());
   const pusherRef = useRef(null);
   const channelRef = useRef(null);
 
@@ -199,18 +197,39 @@ export function useChat() {
 
   // No auto-initialize - wait for email submission
 
-  // Subscribe to Pusher channel for real-time updates
+  // Subscribe to Pusher presence channel for real-time updates and online status
   useEffect(() => {
-    if (!conversationId) return;
+    if (!conversationId || !email) return;
 
-    // Initialize Pusher
+    // Initialize Pusher with custom authorizer that calls Gadget action
     pusherRef.current = new Pusher(PUSHER_KEY, {
-      cluster: PUSHER_CLUSTER
+      cluster: PUSHER_CLUSTER,
+      authorizer: (channel) => ({
+        authorize: async (socketId, callback) => {
+          try {
+            const auth = await api.widget.pusherAuth({
+              socketId,
+              channelName: channel.name,
+              email,
+              conversationId
+            });
+            callback(null, auth);
+          } catch (err) {
+            console.error('Pusher auth error:', err);
+            callback(err, null);
+          }
+        }
+      })
     });
 
-    // Subscribe to conversation channel
-    const channelName = `conversation-${conversationId}`;
+    // Subscribe to presence channel (tracks online/offline automatically)
+    const channelName = `presence-conversation-${conversationId}`;
     channelRef.current = pusherRef.current.subscribe(channelName);
+
+    // Listen for successful subscription
+    channelRef.current.bind('pusher:subscription_succeeded', (members) => {
+      console.log('Pusher: subscribed to presence channel', { channelName, memberCount: members.count });
+    });
 
     // Listen for new messages
     channelRef.current.bind('new-message', (message) => {
@@ -230,7 +249,7 @@ export function useChat() {
       }
     });
 
-    console.log('Pusher: subscribed to', channelName);
+    console.log('Pusher: subscribing to', channelName);
 
     return () => {
       if (channelRef.current) {
@@ -241,7 +260,7 @@ export function useChat() {
         pusherRef.current.disconnect();
       }
     };
-  }, [conversationId]);
+  }, [conversationId, email]);
 
   // Initial fetch and fallback polling (slower, as backup to Pusher)
   useEffect(() => {
@@ -266,50 +285,6 @@ export function useChat() {
     }
   }, [isOpen, conversationId, fetchMessages, markAsRead]);
 
-  // Track user activity
-  useEffect(() => {
-    const updateActivity = () => {
-      lastActivityRef.current = Date.now();
-    };
-
-    const events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
-    events.forEach(event => window.addEventListener(event, updateActivity));
-
-    return () => {
-      events.forEach(event => window.removeEventListener(event, updateActivity));
-    };
-  }, []);
-
-  // Send heartbeat when chat is open and user is active
-  useEffect(() => {
-    if (isOpen && email) {
-      const sendHeartbeat = async () => {
-        const isActive = (Date.now() - lastActivityRef.current) < 60000;
-        console.log('Heartbeat check:', { isActive, visible: document.visibilityState, email });
-        if (isActive && document.visibilityState === 'visible') {
-          try {
-            await api.widget.sendHeartbeat({ email });
-            console.log('Heartbeat sent successfully');
-          } catch (err) {
-            console.log('Heartbeat failed:', err);
-          }
-        }
-      };
-
-      // Send initial heartbeat
-      sendHeartbeat();
-
-      // Send heartbeat every 30 seconds
-      heartbeatIntervalRef.current = setInterval(sendHeartbeat, 30000);
-
-      return () => {
-        if (heartbeatIntervalRef.current) {
-          clearInterval(heartbeatIntervalRef.current);
-        }
-      };
-    }
-  }, [isOpen, email]);
-
   // Mark as read when tab becomes visible (customer returns to tab)
   useEffect(() => {
     if (!conversationId || !shopId) return;
@@ -325,28 +300,8 @@ export function useChat() {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [conversationId, shopId, isOpen, markAsRead]);
 
-  // Notify server when customer leaves/closes tab
-  useEffect(() => {
-    if (!email || !conversationId || !shopId) return;
-
-    const handleDisconnect = () => {
-      api.widget.disconnect({ email, conversationId, shopId });
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        handleDisconnect();
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('beforeunload', handleDisconnect);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleDisconnect);
-    };
-  }, [email, conversationId, shopId]);
+  // Pusher presence channel handles disconnect detection automatically
+  // When the WebSocket disconnects, Pusher sends a webhook to our server
 
   return {
     isOpen,
