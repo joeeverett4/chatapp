@@ -2,7 +2,7 @@
 
 ## ⚠️ IMPORTANT: Environment Variables (Gadget)
 
-**You MUST add these in Gadget dashboard → Settings → Environment Variables:**
+**You MUST add these in Gadget dashboardaa→ Settings → Environment Variables:**
 
 ```
 PUSHER_APP_ID=2137606
