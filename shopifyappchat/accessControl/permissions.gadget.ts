@@ -86,6 +86,8 @@ export const permissions: GadgetPermissions = {
         shopifyPartnerApi: true,
         trackEvent: true,
         trackEventsTWO: true,
+        "widget/disconnect": true,
+        "widget/pusherAuth": true,
       },
     },
     unauthenticated: {
@@ -128,11 +130,13 @@ export const permissions: GadgetPermissions = {
       actions: {
         trackEvent: true,
         trackEventsTWO: true,
+        "widget/disconnect": true,
         "widget/getWidgetMessages": true,
         "widget/initWidgetTwo": true,
         "widget/logEvent": true,
         "widget/markConversationRead": true,
         "widget/markEmailRead": true,
+        "widget/pusherAuth": true,
         "widget/sendHeartbeat": true,
         "widget/sendMessageEmail": true,
         "widget/sendWidgetMessage": true,

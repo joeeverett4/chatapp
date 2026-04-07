@@ -5,26 +5,27 @@ import { InboxView } from "../components/views/InboxView";
 import { MerchantsView } from "../components/views/MerchantsView";
 import { MerchantView } from "../components/views/MerchantView";
 import { ImportView } from "../components/views/ImportView";
+import { Inbox, Store, Upload } from "lucide-react";
 
 // View configuration
 const viewConfig = {
   inbox: {
     label: "Inbox",
-    icon: "message",
+    icon: Inbox,
   },
   merchants: {
     label: "Merchants",
-    icon: "store",
+    icon: Store,
     submenus: {
       import: {
         label: "Import",
-        icon: "import",
+        icon: Upload,
       },
     },
   },
 };
 
-function SidebarNavItem({ icon, label, active, badge, onClick }) {
+function SidebarNavItem({ icon: Icon, label, active, badge, onClick }) {
   return (
     <div
       onClick={onClick}
@@ -38,10 +39,17 @@ function SidebarNavItem({ icon, label, active, badge, onClick }) {
         gap: '8px',
       }}
     >
-      <s-icon name={icon} />
-      <s-text fontWeight={active ? "semibold" : "regular"}>{label}</s-text>
+      <Icon size={18} style={{ color: active ? '#111' : '#666' }} />
+      <span style={{ fontWeight: active ? 600 : 400, color: active ? '#111' : '#333' }}>{label}</span>
       {badge > 0 && (
-        <s-badge tone="info">{badge}</s-badge>
+        <span style={{
+          backgroundColor: '#e0f2fe',
+          color: '#0369a1',
+          fontSize: '12px',
+          padding: '2px 6px',
+          borderRadius: '10px',
+          fontWeight: 500,
+        }}>{badge}</span>
       )}
     </div>
   );
@@ -107,7 +115,7 @@ export default function AppShell() {
             }}>
               S
             </div>
-            <s-text fontWeight="semibold">Support Chat</s-text>
+            <span style={{ fontWeight: 600 }}>Support Chat</span>
           </div>
         </div>
 
@@ -151,8 +159,21 @@ export default function AppShell() {
         {/* User Profile */}
         <div style={{ padding: '16px', borderTop: '1px solid #e1e3e5' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <s-avatar name={user?.email || 'User'} size="small" />
-            <s-text>{user?.email?.split('@')[0] || 'User'}</s-text>
+            <div style={{
+              width: '28px',
+              height: '28px',
+              backgroundColor: '#6366f1',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '12px',
+              fontWeight: 500,
+            }}>
+              {(user?.email?.[0] || 'U').toUpperCase()}
+            </div>
+            <span style={{ fontSize: '14px', color: '#333' }}>{user?.email?.split('@')[0] || 'User'}</span>
           </div>
         </div>
       </div>

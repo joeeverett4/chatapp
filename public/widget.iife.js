@@ -20867,8 +20867,8 @@ stack: ${String(
         /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "22,6 12,13 2,6" })
       ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "sac-email-title", children: "Let's stay in touch" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "sac-email-subtitle", children: "We'll notify you when we respond" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "sac-email-title", children: "How can we reach you?" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "sac-email-subtitle", children: "We'll send a notification when we reply" }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
@@ -20902,17 +20902,7 @@ stack: ${String(
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sac-minimize-btn", onClick: onClose, "aria-label": "Close chat", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M18 15l-6-6-6 6" }) }) })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sac-header-content", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "sac-header-title", children: "How can we help?" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sac-header-status", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "sac-status-badge", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sac-online-dot" }),
-              "Online"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sac-status-divider", children: "·" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sac-response-time", children: "Usually responds in minutes" })
-          ] })
-        ] })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sac-header-content", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "sac-header-title", children: "How can we help?" }) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sac-body", children: !email ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(WelcomeSection, {}),

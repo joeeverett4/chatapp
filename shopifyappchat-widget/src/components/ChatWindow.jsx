@@ -21,8 +21,8 @@ function EmailForm({ onSubmit, loading }) {
             <polyline points="22,6 12,13 2,6"/>
           </svg>
         </div>
-        <h3 className="sac-email-title">Let's stay in touch</h3>
-        <p className="sac-email-subtitle">We'll notify you when we respond</p>
+        <h3 className="sac-email-title">How can we reach you?</h3>
+        <p className="sac-email-subtitle">We'll send a notification when we reply</p>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -80,14 +80,6 @@ export default function ChatWindow({ messages, onSend, onClose, loading, error, 
 
         <div className="sac-header-content">
           <h2 className="sac-header-title">How can we help?</h2>
-          <div className="sac-header-status">
-            <span className="sac-status-badge">
-              <span className="sac-online-dot"></span>
-              Online
-            </span>
-            <span className="sac-status-divider">·</span>
-            <span className="sac-response-time">Usually responds in minutes</span>
-          </div>
         </div>
       </div>
 
