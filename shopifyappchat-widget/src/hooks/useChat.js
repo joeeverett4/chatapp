@@ -184,8 +184,8 @@ export function useChat() {
         params.attachmentMimeType = file.type;
       }
 
-      const data = await api.widget.sendWidgetMessage(params);
-      setMessages(prev => [...prev, data.message]);
+      await api.widget.sendWidgetMessage(params);
+      // Message will be added via Pusher's new-message event to avoid duplicates
     } catch (err) {
       setError(err.message);
     } finally {

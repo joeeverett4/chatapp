@@ -20531,8 +20531,7 @@ stack: ${String(
           params.attachmentFileName = file.name;
           params.attachmentMimeType = file.type;
         }
-        const data = await api.widget.sendWidgetMessage(params);
-        setMessages((prev) => [...prev, data.message]);
+        await api.widget.sendWidgetMessage(params);
       } catch (err) {
         setError(err.message);
       } finally {
